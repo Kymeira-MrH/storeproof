@@ -79,7 +79,7 @@ export function SiteFooter() {
             href="https://vpnetworks.co.uk"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "#cdbfae" }}
+            style={{ color: "#d4d7db", textDecoration: "underline", textUnderlineOffset: "2px" }}
           >
             VantagePoint Networks
           </a>{" "}
