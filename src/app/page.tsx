@@ -19,6 +19,7 @@ export default function Page() {
             <li><a href="#how">How it works</a></li>
             <li><a href="#proof">The proof</a></li>
             <li><a href="#pricing">Pricing</a></li>
+            <li><a href="/login">Log in</a></li>
           </ul>
           <a className="navcta" href="#scan">Scan my store</a>
         </div>
@@ -233,8 +234,8 @@ Not an overlay. Fixed at source.`}</div>
         <div className="w">
           <span>© 2026 StoreProof · EU · EAA Ready</span>
           <span>
-            <a href="#">Accessibility statement</a> &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp;{" "}
-            <a href="#scan">Scan my store</a>
+            <a href="/login">Sign in</a> &nbsp;·&nbsp; <a href="#">Accessibility statement</a> &nbsp;·&nbsp;{" "}
+            <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#scan">Scan my store</a>
           </span>
           <span>We pass our own WCAG 2.2 AA test.</span>
         </div>
