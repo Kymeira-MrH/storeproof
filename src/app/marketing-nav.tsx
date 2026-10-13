@@ -34,9 +34,24 @@ export function MarketingNav({ active }: { active?: string }) {
               <a href="/login">Log in</a>
             </li>
           </ul>
-          <a className="navcta" href="/#scan">
-            Scan my store
-          </a>
+          <div className="nav-right">
+            <a className="navcta" href="/#scan">
+              Scan my store
+            </a>
+            <details className="navmenu">
+              <summary aria-label="Open menu">
+                <span aria-hidden="true">☰</span>
+              </summary>
+              <div className="menu">
+                {LINKS.map((l) => (
+                  <a key={l.key} className={active === l.key ? "active" : undefined} href={l.href}>
+                    {l.label}
+                  </a>
+                ))}
+                <a href="/login">Log in</a>
+              </div>
+            </details>
+          </div>
         </div>
       </nav>
     </>

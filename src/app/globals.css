@@ -29,7 +29,16 @@ html, body { margin: 0; padding: 0; }
 .ap nav a:hover{ color:var(--ink); }
 .ap .navcta{ font-size:14px; font-weight:600; background:var(--green); color:#fff; padding:10px 18px; text-decoration:none; border-radius:var(--r-pill); box-shadow:var(--sh-sm); }
 .ap .navcta:hover{ background:var(--green-d); }
-@media(max-width:760px){ .ap nav ul{ display:none; } }
+.ap .nav-right{ display:flex; align-items:center; gap:12px; }
+.ap .navmenu{ display:none; }
+.ap .navmenu > summary{ list-style:none; cursor:pointer; font-size:22px; line-height:1; padding:4px 8px; color:var(--ink); border-radius:var(--r-sm); }
+.ap .navmenu > summary::-webkit-details-marker{ display:none; }
+.ap .navmenu[open] > summary{ color:var(--green-d); background:var(--paper-2); }
+.ap .navmenu .menu{ position:absolute; right:16px; margin-top:12px; background:var(--card); border:1px solid var(--rule); border-radius:var(--r); box-shadow:var(--sh-lg); padding:10px; min-width:210px; display:flex; flex-direction:column; gap:2px; z-index:40; }
+.ap .navmenu .menu a{ padding:11px 13px; border-radius:var(--r-sm); font-size:15px; color:var(--ink); text-decoration:none; }
+.ap .navmenu .menu a:hover{ background:var(--paper-2); }
+.ap .navmenu .menu a.active{ color:var(--green-d); font-weight:600; }
+@media(max-width:760px){ .ap nav ul{ display:none; } .ap .navmenu{ display:block; } }
 
 .ap .mast{ background:var(--red); color:#fbeae7; font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; }
 .ap .mast .w{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px 18px; padding-top:9px; padding-bottom:9px; }
