@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/dashboard", "/api", "/auth"],
+      disallow: ["/dashboard", "/api", "/auth", "/login", "/forgot-password", "/reset-password"],
     },
     sitemap: "https://storeproof.co.uk/sitemap.xml",
     host: "https://storeproof.co.uk",
