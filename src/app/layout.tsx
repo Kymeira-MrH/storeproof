@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AccessProof — Shopify accessibility, done and documented",
+  title: "StoreProof — Shopify accessibility, done and documented",
   description:
     "Automated WCAG 2.2 AA scanning and remediation for EU-selling Shopify stores, with the evidence pack your lawyer needs. Not an overlay.",
 };

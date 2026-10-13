@@ -5,7 +5,7 @@ export default function Page() {
     <>
       <div className="mast">
         <div className="w">
-          <span>ACCESSPROOF</span>
+          <span>STOREPROOF</span>
           <span>Case EAA-2026-0417 · Re: Accessibility Demand</span>
           <span>EU · EAA Ready</span>
         </div>
@@ -13,7 +13,7 @@ export default function Page() {
 
       <nav>
         <div className="w">
-          <span className="brand">ACCESSPROOF</span>
+          <span className="brand">STOREPROOF</span>
           <ul>
             <li><a href="#overlays">The overlay trap</a></li>
             <li><a href="#how">How it works</a></li>
@@ -136,7 +136,7 @@ export default function Page() {
             </div>
             <div className="packet">
               <span className="cap">Evidence pack — contents</span>
-              <div className="doc">{`ACCESSPROOF / EVIDENCE PACK
+              <div className="doc">{`STOREPROOF / EVIDENCE PACK
 RE: your-store.com
 
 01  Accessibility statement ....... EN 301 549
@@ -145,7 +145,7 @@ RE: your-store.com
 04  Items needing human review .... flagged
 05  Re-scan schedule .............. monthly
 —
-Prepared by AccessProof.
+Prepared by StoreProof.
 Not an overlay. Fixed at source.`}</div>
             </div>
           </div>
@@ -231,7 +231,7 @@ Not an overlay. Fixed at source.`}</div>
 
       <footer>
         <div className="w">
-          <span>© 2026 AccessProof · EU · EAA Ready</span>
+          <span>© 2026 StoreProof · EU · EAA Ready</span>
           <span>
             <a href="#">Accessibility statement</a> &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp;{" "}
             <a href="#scan">Scan my store</a>
