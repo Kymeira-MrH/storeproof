@@ -23,6 +23,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "That is not a valid store URL." }, { status: 400 });
   }
 
+  // Avoid adding the same store twice (RLS scopes this to the current user).
+  const { data: existing } = await supabase.from("stores").select("id").eq("url", url).maybeSingle();
+  if (existing) {
+    return NextResponse.json({ error: "You've already added that store." }, { status: 409 });
+  }
+
   // RLS ensures the store is owned by this user.
   const { data: store, error } = await supabase
     .from("stores")
