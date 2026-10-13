@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { AddStore } from "./add-store";
+import { Billing } from "./billing";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +33,9 @@ export default async function DashboardPage() {
     if (!latest.has(s.store_id)) latest.set(s.store_id, { band: s.band, scanned_at: s.scanned_at });
   }
 
+  const { data: subRow } = await supabase.from("subscriptions").select("status").maybeSingle();
+  const subStatus = (subRow?.status as string | undefined) ?? "none";
+
   const storeList = (stores ?? []) as Array<{ id: string; url: string; created_at: string }>;
 
   return (
@@ -48,6 +52,10 @@ export default async function DashboardPage() {
           <div className="head">
             <span className="eyebrow">Dashboard</span>
             <h2>Your stores</h2>
+          </div>
+
+          <div style={{ marginBottom: "22px" }}>
+            <Billing status={subStatus} />
           </div>
 
           <AddStore />
