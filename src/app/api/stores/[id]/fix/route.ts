@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { ShopifyAdmin } from "@/lib/shopify/client";
 import { generateAltText } from "@/lib/alt-text/generate";
+import { createFixRateLimiter } from "@/lib/ratelimit/factory";
 
 // How many images we remediate per run. Keeps a single request bounded; the
 // merchant re-runs to continue through a large catalogue.
@@ -18,6 +19,19 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
 
   const { data: store } = await supabase.from("stores").select("id").eq("id", id).single();
   if (!store) return NextResponse.json({ error: "Store not found." }, { status: 404 });
+
+  // Fix runs call Claude + Shopify per image, so cap them per user. Fail open.
+  try {
+    const rl = await createFixRateLimiter().check(`fix:${user.id}`);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: `Too many fix runs. Try again in about ${Math.ceil(rl.resetSeconds / 60)} min.` },
+        { status: 429 },
+      );
+    }
+  } catch {
+    // limiter unavailable — don't block the user
+  }
 
   const { data: sub } = await supabase.from("subscriptions").select("status").maybeSingle();
   const active = sub?.status === "active" || sub?.status === "trialing";

@@ -6,13 +6,25 @@ import { UpstashRateLimiter } from "./upstash";
 const SCAN_LIMIT = 5;
 const SCAN_WINDOW_SECONDS = 3600; // 5 scans per hour per IP
 
+// A fix run calls Claude + Shopify per image, so it is costly: cap per user.
+const FIX_LIMIT = 6;
+const FIX_WINDOW_SECONDS = 3600; // 6 fix runs per hour per user
+
 let cached: RateLimiter | null = null;
+let cachedFix: RateLimiter | null = null;
+
+function build(limit: number, windowSeconds: number): RateLimiter {
+  return process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+    ? new UpstashRateLimiter(limit, windowSeconds)
+    : new MemoryRateLimiter(limit, windowSeconds * 1000);
+}
 
 export function createRateLimiter(): RateLimiter {
-  if (cached) return cached;
-  cached =
-    process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
-      ? new UpstashRateLimiter(SCAN_LIMIT, SCAN_WINDOW_SECONDS)
-      : new MemoryRateLimiter(SCAN_LIMIT, SCAN_WINDOW_SECONDS * 1000);
+  if (!cached) cached = build(SCAN_LIMIT, SCAN_WINDOW_SECONDS);
   return cached;
+}
+
+export function createFixRateLimiter(): RateLimiter {
+  if (!cachedFix) cachedFix = build(FIX_LIMIT, FIX_WINDOW_SECONDS);
+  return cachedFix;
 }
