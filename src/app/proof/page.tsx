@@ -3,9 +3,10 @@ import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
 
 export const metadata = {
-  title: "The proof — StoreProof",
+  title: "The proof",
   description:
     "What you walk away with: an EN 301 549 EAA accessibility statement, a dated fix log, a flagged human-review list, a conformance declaration, and monthly re-scans.",
+  alternates: { canonical: "/proof" },
 };
 
 export default function Page() {

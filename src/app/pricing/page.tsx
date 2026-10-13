@@ -3,9 +3,10 @@ import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
 
 export const metadata = {
-  title: "Pricing — StoreProof",
+  title: "Pricing",
   description:
     "Start with the free scan. Subscribe when you're ready: £49/month to fix and watch, or £29/month to stay monitored and defensible. No retainer.",
+  alternates: { canonical: "/pricing" },
 };
 
 export default function Page() {

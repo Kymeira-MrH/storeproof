@@ -3,14 +3,58 @@ import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
 
 export const metadata = {
-  title: "FAQ — StoreProof",
+  title: "FAQ",
   description:
     "Straight answers: does Shopify make you compliant, is a free scan enough, do overlays protect you, and does this apply if you only sell in the UK?",
+  alternates: { canonical: "/faq" },
 };
 
 export default function Page() {
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Doesn't Shopify make my store compliant?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. Shopify's platform is accessible, but the finished store is your legal responsibility. Shopify themes cover only about a fifth of the WCAG criteria, and 'I used Shopify' has never been a successful defence.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Isn't a free scan enough on its own?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. An automated scan reliably catches around a third of accessibility issues. The rest, like whether a screen reader can complete your checkout, needs human judgement. We flag those items plainly.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Will an overlay widget protect me instead?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. Overlays were fined by the FTC, are rejected by courts, and sit on more than 800 sued businesses. They cannot change the code a claim is built on.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "I only sell in the UK. Does this still apply?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. The UK Equality Act already requires accessible services, and if you sell to anyone in the EU the European Accessibility Act applies regardless of where you are based.",
+        },
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <MarketingNav />
       <main>
         <section className="block faq">

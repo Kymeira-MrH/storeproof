@@ -3,9 +3,10 @@ import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
 
 export const metadata = {
-  title: "The overlay trap — StoreProof",
+  title: "The overlay trap",
   description:
     "Why accessibility overlay widgets backfire: the $1M FTC fine, 800+ stores sued anyway, and what a widget can never fix.",
+  alternates: { canonical: "/overlays" },
 };
 
 export default function Page() {

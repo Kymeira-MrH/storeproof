@@ -3,9 +3,10 @@ import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
 
 export const metadata = {
-  title: "How it works — StoreProof",
+  title: "How it works",
   description:
     "Scanned, fixed and documented online. A hands-off, fixed monthly price: scan, auto-fix at the source, flag what needs judgement, and keep the evidence current.",
+  alternates: { canonical: "/how-it-works" },
 };
 
 export default function Page() {
