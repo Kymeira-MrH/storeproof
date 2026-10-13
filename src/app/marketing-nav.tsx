@@ -3,6 +3,7 @@ const LINKS: Array<{ key: string; label: string; href: string }> = [
   { key: "how", label: "How it works", href: "/how-it-works" },
   { key: "proof", label: "The proof", href: "/proof" },
   { key: "pricing", label: "Pricing", href: "/pricing" },
+  { key: "blog", label: "Blog", href: "/blog" },
 ];
 
 export function MarketingNav({ active }: { active?: string }) {
