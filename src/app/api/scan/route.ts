@@ -20,13 +20,18 @@ export async function POST(req: NextRequest) {
   }
 
   // Rate limit the expensive part (a scan launches a headless browser). Keyed by IP.
+  // Fail open: a rate-limiter outage or misconfig must never take down the scanner.
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  const limit = await createRateLimiter().check(ip);
-  if (!limit.allowed) {
-    return NextResponse.json(
-      { error: "You've reached the scan limit for now. Please try again a little later." },
-      { status: 429, headers: { "Retry-After": String(limit.resetSeconds) } },
-    );
+  try {
+    const limit = await createRateLimiter().check(ip);
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: "You've reached the scan limit for now. Please try again a little later." },
+        { status: 429, headers: { "Retry-After": String(limit.resetSeconds) } },
+      );
+    }
+  } catch (err) {
+    console.error("rate limiter failed (allowing request)", err);
   }
 
   // The sign-up gate: capture the lead before scanning. Best-effort — a storage
