@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { RescanButton } from "./rescan-button";
 import { StatementDownload } from "./statement-download";
 import { ShopifyPanel } from "./shopify-panel";
+import { DeleteStore } from "./delete-store";
 import { isAutoFixable, fixAction } from "@/lib/remediation/auto-fixable";
 import { fixGuidance } from "@/lib/remediation/fix-guidance";
 
@@ -180,22 +181,41 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
                     instead of pretending they&rsquo;re solved.
                   </p>
                   <ul className="issues review">
-                    {review.map((v, i) => (
-                      <li key={`r-${v.id}-${i}`}>
-                        <span className={`imp imp-${v.impact}`}>{v.impact}</span>
-                        <div>
-                          <div className="issue-help">{v.help}</div>
-                          <div className="issue-meta">
-                            {v.nodes} element{v.nodes === 1 ? "" : "s"}
-                            {v.wcagCriteria?.length ? ` · ${v.wcagCriteria.join(", ")}` : ""}
+                    {review.map((v, i) => {
+                      const g = fixGuidance(v.id);
+                      return (
+                        <li key={`r-${v.id}-${i}`}>
+                          <span className={`imp imp-${v.impact}`}>{v.impact}</span>
+                          <div>
+                            <div className="issue-help">{v.help}</div>
+                            <div className="issue-meta">
+                              {v.nodes} element{v.nodes === 1 ? "" : "s"}
+                              {v.wcagCriteria?.length ? ` · ${v.wcagCriteria.join(", ")}` : ""}
+                            </div>
+                            <details className="howfix">
+                              <summary>How to fix</summary>
+                              <p>{g.text}</p>
+                              {g.bad || g.good ? (
+                                <div className="ex">
+                                  {g.bad ? (
+                                    <div className="bad">
+                                      <div className="lbl">✗ Before</div>
+                                      <pre>{g.bad}</pre>
+                                    </div>
+                                  ) : null}
+                                  {g.good ? (
+                                    <div className="good">
+                                      <div className="lbl">✓ After</div>
+                                      <pre>{g.good}</pre>
+                                    </div>
+                                  ) : null}
+                                </div>
+                              ) : null}
+                            </details>
                           </div>
-                          <details className="howfix">
-                            <summary>How to fix</summary>
-                            <p>{fixGuidance(v.id)}</p>
-                          </details>
-                        </div>
-                      </li>
-                    ))}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </>
               ) : null}
@@ -259,6 +279,14 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
           </ul>
         </>
       ) : null}
+
+      <div className="section-label" style={{ color: "var(--red)" }}>
+        Danger zone
+      </div>
+      <p className="remnote">Permanently remove this store and everything we&rsquo;ve recorded for it.</p>
+      <div style={{ marginTop: "12px" }}>
+        <DeleteStore storeId={store.id} storeUrl={store.url} />
+      </div>
     </>
   );
 }

@@ -1,44 +1,110 @@
-// Our own plain-English "how to fix" guidance for the findings that need human
-// judgement — shown inline in the dashboard instead of linking merchants out to
-// a third-party reference site.
-const GUIDANCE: Record<string, string> = {
-  "color-contrast":
-    "Increase the contrast between the text and its background to at least 4.5:1 (3:1 for large text). Adjust the colours in your theme settings or CSS — usually darkening the text or lightening the background.",
-  "link-name":
-    "Give the link real, descriptive text. If it only holds an icon or image, add visible text or an aria-label so its destination is clear to a screen reader.",
-  "button-name":
-    "Give the button an accessible name — visible text, or an aria-label when it's icon-only (e.g. a cart or close button).",
-  label:
-    "Associate every form field with a <label> using matching for and id attributes, so screen readers announce what each field is for.",
-  "select-name": "Give each dropdown (<select>) an associated <label>.",
-  "form-field-multiple-labels": "Make sure each form field has exactly one label, not several competing ones.",
-  "heading-order":
-    "Use headings in order (h1 → h2 → h3) without skipping levels, so the page outline is logical for screen-reader navigation.",
-  "empty-heading": "Remove empty headings or give them text. A heading with no content disrupts navigation.",
-  "landmark-one-main": "Wrap your primary content in a single <main> landmark so users can jump straight to it.",
-  region:
-    "Place page content inside landmark regions (header, nav, main, footer) so assistive-tech users can move between sections.",
-  list: "Ensure <ul>/<ol> contain only <li> children — don't wrap other elements directly inside a list.",
-  listitem: "Make sure every <li> sits directly inside a <ul> or <ol>.",
-  "link-in-text-block":
-    "Distinguish links from surrounding text by more than colour alone — add an underline so colour-blind users can spot them.",
-  tabindex: "Avoid positive tabindex values. Let the natural DOM order control keyboard focus.",
-  "nested-interactive": "Don't nest interactive controls (e.g. a button inside a link). Keep one interactive element per control.",
-  "scrollable-region-focusable":
-    "Make scrollable areas keyboard-focusable (tabindex=\"0\") so keyboard-only users can scroll them.",
-  "target-size": "Make tap targets at least 24×24 CSS pixels so they're easy to activate on touch screens.",
-  "aria-allowed-attr": "Remove or correct ARIA attributes that aren't allowed on this element's role.",
-  "aria-required-attr": "Add the ARIA attributes this role requires to be understood by assistive tech.",
-  "aria-required-children": "Ensure this ARIA role contains the child roles it needs (e.g. a list containing list items).",
-  "aria-required-parent": "Ensure this element sits inside the parent role its ARIA role requires.",
-  "aria-roles": "Use a valid ARIA role that matches what the element actually does.",
-  "aria-valid-attr-value": "Correct the value of this ARIA attribute so it's valid.",
-  "aria-hidden-focus": "Don't place focusable elements inside an aria-hidden container — they become unreachable yet still focusable.",
+// Plain-English "how to fix" guidance for findings that need human judgement,
+// shown inline in the dashboard. Each entry can include a concrete before/after
+// example so non-technical merchants can see the actual change, not just read words.
+export interface FixGuidance {
+  text: string;
+  bad?: string;
+  good?: string;
+}
+
+const GUIDANCE: Record<string, FixGuidance> = {
+  "color-contrast": {
+    text: "Make the text darker (or its background lighter) so it's easy to read. Text needs a contrast ratio of at least 4.5:1 against its background. You can change this in your theme's colour settings.",
+    bad: `Light grey on white — too faint:
+color: #aaaaaa;   /* fails */`,
+    good: `Darker grey — easy to read:
+color: #595959;   /* passes 4.5:1 */`,
+  },
+  "link-name": {
+    text: "Every link needs text that says where it goes. If a link is just an icon or image, add a hidden label so a screen reader can announce it.",
+    bad: `<a href="/cart"><img src="cart.svg"></a>`,
+    good: `<a href="/cart" aria-label="View your cart">
+  <img src="cart.svg" alt="">
+</a>`,
+  },
+  "button-name": {
+    text: "Every button needs a name. If it's an icon-only button (like a close ✕ or a search 🔍), add a label so people using screen readers know what it does.",
+    bad: `<button>✕</button>`,
+    good: `<button aria-label="Close">✕</button>`,
+  },
+  label: {
+    text: "Every form box needs a visible label that's properly linked to it, so screen-reader users know what to type. Placeholder text alone is not enough.",
+    bad: `<input type="email" placeholder="Email">`,
+    good: `<label for="email">Email</label>
+<input id="email" type="email">`,
+  },
+  "select-name": {
+    text: "Give each dropdown a linked label, the same way you would a text box.",
+    bad: `<select>…</select>`,
+    good: `<label for="size">Size</label>
+<select id="size">…</select>`,
+  },
+  "heading-order": {
+    text: "Headings should go in order — a big heading (H1), then H2, then H3 — without skipping a level. Think of it like a document's table of contents.",
+    bad: `<h1>Shop</h1>
+<h4>New arrivals</h4>   <!-- skipped H2 and H3 -->`,
+    good: `<h1>Shop</h1>
+<h2>New arrivals</h2>`,
+  },
+  "empty-heading": {
+    text: "Remove headings that have no text, or give them wording. An empty heading confuses screen-reader navigation.",
+    bad: `<h2></h2>`,
+    good: `<h2>Featured products</h2>`,
+  },
+  "link-in-text-block": {
+    text: "Links sitting inside a paragraph must stand out by more than colour — add an underline — so colour-blind readers can spot them.",
+    bad: `a { color: green; text-decoration: none; }`,
+    good: `a { color: green; text-decoration: underline; }`,
+  },
+  list: {
+    text: "A list (<ul> or <ol>) should contain only list items (<li>) — don't put other elements directly between them.",
+    bad: `<ul>
+  <div>Item</div>
+</ul>`,
+    good: `<ul>
+  <li>Item</li>
+</ul>`,
+  },
+  listitem: {
+    text: "Every list item (<li>) must sit directly inside a <ul> or <ol>.",
+    bad: `<div><li>Item</li></div>`,
+    good: `<ul><li>Item</li></ul>`,
+  },
+  "target-size": {
+    text: "Make buttons and tap targets big enough to press on a phone — at least 24×24 pixels, ideally larger — with a little space around them.",
+    bad: `.icon-btn { width: 16px; height: 16px; }`,
+    good: `.icon-btn { width: 44px; height: 44px; }`,
+  },
+  "scrollable-region-focusable": {
+    text: "If an area scrolls, make it reachable by keyboard so people who don't use a mouse can scroll it too.",
+    bad: `<div class="scroll">…</div>`,
+    good: `<div class="scroll" tabindex="0">…</div>`,
+  },
+  "nested-interactive": {
+    text: "Don't put one clickable thing inside another (like a button inside a link). Keep one control per element.",
+    bad: `<a href="/p"><button>Buy</button></a>`,
+    good: `<a href="/p" class="button">Buy</a>`,
+  },
+  region: {
+    text: "Wrap your page content in landmark areas (header, nav, main, footer) so screen-reader users can jump between the main sections quickly.",
+    bad: `<div>…page content…</div>`,
+    good: `<main>…page content…</main>`,
+  },
+  "aria-allowed-attr": {
+    text: "Remove ARIA attributes that aren't valid for this element. ARIA used incorrectly is worse than none — if you're unsure, it's safest to leave it out.",
+  },
+  "aria-valid-attr-value": {
+    text: "An ARIA attribute here has an invalid value. Correct it so assistive technology can understand the element.",
+  },
+  "aria-required-attr": {
+    text: "This element's ARIA role needs extra attributes to make sense to a screen reader. Add the required ones, or remove the role.",
+  },
 };
 
-const FALLBACK =
-  "Fix this at the source in your theme or product content so it meets WCAG 2.2 AA. On the Fix & Watch plan we walk through the exact change during remediation.";
+const FALLBACK: FixGuidance = {
+  text: "Fix this in your theme or product content so it meets WCAG 2.2 AA. On the Fix & Watch plan we walk through the exact change with you during remediation.",
+};
 
-export function fixGuidance(ruleId: string): string {
+export function fixGuidance(ruleId: string): FixGuidance {
   return GUIDANCE[ruleId] ?? FALLBACK;
 }
