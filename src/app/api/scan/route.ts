@@ -5,6 +5,7 @@ import { generateEaaStatement } from "@/lib/statement/eaa-statement";
 import { parseSignup } from "@/lib/lead-input";
 import { createLeadStore } from "@/lib/leads/factory";
 import { createRateLimiter } from "@/lib/ratelimit/factory";
+import { sendReportEmail } from "@/lib/email/send-report";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -59,7 +60,17 @@ export async function POST(req: NextRequest) {
       score,
       preparedOn,
     );
-    return NextResponse.json({ result, score, statement });
+
+    // Email the report (dormant until RESEND_API_KEY is set; never throws).
+    const emailed = await sendReportEmail({
+      to: signup.email,
+      storeUrl: signup.url,
+      band: score.band,
+      totalViolations: score.totalViolations,
+      statement,
+    }).catch(() => false);
+
+    return NextResponse.json({ result, score, statement, emailed });
   } catch (err) {
     console.error("scan failed", err);
     const message = err instanceof Error ? err.message : "unknown";

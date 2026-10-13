@@ -26,6 +26,7 @@ export function ScanHero() {
   const [score, setScore] = useState<RiskScore | null>(null);
   const [scannedUrl, setScannedUrl] = useState("");
   const [statement, setStatement] = useState("");
+  const [emailed, setEmailed] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -34,6 +35,7 @@ export function ScanHero() {
     setError("");
     setScore(null);
     setStatement("");
+    setEmailed(false);
     setLoading(true);
     try {
       const res = await fetch("/api/scan", {
@@ -42,7 +44,7 @@ export function ScanHero() {
         body: JSON.stringify({ email, url }),
       });
       const data = (await res.json().catch(() => null)) as
-        | { score?: unknown; statement?: unknown; error?: unknown }
+        | { score?: unknown; statement?: unknown; emailed?: unknown; error?: unknown }
         | null;
       if (!res.ok) {
         setError(typeof data?.error === "string" ? data.error : "Scan failed.");
@@ -51,6 +53,7 @@ export function ScanHero() {
       if (data && isRiskScore(data.score)) {
         setScore(data.score);
         setScannedUrl(url);
+        setEmailed(data.emailed === true);
         if (typeof data.statement === "string") setStatement(data.statement);
       } else {
         setError("Unexpected response from the scanner. Please try again.");
@@ -103,8 +106,8 @@ export function ScanHero() {
         </div>
       </form>
       <p className="micro">
-        One page, a real WCAG 2.2 AA scan. We email your report to the address above. A clean
-        automated scan is not full compliance, and we will say so plainly.
+        One page, a real WCAG 2.2 AA scan. A clean automated scan is not full compliance, and we
+        will say so plainly.
       </p>
       {error ? (
         <p className="micro err" role="alert">
@@ -112,6 +115,7 @@ export function ScanHero() {
         </p>
       ) : null}
       {score ? <ReportView url={scannedUrl} score={score} /> : null}
+      {emailed ? <p className="micro">A copy has been emailed to {email}.</p> : null}
       {statement ? (
         <details className="stmt">
           <summary>Draft EAA accessibility statement</summary>
