@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { RescanButton } from "./rescan-button";
 import { StatementDownload } from "./statement-download";
+import { isAutoFixable, fixAction } from "@/lib/remediation/auto-fixable";
 
 export const dynamic = "force-dynamic";
 
@@ -56,6 +57,8 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
   const violations = [...((latest?.violations ?? []) as Violation[])].sort(
     (a, b) => (IMPACT_ORDER[a.impact] ?? 9) - (IMPACT_ORDER[b.impact] ?? 9),
   );
+  const autoFix = violations.filter((v) => isAutoFixable(v.id));
+  const review = violations.filter((v) => !isAutoFixable(v.id));
 
   return (
     <>
@@ -116,24 +119,65 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
 
           {violations.length > 0 ? (
             <>
-              <div className="section-label">What to fix</div>
-              <ul className="issues">
-                {violations.map((v, i) => (
-                  <li key={`${v.id}-${i}`}>
-                    <span className={`imp imp-${v.impact}`}>{v.impact}</span>
-                    <div>
-                      <div className="issue-help">{v.help}</div>
-                      <div className="issue-meta">
-                        {v.nodes} element{v.nodes === 1 ? "" : "s"}
-                        {v.wcagCriteria?.length ? ` · ${v.wcagCriteria.join(", ")}` : ""} ·{" "}
-                        <a href={v.helpUrl} target="_blank" rel="noopener noreferrer">
-                          how to fix
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <p className="remsum">
+                Of <b>{violations.length}</b> automated finding{violations.length === 1 ? "" : "s"},
+                we fix <b>{autoFix.length}</b> for you automatically and flag <b>{review.length}</b>{" "}
+                for human review.
+              </p>
+
+              {autoFix.length > 0 ? (
+                <>
+                  <div className="section-label" style={{ color: "#1f8a52" }}>
+                    We fix these for you
+                  </div>
+                  <p className="remnote">
+                    Handled automatically on the Fix &amp; Watch plan — written to your product data
+                    and theme at the source. Nothing is marked done until it&rsquo;s actually done.
+                  </p>
+                  <ul className="issues fix">
+                    {autoFix.map((v, i) => (
+                      <li key={`f-${v.id}-${i}`}>
+                        <span className="imp">auto-fix</span>
+                        <div>
+                          <div className="issue-help">{v.help}</div>
+                          <div className="fixaction">↳ {fixAction(v.id)}</div>
+                          <div className="issue-meta">
+                            {v.nodes} element{v.nodes === 1 ? "" : "s"}
+                            {v.wcagCriteria?.length ? ` · ${v.wcagCriteria.join(", ")}` : ""}
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
+
+              {review.length > 0 ? (
+                <>
+                  <div className="section-label">Flagged for human review — never faked</div>
+                  <p className="remnote">
+                    These need judgement a machine can&rsquo;t safely make. We surface them plainly
+                    instead of pretending they&rsquo;re solved.
+                  </p>
+                  <ul className="issues review">
+                    {review.map((v, i) => (
+                      <li key={`r-${v.id}-${i}`}>
+                        <span className={`imp imp-${v.impact}`}>{v.impact}</span>
+                        <div>
+                          <div className="issue-help">{v.help}</div>
+                          <div className="issue-meta">
+                            {v.nodes} element{v.nodes === 1 ? "" : "s"}
+                            {v.wcagCriteria?.length ? ` · ${v.wcagCriteria.join(", ")}` : ""} ·{" "}
+                            <a href={v.helpUrl} target="_blank" rel="noopener noreferrer">
+                              how to fix
+                            </a>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
             </>
           ) : (
             <p className="micro" style={{ marginTop: "14px" }}>
