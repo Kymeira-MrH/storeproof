@@ -21,6 +21,7 @@ function isRiskScore(x: unknown): x is RiskScore {
 }
 
 export function ScanHero() {
+  const [email, setEmail] = useState("");
   const [url, setUrl] = useState("");
   const [score, setScore] = useState<RiskScore | null>(null);
   const [scannedUrl, setScannedUrl] = useState("");
@@ -38,7 +39,7 @@ export function ScanHero() {
       const res = await fetch("/api/scan", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ email, url }),
       });
       const data = (await res.json().catch(() => null)) as
         | { score?: unknown; statement?: unknown; error?: unknown }
@@ -55,7 +56,7 @@ export function ScanHero() {
         setError("Unexpected response from the scanner. Please try again.");
       }
     } catch {
-      setError("Scan failed. Please check the URL and try again.");
+      setError("Scan failed. Please check the details and try again.");
     } finally {
       setLoading(false);
     }
@@ -74,24 +75,36 @@ export function ScanHero() {
   return (
     <div className="intake">
       <div className="stamp">Received</div>
-      <span className="cap">Exhibit A — scan your store, free</span>
-      <form className="field" onSubmit={onScan}>
+      <span className="cap">Exhibit A — sign up, then scan free</span>
+      <form onSubmit={onScan}>
         <input
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="https://your-store.com"
-          aria-label="Your store URL"
-          autoComplete="url"
-          inputMode="url"
+          className="gate-input"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@your-store.com"
+          aria-label="Your work email"
+          autoComplete="email"
           required
         />
-        <button type="submit" disabled={loading}>
-          {loading ? "Scanning…" : "Scan"}
-        </button>
+        <div className="field">
+          <input
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder="https://your-store.com"
+            aria-label="Your store URL"
+            autoComplete="url"
+            inputMode="url"
+            required
+          />
+          <button type="submit" disabled={loading}>
+            {loading ? "Scanning…" : "Scan"}
+          </button>
+        </div>
       </form>
       <p className="micro">
-        One page, a real WCAG 2.2 AA scan. A clean automated scan is not full compliance, and
-        we will say so plainly.
+        One page, a real WCAG 2.2 AA scan. We email your report to the address above. A clean
+        automated scan is not full compliance, and we will say so plainly.
       </p>
       {error ? (
         <p className="micro err" role="alert">

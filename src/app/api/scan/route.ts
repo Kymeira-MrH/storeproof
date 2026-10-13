@@ -2,24 +2,42 @@ import { NextRequest, NextResponse } from "next/server";
 import { createScanner } from "@/lib/scanner/factory";
 import { runScan } from "@/lib/scan-service";
 import { generateEaaStatement } from "@/lib/statement/eaa-statement";
+import { parseSignup } from "@/lib/lead-input";
+import { createLeadStore } from "@/lib/leads/factory";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
-  const body = (await req.json().catch(() => null)) as { url?: unknown } | null;
-  const url = body?.url;
-  if (typeof url !== "string") {
-    return NextResponse.json({ error: "A store URL is required." }, { status: 400 });
+  const body = (await req.json().catch(() => null)) as unknown;
+  const signup = parseSignup(body);
+  if (!signup) {
+    return NextResponse.json(
+      { error: "A valid email and store URL are required to run a scan." },
+      { status: 400 },
+    );
   }
+
+  // The sign-up gate: capture the lead before scanning. Best-effort — a storage
+  // hiccup must not cost the user their scan, but we log it so it is never silent.
   try {
-    const { result, score } = await runScan(createScanner(), url);
+    await createLeadStore().save({
+      email: signup.email,
+      storeUrl: signup.url,
+      createdAt: new Date().toISOString(),
+    });
+  } catch (err) {
+    console.error("lead save failed", err);
+  }
+
+  try {
+    const { result, score } = await runScan(createScanner(), signup.url);
     const preparedOn = new Date().toISOString().slice(0, 10);
     const statement = generateEaaStatement(
       {
         legalName: "[Your registered business name]",
-        contactEmail: "[your contact email]",
-        storeUrl: url,
+        contactEmail: signup.email,
+        storeUrl: signup.url,
       },
       result,
       score,
