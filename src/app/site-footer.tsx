@@ -41,19 +41,19 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <div className="footer-h">Contact</div>
+          <div className="footer-h">Company</div>
           <ul className="footer-links">
             <li>
               <a href="mailto:info@vpnetworks.co.uk">info@vpnetworks.co.uk</a>
             </li>
             <li>
-              <a href="/faq">Common questions</a>
+              <a href="/accessibility">Accessibility statement</a>
             </li>
             <li>
-              <a href="/#">Accessibility statement</a>
+              <a href="/privacy">Privacy</a>
             </li>
             <li>
-              <a href="/#">Privacy</a>
+              <a href="/terms">Terms</a>
             </li>
           </ul>
         </div>

@@ -1,0 +1,21 @@
+# StoreProof
+
+> Honest, automated web accessibility compliance for EU-selling Shopify stores. StoreProof scans a store for WCAG 2.2 Level AA issues, automatically fixes the subset that can be safely fixed at the source (image alt text, theme attributes), flags the rest for human review, and produces the European Accessibility Act (EAA) accessibility statement and evidence pack a merchant's lawyer needs. StoreProof is NOT an accessibility overlay widget.
+
+## Key pages
+- [Home](https://storeproof.co.uk/): free store accessibility scan and overview
+- [How it works](https://storeproof.co.uk/how-it-works): scan, fix at the source, document, monitor
+- [The overlay trap](https://storeproof.co.uk/overlays): why accessibility overlay widgets fail in court and still get merchants sued
+- [The proof](https://storeproof.co.uk/proof): the EAA accessibility statement and evidence pack a customer receives
+- [Pricing](https://storeproof.co.uk/pricing): free scan; £49/month fix & watch; £29/month monitoring
+- [FAQ](https://storeproof.co.uk/faq): Shopify compliance, overlays, UK and EU scope
+- [Accessibility statement](https://storeproof.co.uk/accessibility): StoreProof's own conformance
+
+## Position
+- The European Accessibility Act (EAA) has been enforced since 28 June 2025; fines reach €500,000.
+- Shopify does not make a merchant's store compliant; the merchant is legally responsible. Shopify themes cover only about a fifth of WCAG criteria.
+- Accessibility overlays are discredited: the FTC fined a leading overlay vendor $1,000,000, and more than 800 overlay users were sued anyway. StoreProof fixes the source code instead of layering a widget on top.
+- An automated scan reliably detects roughly 30–40% of WCAG issues. StoreProof fixes those automatically and flags the remainder for human review. It never claims a full compliance guarantee it cannot deliver.
+
+## Contact
+info@vpnetworks.co.uk — StoreProof is a VantagePoint Networks product.

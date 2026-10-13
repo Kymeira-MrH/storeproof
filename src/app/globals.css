@@ -255,5 +255,17 @@ html, body { margin: 0; padding: 0; }
   .ap .block .head,.ap .navcards,.ap .steps,.ap .cols,.ap .deliver,.ap .prices{ animation:sp-rise .6s cubic-bezier(.16,1,.3,1) both; }
 }
 
+/* legal / content prose pages */
+.ap .legal{ max-width:760px; }
+.ap .legal .updated{ font-family:var(--mono); font-size:12px; color:var(--faint); text-transform:uppercase; letter-spacing:.1em; margin:-20px 0 0; }
+.ap .legal h2{ font-size:22px; font-weight:700; margin:36px 0 10px; letter-spacing:-.015em; }
+.ap .legal h3{ font-size:17px; font-weight:700; margin:22px 0 6px; }
+.ap .legal p, .ap .legal li{ font-size:15.5px; color:var(--ink-2); line-height:1.72; }
+.ap .legal p{ margin:10px 0; }
+.ap .legal ul{ padding-left:20px; margin:10px 0; }
+.ap .legal li{ margin:6px 0; }
+.ap .legal a{ color:var(--green-d); }
+.ap .legal .lead{ font-size:17.5px; color:var(--ink); }
+
 .ap :focus-visible{ outline:3px solid var(--green); outline-offset:2px; }
 @media(prefers-reduced-motion:reduce){ .ap *{ animation:none!important; transition:none!important; } }
