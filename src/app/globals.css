@@ -137,5 +137,11 @@ html, body { margin: 0; padding: 0; }
 .ap footer a{ color:var(--ink); text-decoration:none; }
 .ap footer a:hover{ color:var(--red); }
 
+.ap .intake details.stmt{ margin-top:14px; }
+.ap .intake details.stmt summary{ font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--red); cursor:pointer; }
+.ap .intake details.stmt pre{ white-space:pre-wrap; font-family:var(--mono); font-size:11px; color:var(--ink-2); background:#f3eee2; border:1px solid var(--rule); padding:12px; margin-top:10px; max-height:240px; overflow:auto; }
+.ap .intake .dl{ margin-top:10px; border:2px solid var(--rule); background:transparent; font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; padding:8px 12px; cursor:pointer; }
+.ap .intake .dl:hover{ background:var(--ink); color:var(--paper); }
+
 .ap :focus-visible{ outline:3px solid var(--red); outline-offset:2px; }
 @media(prefers-reduced-motion:reduce){ .ap *{ animation:none!important; transition:none!important; } }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { scannerFromEnv } from "@/lib/scanner/factory";
+import { createScanner } from "@/lib/scanner/factory";
 import { runScan } from "@/lib/scan-service";
+import { generateEaaStatement } from "@/lib/statement/eaa-statement";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -12,11 +13,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "A store URL is required." }, { status: 400 });
   }
   try {
-    const out = await runScan(scannerFromEnv(), url);
-    return NextResponse.json(out);
+    const { result, score } = await runScan(createScanner(), url);
+    const preparedOn = new Date().toISOString().slice(0, 10);
+    const statement = generateEaaStatement(
+      {
+        legalName: "[Your registered business name]",
+        contactEmail: "[your contact email]",
+        storeUrl: url,
+      },
+      result,
+      score,
+      preparedOn,
+    );
+    return NextResponse.json({ result, score, statement });
   } catch (err) {
+    console.error("scan failed", err);
     const message = err instanceof Error ? err.message : "unknown";
-    if (message === "invalid-url" || message === "blocked-host") {
+    if (message === "invalid-url" || message === "blocked-host" || message === "blocked-port") {
       return NextResponse.json(
         { error: "That URL is not a scannable public store address." },
         { status: 400 },

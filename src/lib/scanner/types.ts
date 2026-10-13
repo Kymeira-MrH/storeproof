@@ -18,5 +18,7 @@ export interface ScanResult {
 }
 
 export interface Scanner {
-  scan(url: string): Promise<ScanResult>;
+  // pinnedIp (when provided) is the pre-validated public IP of url's host, so the
+  // implementation can pin DNS at connection time and resist rebinding.
+  scan(url: string, pinnedIp?: string): Promise<ScanResult>;
 }

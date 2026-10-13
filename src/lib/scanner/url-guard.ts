@@ -1,5 +1,6 @@
 import { lookup } from "node:dns/promises";
 import net from "node:net";
+import ipaddr from "ipaddr.js";
 
 const BLOCKED_HOSTNAMES = new Set([
   "localhost",
@@ -16,24 +17,34 @@ export function isValidHttpUrl(value: string): boolean {
   }
 }
 
+// Anything that is not a normal public unicast address is treated as unsafe.
+// ipaddr.js classifies loopback, private, link-local, CGNAT, multicast, reserved,
+// and IPv4-mapped IPv6 (e.g. ::ffff:169.254.169.254) correctly — do not hand-roll this.
 export function isPrivateIp(ip: string): boolean {
-  if (net.isIPv4(ip)) {
-    const [a, b] = ip.split(".").map(Number);
-    if (a === 0 || a === 10 || a === 127) return true;
-    if (a === 169 && b === 254) return true;
-    if (a === 172 && b >= 16 && b <= 31) return true;
-    if (a === 192 && b === 168) return true;
-    return false;
+  let addr: ipaddr.IPv4 | ipaddr.IPv6;
+  try {
+    addr = ipaddr.parse(ip);
+  } catch {
+    return true; // unparseable → fail closed
   }
-  const low = ip.toLowerCase();
-  return low === "::1" || low.startsWith("fc") || low.startsWith("fd") || low.startsWith("fe80");
+  if (addr.kind() === "ipv6") {
+    const v6 = addr as ipaddr.IPv6;
+    if (v6.isIPv4MappedAddress()) addr = v6.toIPv4Address();
+  }
+  return addr.range() !== "unicast";
 }
 
-export async function assertPublicUrl(value: string): Promise<void> {
+// Validates the URL is a public http(s) target on a standard port and returns the
+// resolved public IP so the caller can pin it at the browser layer (anti-rebinding).
+export async function assertPublicUrl(value: string): Promise<string> {
   if (!isValidHttpUrl(value)) throw new Error("invalid-url");
-  const host = new URL(value).hostname.toLowerCase();
+  const u = new URL(value);
+  const host = u.hostname.toLowerCase();
+  const port = u.port ? Number(u.port) : u.protocol === "https:" ? 443 : 80;
+  if (port !== 80 && port !== 443) throw new Error("blocked-port");
   if (BLOCKED_HOSTNAMES.has(host)) throw new Error("blocked-host");
   if (net.isIP(host) && isPrivateIp(host)) throw new Error("blocked-host");
   const { address } = await lookup(host);
   if (isPrivateIp(address)) throw new Error("blocked-host");
+  return address;
 }

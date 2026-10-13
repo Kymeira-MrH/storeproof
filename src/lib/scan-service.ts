@@ -6,7 +6,7 @@ export async function runScan(
   scanner: Scanner,
   url: string,
 ): Promise<{ result: ScanResult; score: RiskScore }> {
-  await assertPublicUrl(url);
-  const result = await scanner.scan(url);
+  const pinnedIp = await assertPublicUrl(url);
+  const result = await scanner.scan(url, pinnedIp);
   return { result, score: scoreScan(result) };
 }

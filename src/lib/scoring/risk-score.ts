@@ -24,8 +24,12 @@ export function scoreScan(result: ScanResult): RiskScore {
   let criticalCount = 0;
   let seriousCount = 0;
   for (const violation of result.violations) {
-    weighted += IMPACT_WEIGHT[violation.impact] * Math.max(1, violation.nodes);
-    affectedElements += violation.nodes;
+    // Fail safe on malformed input: unknown impact counts as moderate, bad node
+    // counts clamp to 1. A compliance tool must never silently under-report.
+    const weight = IMPACT_WEIGHT[violation.impact] ?? IMPACT_WEIGHT.moderate;
+    const nodes = Number.isFinite(violation.nodes) && violation.nodes > 0 ? violation.nodes : 1;
+    weighted += weight * nodes;
+    affectedElements += nodes;
     if (violation.impact === "critical") criticalCount += 1;
     if (violation.impact === "serious") seriousCount += 1;
   }
