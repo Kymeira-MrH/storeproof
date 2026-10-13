@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { createClient } from "@/lib/supabase/browser";
+import { SiteFooter } from "../site-footer";
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
@@ -39,7 +40,24 @@ export default function LoginPage() {
   }
 
   return (
-    <main>
+    <>
+      <header className="dash-top">
+        <div className="dash-top-inner">
+          <a href="/" className="dash-brand">
+            STOREPROOF
+          </a>
+          <nav className="dash-nav">
+            <a href="/#how">How it works</a>
+            <a href="/#pricing">Pricing</a>
+          </nav>
+          <div className="dash-account">
+            <a className="dash-signout" href="/#scan">
+              Scan my store
+            </a>
+          </div>
+        </div>
+      </header>
+      <main>
       <section className="block">
         <div className="w" style={{ maxWidth: "520px" }}>
           <div className="head">
@@ -119,6 +137,8 @@ export default function LoginPage() {
           </p>
         </div>
       </section>
-    </main>
+      </main>
+      <SiteFooter />
+    </>
   );
 }

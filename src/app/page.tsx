@@ -1,4 +1,5 @@
 import { ScanHero } from "./scan-hero";
+import { SiteFooter } from "./site-footer";
 
 export default function Page() {
   return (
@@ -230,16 +231,7 @@ Not an overlay. Fixed at source.`}</div>
         </div>
       </section>
 
-      <footer>
-        <div className="w">
-          <span>© 2026 StoreProof · EU · EAA Ready</span>
-          <span>
-            <a href="/login">Sign in</a> &nbsp;·&nbsp; <a href="#">Accessibility statement</a> &nbsp;·&nbsp;{" "}
-            <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#scan">Scan my store</a>
-          </span>
-          <span>We pass our own WCAG 2.2 AA test.</span>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

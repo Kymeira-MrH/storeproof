@@ -1,4 +1,4 @@
-import { redirect, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { RescanButton } from "./rescan-button";
 import { StatementDownload } from "./statement-download";
@@ -11,7 +11,18 @@ const BAND_LABEL: Record<string, string> = {
   high: "High",
   severe: "Severe",
 };
+const BAND_CLASS: Record<string, string> = { low: "low", elevated: "ele", high: "hi", severe: "sev" };
+const ORDER = ["low", "elevated", "high", "severe"] as const;
+const IMPACT_ORDER: Record<string, number> = { critical: 0, serious: 1, moderate: 2, minor: 3 };
 
+interface Violation {
+  id: string;
+  impact: string;
+  wcagCriteria: string[];
+  nodes: number;
+  help: string;
+  helpUrl: string;
+}
 interface ScanRow {
   id: string;
   band: string;
@@ -21,81 +32,130 @@ interface ScanRow {
   serious_count: number;
   affected_elements: number;
   statement: string | null;
+  violations: Violation[] | null;
   scanned_at: string;
 }
 
 export default async function StoreDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
 
   const { data: store } = await supabase.from("stores").select("id, url").eq("id", id).single();
   if (!store) notFound();
 
   const { data: scansData } = await supabase
     .from("scans")
-    .select("id, band, score, total_violations, critical_count, serious_count, affected_elements, statement, scanned_at")
+    .select(
+      "id, band, score, total_violations, critical_count, serious_count, affected_elements, statement, violations, scanned_at",
+    )
     .eq("store_id", id)
     .order("scanned_at", { ascending: false })
     .limit(24);
   const scans = (scansData ?? []) as ScanRow[];
   const latest = scans[0];
+  const violations = [...((latest?.violations ?? []) as Violation[])].sort(
+    (a, b) => (IMPACT_ORDER[a.impact] ?? 9) - (IMPACT_ORDER[b.impact] ?? 9),
+  );
 
   return (
-    <main>
-      <div className="mast">
-        <div className="w">
-          <span>STOREPROOF</span>
-          <span>Store</span>
-          <span>
-            <a href="/dashboard" style={{ color: "inherit" }}>
-              &larr; Dashboard
-            </a>
+    <>
+      <p className="crumb">
+        <a href="/dashboard">&larr; Stores</a>
+      </p>
+      <h1 className="dash-h1" style={{ wordBreak: "break-all" }}>
+        {store.url}
+      </h1>
+
+      {latest ? (
+        <div style={{ marginTop: "14px" }}>
+          <span className={`band-pill ${BAND_CLASS[latest.band] ?? ""}`}>
+            {BAND_LABEL[latest.band] ?? latest.band} exposure
           </span>
         </div>
+      ) : null}
+
+      <div style={{ display: "flex", gap: "12px", marginTop: "18px", flexWrap: "wrap", alignItems: "center" }}>
+        <RescanButton storeId={store.id} />
+        {latest ? <StatementDownload statement={latest.statement ?? ""} /> : null}
       </div>
-      <section className="block">
-        <div className="w">
-          <div className="head">
-            <span className="eyebrow">Store</span>
-            <h2 style={{ wordBreak: "break-all" }}>{store.url}</h2>
+
+      {latest ? (
+        <>
+          <div className="bandbar big" role="img" aria-label={`Exposure: ${latest.band}`} style={{ marginTop: "22px" }}>
+            {ORDER.map((b) => (
+              <span key={b} className={b === latest.band ? `on ${BAND_CLASS[b]}` : ""}>
+                {BAND_LABEL[b]}
+              </span>
+            ))}
           </div>
 
-          <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
-            <RescanButton storeId={store.id} />
-            {latest ? <StatementDownload statement={latest.statement ?? ""} /> : null}
+          <div className="statrow">
+            <div className="stat">
+              <div className="n">{latest.total_violations}</div>
+              <div className="l">Automated issues</div>
+            </div>
+            <div className="stat">
+              <div className="n">{latest.critical_count}</div>
+              <div className="l">Critical</div>
+            </div>
+            <div className="stat">
+              <div className="n">{latest.serious_count}</div>
+              <div className="l">Serious</div>
+            </div>
+            <div className="stat">
+              <div className="n">{latest.affected_elements}</div>
+              <div className="l">Elements</div>
+            </div>
           </div>
 
-          {latest ? (
+          <p className="micro" style={{ marginTop: "14px" }}>
+            An automated scan does not establish full WCAG conformance. Issues needing human
+            judgement are assessed during remediation, never faked. Last scan{" "}
+            {new Date(latest.scanned_at).toLocaleString()}.
+          </p>
+
+          {violations.length > 0 ? (
             <>
-              <p className="micro" style={{ marginTop: "16px" }}>
-                Latest: <strong>{BAND_LABEL[latest.band] ?? latest.band}</strong> ·{" "}
-                {latest.total_violations} issues · {latest.serious_count} serious ·{" "}
-                {latest.critical_count} critical · {new Date(latest.scanned_at).toLocaleString()}
-              </p>
-
-              <h3 className="eyebrow" style={{ marginTop: "28px" }}>
-                Scan history
-              </h3>
-              <ul className="checklist">
-                {scans.map((s) => (
-                  <li key={s.id}>
-                    <span className="mono">{new Date(s.scanned_at).toLocaleDateString()}</span> ·{" "}
-                    {BAND_LABEL[s.band] ?? s.band} · {s.total_violations} issues
+              <div className="section-label">What to fix</div>
+              <ul className="issues">
+                {violations.map((v, i) => (
+                  <li key={`${v.id}-${i}`}>
+                    <span className={`imp imp-${v.impact}`}>{v.impact}</span>
+                    <div>
+                      <div className="issue-help">{v.help}</div>
+                      <div className="issue-meta">
+                        {v.nodes} element{v.nodes === 1 ? "" : "s"}
+                        {v.wcagCriteria?.length ? ` · ${v.wcagCriteria.join(", ")}` : ""} ·{" "}
+                        <a href={v.helpUrl} target="_blank" rel="noopener noreferrer">
+                          how to fix
+                        </a>
+                      </div>
+                    </div>
                   </li>
                 ))}
               </ul>
             </>
           ) : (
-            <p className="micro" style={{ marginTop: "16px" }}>
-              No scans yet — hit Re-scan now.
+            <p className="micro" style={{ marginTop: "14px" }}>
+              No automated violations in the latest scan.
             </p>
           )}
-        </div>
-      </section>
-    </main>
+
+          <div className="section-label">Scan history</div>
+          <ul className="checklist">
+            {scans.map((s) => (
+              <li key={s.id}>
+                <span className="mono">{new Date(s.scanned_at).toLocaleDateString()}</span> ·{" "}
+                {BAND_LABEL[s.band] ?? s.band} · {s.total_violations} issues
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p className="dash-sub" style={{ marginTop: "16px" }}>
+          No scans yet — hit Re-scan now.
+        </p>
+      )}
+    </>
   );
 }
