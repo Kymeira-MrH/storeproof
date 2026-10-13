@@ -176,6 +176,10 @@ html, body { margin: 0; padding: 0; }
 .ap .issues.fix{ border-color:#1f8a52; }
 .ap .issues.fix .imp{ background:#1f8a52; color:#fff; border-color:#1f8a52; }
 .ap .fixaction{ color:#1f7a49; font-size:13px; margin-top:5px; }
+.ap .issues .howfix{ margin-top:9px; }
+.ap .issues .howfix summary{ font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--red); cursor:pointer; display:inline-block; }
+.ap .issues .howfix summary:hover{ text-decoration:underline; }
+.ap .issues .howfix p{ font-size:13.5px; color:var(--ink); margin:8px 0 0; line-height:1.55; max-width:72ch; }
 
 /* dashboard chrome */
 .ap .dash-top{ background:var(--ink); color:var(--paper); position:sticky; top:0; z-index:30; border-bottom:3px solid var(--red); }

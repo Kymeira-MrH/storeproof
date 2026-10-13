@@ -4,6 +4,7 @@ import { RescanButton } from "./rescan-button";
 import { StatementDownload } from "./statement-download";
 import { ShopifyPanel } from "./shopify-panel";
 import { isAutoFixable, fixAction } from "@/lib/remediation/auto-fixable";
+import { fixGuidance } from "@/lib/remediation/fix-guidance";
 
 export const dynamic = "force-dynamic";
 
@@ -186,11 +187,12 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
                           <div className="issue-help">{v.help}</div>
                           <div className="issue-meta">
                             {v.nodes} element{v.nodes === 1 ? "" : "s"}
-                            {v.wcagCriteria?.length ? ` · ${v.wcagCriteria.join(", ")}` : ""} ·{" "}
-                            <a href={v.helpUrl} target="_blank" rel="noopener noreferrer">
-                              how to fix
-                            </a>
+                            {v.wcagCriteria?.length ? ` · ${v.wcagCriteria.join(", ")}` : ""}
                           </div>
+                          <details className="howfix">
+                            <summary>How to fix</summary>
+                            <p>{fixGuidance(v.id)}</p>
+                          </details>
                         </div>
                       </li>
                     ))}
