@@ -17,6 +17,16 @@ describe("parseSignup (the scan gate)", () => {
       url: "https://a.test",
     });
   });
+  it("auto-prepends https:// to a bare domain", () => {
+    expect(parseSignup({ email: "a@b.co", url: "mystore.com" })).toEqual({
+      email: "a@b.co",
+      url: "https://mystore.com",
+    });
+    expect(parseSignup({ email: "a@b.co", url: "  www.mystore.co.uk/shop  " })).toEqual({
+      email: "a@b.co",
+      url: "https://www.mystore.co.uk/shop",
+    });
+  });
   it("rejects a missing or invalid email", () => {
     expect(parseSignup({ url: "https://a.test" })).toBeNull();
     expect(parseSignup({ email: "nope", url: "https://a.test" })).toBeNull();
