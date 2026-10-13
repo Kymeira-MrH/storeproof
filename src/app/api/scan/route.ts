@@ -4,6 +4,7 @@ import { runScan } from "@/lib/scan-service";
 import { generateEaaStatement } from "@/lib/statement/eaa-statement";
 import { parseSignup } from "@/lib/lead-input";
 import { createLeadStore } from "@/lib/leads/factory";
+import { createRateLimiter } from "@/lib/ratelimit/factory";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -15,6 +16,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { error: "A valid email and store URL are required to run a scan." },
       { status: 400 },
+    );
+  }
+
+  // Rate limit the expensive part (a scan launches a headless browser). Keyed by IP.
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const limit = await createRateLimiter().check(ip);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: "You've reached the scan limit for now. Please try again a little later." },
+      { status: 429, headers: { "Retry-After": String(limit.resetSeconds) } },
     );
   }
 

@@ -1,23 +1,41 @@
-import { chromium, type Browser, type LaunchOptions } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
+import type { Browser } from "playwright-core";
 import type { Scanner, ScanResult, Violation, Impact } from "./types";
 import { assertPublicUrl } from "./url-guard";
 
+const IMPACTS: readonly string[] = ["minor", "moderate", "serious", "critical"];
 function isImpact(value: string | null | undefined): value is Impact {
-  return value === "minor" || value === "moderate" || value === "serious" || value === "critical";
+  return IMPACTS.includes(value ?? "");
+}
+
+function isServerless(): boolean {
+  return Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+}
+
+// Serverless (Vercel): @sparticuz/chromium + playwright-core. Local: the full
+// playwright package, which ships its own browser.
+async function launchBrowser(url: string, pinnedIp?: string): Promise<Browser> {
+  const pin = pinnedIp ? [`--host-resolver-rules=MAP ${new URL(url).hostname} ${pinnedIp}`] : [];
+  if (isServerless()) {
+    const sparticuz = (await import("@sparticuz/chromium")).default;
+    const { chromium } = await import("playwright-core");
+    return chromium.launch({
+      args: [...sparticuz.args, ...pin],
+      executablePath: await sparticuz.executablePath(),
+      headless: true,
+    });
+  }
+  const { chromium } = await import("playwright");
+  const args = ["--no-sandbox", "--disable-dev-shm-usage", ...pin];
+  const executablePath = process.env.PLAYWRIGHT_EXECUTABLE_PATH;
+  return (executablePath
+    ? chromium.launch({ args, executablePath })
+    : chromium.launch({ args })) as unknown as Browser;
 }
 
 export class AxeScanner implements Scanner {
   async scan(url: string, pinnedIp?: string): Promise<ScanResult> {
-    const args = ["--no-sandbox", "--disable-dev-shm-usage"];
-    // Pin the entry host to its already-validated public IP (anti-DNS-rebinding).
-    if (pinnedIp) args.push(`--host-resolver-rules=MAP ${new URL(url).hostname} ${pinnedIp}`);
-
-    const launch: LaunchOptions = { args };
-    // On Vercel serverless, @sparticuz/chromium sets PLAYWRIGHT_EXECUTABLE_PATH at deploy time.
-    if (process.env.PLAYWRIGHT_EXECUTABLE_PATH) launch.executablePath = process.env.PLAYWRIGHT_EXECUTABLE_PATH;
-
-    const browser: Browser = await chromium.launch(launch);
+    const browser = await launchBrowser(url, pinnedIp);
     try {
       // axe-core/playwright requires a page from an explicit context, not browser.newPage().
       const context = await browser.newContext();
@@ -39,7 +57,6 @@ export class AxeScanner implements Scanner {
       });
 
       await page.goto(url, { waitUntil: "load", timeout: 30_000 });
-      // Let JS-heavy Shopify themes settle so axe sees the hydrated DOM (best-effort).
       await page.waitForLoadState("networkidle", { timeout: 5_000 }).catch(() => {});
 
       const axe = await new AxeBuilder({ page })

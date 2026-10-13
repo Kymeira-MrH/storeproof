@@ -11,9 +11,13 @@
   },
   "dependencies": {
     "@axe-core/playwright": "latest",
+    "@sparticuz/chromium": "^153.0.0",
     "@supabase/supabase-js": "latest",
+    "@upstash/ratelimit": "^2.2.0",
+    "@upstash/redis": "^1.39.0",
     "ipaddr.js": "^2.5.0",
     "next": "latest",
+    "playwright-core": "^1.64.0",
     "react": "latest",
     "react-dom": "latest"
   },
