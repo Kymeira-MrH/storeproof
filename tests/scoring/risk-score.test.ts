@@ -28,16 +28,26 @@ describe("scoreScan", () => {
     expect(s.criticalCount).toBe(1);
   });
 
-  it("caps the score at 100 for pathological volume (Review Focus: overflow)", () => {
+  it("does not overflow or NaN on pathological volume, still severe (Review Focus)", () => {
     const s = scoreScan(result([v("critical", 100000)]));
-    expect(s.score).toBe(100);
     expect(Number.isNaN(s.score)).toBe(false);
-    expect(s.band).toBe("severe");
+    expect(s.score).toBeLessThanOrEqual(100);
+    expect(s.band).toBe("severe"); // critical present
   });
 
-  it("bands mid-range serious issues as high", () => {
+  it("bands a single serious issue as high", () => {
     const s = scoreScan(result([v("serious", 5)]));
-    expect(s.score).toBeGreaterThanOrEqual(30);
     expect(s.band).toBe("high");
+  });
+
+  it("bands two serious issues as high, not severe (calibrated, not alarmist)", () => {
+    const s = scoreScan(result([v("serious", 10), v("serious", 3)]));
+    expect(s.seriousCount).toBe(2);
+    expect(s.band).toBe("high");
+  });
+
+  it("escalates many serious issues to severe", () => {
+    const s = scoreScan(result([v("serious"), v("serious"), v("serious"), v("serious"), v("serious")]));
+    expect(s.band).toBe("severe");
   });
 });

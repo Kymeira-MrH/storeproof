@@ -1,4 +1,4 @@
-import { lookup } from "node:dns/promises";
+import { resolve4, resolve6 } from "node:dns/promises";
 import net from "node:net";
 import ipaddr from "ipaddr.js";
 
@@ -34,6 +34,24 @@ export function isPrivateIp(ip: string): boolean {
   return addr.range() !== "unicast";
 }
 
+// Resolve via c-ares (resolve4/6), NOT dns.lookup. dns.lookup uses libuv's thread
+// pool, which flakes with EBUSY on serverless and appends resolv.conf search domains
+// (mangling hostnames like "example.co.uk" -> "example.co.uk.co.uk"). c-ares queries
+// DNS directly and does neither.
+async function resolveHost(host: string): Promise<string[]> {
+  try {
+    const v4 = await resolve4(host);
+    if (v4.length > 0) return v4;
+  } catch {
+    /* no A record */
+  }
+  try {
+    return await resolve6(host);
+  } catch {
+    return [];
+  }
+}
+
 // Validates the URL is a public http(s) target on a standard port and returns the
 // resolved public IP so the caller can pin it at the browser layer (anti-rebinding).
 export async function assertPublicUrl(value: string): Promise<string> {
@@ -43,8 +61,14 @@ export async function assertPublicUrl(value: string): Promise<string> {
   const port = u.port ? Number(u.port) : u.protocol === "https:" ? 443 : 80;
   if (port !== 80 && port !== 443) throw new Error("blocked-port");
   if (BLOCKED_HOSTNAMES.has(host)) throw new Error("blocked-host");
-  if (net.isIP(host) && isPrivateIp(host)) throw new Error("blocked-host");
-  const { address } = await lookup(host);
-  if (isPrivateIp(address)) throw new Error("blocked-host");
-  return address;
+  if (net.isIP(host)) {
+    if (isPrivateIp(host)) throw new Error("blocked-host");
+    return host;
+  }
+  const addresses = await resolveHost(host);
+  if (addresses.length === 0) throw new Error("dns-failed");
+  for (const addr of addresses) {
+    if (isPrivateIp(addr)) throw new Error("blocked-host");
+  }
+  return addresses[0];
 }
