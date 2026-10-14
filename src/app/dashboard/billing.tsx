@@ -21,11 +21,15 @@ export function Billing({ status }: { status: string }) {
     );
   }
 
-  async function go(path: string) {
+  async function go(path: string, payload?: object) {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(path, { method: "POST" });
+      const res = await fetch(path, {
+        method: "POST",
+        headers: payload ? { "content-type": "application/json" } : undefined,
+        body: payload ? JSON.stringify(payload) : undefined,
+      });
       const data = (await res.json().catch(() => null)) as { url?: string; error?: string } | null;
       if (data?.url) {
         window.location.href = data.url;
@@ -49,9 +53,25 @@ export function Billing({ status }: { status: string }) {
           </button>
         </>
       ) : (
-        <button className="btn" type="button" onClick={() => go("/api/stripe/checkout")} disabled={loading}>
-          {loading ? "Opening…" : "Subscribe — £29/mo monitoring"}
-        </button>
+        <>
+          <button
+            className="btn"
+            type="button"
+            onClick={() => go("/api/stripe/checkout", { tier: "fix" })}
+            disabled={loading}
+          >
+            {loading ? "Opening…" : "Fix & Watch — £49/mo"}
+          </button>
+          <button
+            className="btn"
+            type="button"
+            onClick={() => go("/api/stripe/checkout", { tier: "monitoring" })}
+            disabled={loading}
+            style={{ background: "var(--ink)" }}
+          >
+            Monitoring — £29/mo
+          </button>
+        </>
       )}
       {error ? (
         <span className="micro err" role="alert">

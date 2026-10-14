@@ -12,7 +12,9 @@ export async function POST(req: NextRequest) {
   } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Not signed in." }, { status: 401 });
 
-  const price = process.env.STRIPE_PRICE_MONITORING;
+  const body = (await req.json().catch(() => null)) as { tier?: string } | null;
+  const price =
+    body?.tier === "fix" ? process.env.STRIPE_PRICE_FIX : process.env.STRIPE_PRICE_MONITORING;
   if (!isStripeConfigured() || !price) {
     return NextResponse.json({ error: "Billing is not configured yet." }, { status: 503 });
   }

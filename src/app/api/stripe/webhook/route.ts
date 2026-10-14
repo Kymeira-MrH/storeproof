@@ -37,11 +37,13 @@ export async function POST(req: NextRequest) {
     }
     if (!accountId) return;
     const periodEnd = (sub as unknown as { current_period_end?: number }).current_period_end;
+    const priceId = sub.items?.data?.[0]?.price?.id;
+    const tier = priceId && priceId === process.env.STRIPE_PRICE_FIX ? "fix" : "monitoring";
     await admin.from("subscriptions").upsert({
       account_id: accountId,
       stripe_customer_id: customerId,
       stripe_subscription_id: sub.id,
-      tier: "monitoring",
+      tier,
       status: sub.status,
       current_period_end: periodEnd ? new Date(periodEnd * 1000).toISOString() : null,
       updated_at: new Date().toISOString(),
