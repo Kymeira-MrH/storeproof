@@ -85,11 +85,30 @@ export function ShopifyPanel({
       <div className="add-panel" style={{ marginTop: "12px" }}>
         <form onSubmit={connect}>
           <p className="micro" style={{ marginTop: 0 }}>
-            Connect your store to write fixes back at the source. In Shopify admin go to{" "}
-            <b>Settings → Apps and sales channels → Develop apps</b>, create an app with{" "}
-            <b>read_products</b> and <b>write_products</b>, install it, then paste its domain and
-            Admin API access token below. The token is stored only to apply your fixes.
+            Connect your store so we can write fixes back at the source. One-time setup (about two
+            minutes):
           </p>
+          <ol className="connect-steps">
+            <li>
+              In Shopify admin: <b>Settings → Apps and sales channels → Develop apps</b> (allow
+              custom app development if asked).
+            </li>
+            <li>
+              Click <b>Create an app</b> and name it &ldquo;StoreProof&rdquo;.
+            </li>
+            <li>
+              Under <b>Configuration → Admin API scopes</b>, tick <b>read_products</b> and{" "}
+              <b>write_products</b>, then <b>Save</b>.
+            </li>
+            <li>
+              Open <b>API credentials → Install app</b>, then reveal and copy the{" "}
+              <b>Admin API access token</b> (<code>shpat_…</code>).
+            </li>
+            <li>
+              Paste your <code>.myshopify.com</code> domain and that token below. We store the token
+              only to apply your fixes — nothing else.
+            </li>
+          </ol>
           <input
             className="gate-input"
             placeholder="your-store.myshopify.com"

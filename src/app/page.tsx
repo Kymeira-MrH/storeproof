@@ -31,7 +31,14 @@ export default function Page() {
                 <div><div className="n">Live</div><div className="l">EAA enforced now</div></div>
               </div>
             </div>
-            <ScanHero />
+            <div className="hero-side">
+              <ScanHero />
+              <ul className="hero-points">
+                <li>A real WCAG 2.2 AA scan of your store — in under a minute.</li>
+                <li>Plain-English issue list and your exposure band.</li>
+                <li>A draft EAA accessibility statement on the spot.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </header>
@@ -42,6 +49,39 @@ export default function Page() {
           <b>&euro;500,000</b>. More than <b>11 new accessibility lawsuits</b> are filed every day.
         </div>
       </div>
+
+      <section className="block">
+        <div className="w">
+          <div className="head">
+            <span className="eyebrow">Overlay vs source-fix</span>
+            <h2>Two ways to answer a demand letter. Only one holds up.</h2>
+            <p>
+              The cheap widget is the most-sued fix there is. We do the opposite — fix the code and
+              keep the receipts.
+            </p>
+          </div>
+          <div className="compare">
+            <div className="compare-col bad">
+              <div className="compare-h">An accessibility overlay</div>
+              <ul>
+                <li>Runs after the page loads — screen readers never see it.</li>
+                <li>Can&rsquo;t touch form labels, keyboard traps or heading structure.</li>
+                <li>FTC-fined $1M; 800+ overlay users were sued anyway.</li>
+                <li>In court, it reads as an admission you knew and took a shortcut.</li>
+              </ul>
+            </div>
+            <div className="compare-col good">
+              <div className="compare-h">StoreProof</div>
+              <ul>
+                <li>Fixes the source — real alt text written to your products.</li>
+                <li>Flags what needs human judgement plainly, never faked.</li>
+                <li>Gives you an EN 301 549 statement and a dated evidence pack.</li>
+                <li>Keeps it current with monthly re-scans and regression alerts.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="block alt">
         <div className="w">

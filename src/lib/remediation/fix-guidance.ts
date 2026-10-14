@@ -8,6 +8,39 @@ export interface FixGuidance {
 }
 
 const GUIDANCE: Record<string, FixGuidance> = {
+  "image-alt": {
+    text: "We generate accurate alt text from each image with Claude vision and write it to your product.",
+    bad: `<img src="snowboard.jpg">`,
+    good: `<img src="snowboard.jpg"
+  alt="Navy snowboard with blue mountain graphic">`,
+  },
+  "html-has-lang": {
+    text: "We set the page language so screen readers use the right pronunciation.",
+    bad: `<html>`,
+    good: `<html lang="en">`,
+  },
+  "document-title": {
+    text: "We set a descriptive page title.",
+    bad: `<title></title>`,
+    good: `<title>Winter Jackets — Your Store</title>`,
+  },
+  "meta-viewport": {
+    text: "We fix the viewport tag so visitors can pinch-to-zoom.",
+    bad: `<meta name="viewport"
+  content="width=device-width, maximum-scale=1">`,
+    good: `<meta name="viewport"
+  content="width=device-width, initial-scale=1">`,
+  },
+  "duplicate-id": {
+    text: "We make conflicting element IDs unique.",
+    bad: `<div id="main"> … <div id="main">`,
+    good: `<div id="main"> … <div id="main-2">`,
+  },
+  "frame-title": {
+    text: "We add a title to embedded frames.",
+    bad: `<iframe src="…">`,
+    good: `<iframe src="…" title="Size guide">`,
+  },
   "color-contrast": {
     text: "Make the text darker (or its background lighter) so it's easy to read. Text needs a contrast ratio of at least 4.5:1 against its background. You can change this in your theme's colour settings.",
     bad: `Light grey on white — too faint:

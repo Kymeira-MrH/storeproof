@@ -156,19 +156,41 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
                     and theme at the source. Nothing is marked done until it&rsquo;s actually done.
                   </p>
                   <ul className="issues fix">
-                    {autoFix.map((v, i) => (
-                      <li key={`f-${v.id}-${i}`}>
-                        <span className="imp">auto-fix</span>
-                        <div>
-                          <div className="issue-help">{v.help}</div>
-                          <div className="fixaction">↳ {fixAction(v.id)}</div>
-                          <div className="issue-meta">
-                            {v.nodes} element{v.nodes === 1 ? "" : "s"}
-                            {v.wcagCriteria?.length ? ` · ${v.wcagCriteria.join(", ")}` : ""}
+                    {autoFix.map((v, i) => {
+                      const g = fixGuidance(v.id);
+                      return (
+                        <li key={`f-${v.id}-${i}`}>
+                          <span className="imp">auto-fix</span>
+                          <div>
+                            <div className="issue-help">{v.help}</div>
+                            <div className="fixaction">↳ {fixAction(v.id)}</div>
+                            <div className="issue-meta">
+                              {v.nodes} element{v.nodes === 1 ? "" : "s"}
+                              {v.wcagCriteria?.length ? ` · ${v.wcagCriteria.join(", ")}` : ""}
+                            </div>
+                            {g.bad || g.good ? (
+                              <details className="howfix">
+                                <summary>See an example</summary>
+                                <div className="ex">
+                                  {g.bad ? (
+                                    <div className="bad">
+                                      <div className="lbl">✗ Before</div>
+                                      <pre>{g.bad}</pre>
+                                    </div>
+                                  ) : null}
+                                  {g.good ? (
+                                    <div className="good">
+                                      <div className="lbl">✓ After</div>
+                                      <pre>{g.good}</pre>
+                                    </div>
+                                  ) : null}
+                                </div>
+                              </details>
+                            ) : null}
                           </div>
-                        </div>
-                      </li>
-                    ))}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </>
               ) : null}
