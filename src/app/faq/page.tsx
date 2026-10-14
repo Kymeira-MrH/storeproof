@@ -46,6 +46,14 @@ export default function Page() {
           text: "Yes. The UK Equality Act already requires accessible services, and if you sell to anyone in the EU the European Accessibility Act applies regardless of where you are based.",
         },
       },
+      {
+        "@type": "Question",
+        name: "Do I definitely need this?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Maybe not, and we'll say so. The EAA exempts microenterprises providing services (under 10 staff and under €2M turnover), and enforcement is still early-stage. But the law is in force, US web-accessibility lawsuits rose to 3,117 in 2025, and overlays don't protect you. The free scan shows exactly where you stand before you spend anything.",
+        },
+      },
     ],
   };
 
@@ -92,6 +100,16 @@ export default function Page() {
                 Yes. The UK Equality Act already requires accessible services, and if you sell to
                 anyone in the EU the European Accessibility Act applies regardless of where you
                 are based.
+              </p>
+            </details>
+            <details>
+              <summary>Do I definitely need this? (the honest answer)</summary>
+              <p>
+                Maybe not — and we&rsquo;ll say so rather than scare you. The EAA exempts
+                microenterprises providing services (under 10 staff and under &euro;2M turnover),
+                and enforcement is still early-stage. But the law is in force, US web-accessibility
+                lawsuits rose to 3,117 in 2025, and an overlay won&rsquo;t protect you. Run the free
+                scan first — it shows exactly where you stand before you spend a penny.
               </p>
             </details>
           </div>

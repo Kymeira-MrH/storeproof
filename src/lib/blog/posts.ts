@@ -17,13 +17,13 @@ export const POSTS: Post[] = [
     slug: "european-accessibility-act-shopify",
     title: "The European Accessibility Act: what Shopify merchants actually need to do",
     description:
-      "The EAA has been enforced since June 2025, with fines up to €500,000. Here's what it means for a Shopify store that sells into the EU — in plain English.",
+      "The EAA has applied to online stores since June 2025, with member-state penalties reported up to around €250,000. Here's what it means for a Shopify store that sells into the EU — in plain English.",
     date: "2026-10-13",
     readMins: 5,
     blocks: [
       {
         type: "p",
-        text: "If you sell to customers in the EU, the European Accessibility Act (EAA) now applies to your online store — whether or not your business is based in Europe. It has been enforced since 28 June 2025, and penalties reach €500,000. This is a plain-English guide to what it means for a Shopify merchant.",
+        text: "If you sell to customers in the EU, the European Accessibility Act (EAA) now applies to your online store — whether or not your business is based in Europe. It has applied since 28 June 2025, and penalties are set per member state (reported maximums around €100,000–€250,000). This is a plain-English guide to what it means for a Shopify merchant.",
       },
       { type: "h2", text: "What the EAA requires" },
       {

@@ -26,9 +26,9 @@ export default function Page() {
               </p>
               <span className="chip">Not an overlay · we fix the code</span>
               <div className="ledger">
-                <div><div className="n">6,176</div><div className="l">EU/US suits, 2026</div></div>
-                <div><div className="n">&euro;500k</div><div className="l">Max EAA fine</div></div>
-                <div><div className="n">Live</div><div className="l">EAA enforced now</div></div>
+                <div><div className="n">3,117</div><div className="l">US web suits, 2025</div></div>
+                <div><div className="n">&euro;250k</div><div className="l">Max fine · France</div></div>
+                <div><div className="n">Jun 2025</div><div className="l">EAA in force</div></div>
               </div>
             </div>
             <div className="hero-side">
@@ -45,8 +45,9 @@ export default function Page() {
 
       <div className="strip">
         <div className="w">
-          The European Accessibility Act is <b>enforced since June 2025</b>. Fines reach{" "}
-          <b>&euro;500,000</b>. More than <b>11 new accessibility lawsuits</b> are filed every day.
+          The European Accessibility Act has applied to online stores <b>since June 2025</b>. US
+          web-accessibility lawsuits hit <b>3,117 in 2025</b> — up <b>27%</b>, roughly a dozen every
+          business day.
         </div>
       </div>
 
@@ -83,6 +84,31 @@ export default function Page() {
         </div>
       </section>
 
+      <section className="statband">
+        <div className="w">
+          <div className="cell">
+            <div className="big">$1M</div>
+            <div className="lab">FTC fine on an overlay vendor</div>
+            <div className="src">FTC, 2025</div>
+          </div>
+          <div className="cell">
+            <div className="big">~30–40%</div>
+            <div className="lab">of WCAG issues automation can fix</div>
+            <div className="src">Deque / AFB, 2025</div>
+          </div>
+          <div className="cell">
+            <div className="big">3,117</div>
+            <div className="lab">US web-accessibility lawsuits, 2025</div>
+            <div className="src">Seyfarth Shaw, 2025</div>
+          </div>
+          <div className="cell">
+            <div className="big">Jun 2025</div>
+            <div className="lab">EAA in force for EU online stores</div>
+            <div className="src">Directive 2019/882</div>
+          </div>
+        </div>
+      </section>
+
       <section className="block alt">
         <div className="w">
           <div className="head">
@@ -115,6 +141,70 @@ export default function Page() {
               <p>Start free. Subscribe when you&rsquo;re ready. No retainer, no games.</p>
               <span className="arrow">Read →</span>
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="block alt">
+        <div className="w">
+          <div className="head">
+            <span className="eyebrow">Why StoreProof</span>
+            <h2>Everything a demand letter needs — handled by StoreProof.</h2>
+            <p>
+              Not a widget. StoreProof fixes your store at the source, documents every change, and
+              keeps you defensible as the store grows.
+            </p>
+          </div>
+          <div className="benefits">
+            <div className="benefit">
+              <div className="b-ico">Not an overlay</div>
+              <h3>Real fixes, in your code</h3>
+              <p>
+                StoreProof writes proper alt text into your products and corrects your theme at the
+                source — the opposite of a widget bolted on top.
+              </p>
+            </div>
+            <div className="benefit">
+              <div className="b-ico">The paperwork</div>
+              <h3>The evidence pack lawyers ask for</h3>
+              <p>
+                An EN 301 549 accessibility statement, a dated fix log and a conformance declaration
+                you can hand straight to a lawyer or regulator.
+              </p>
+            </div>
+            <div className="benefit">
+              <div className="b-ico">Honest by design</div>
+              <h3>We never fake a fix</h3>
+              <p>
+                StoreProof fixes what can be safely automated and flags the rest for human review,
+                plainly — none of the &ldquo;guaranteed compliance&rdquo; theatre that got overlays
+                fined.
+              </p>
+            </div>
+            <div className="benefit">
+              <div className="b-ico">Hands-off</div>
+              <h3>Set up once, it runs itself</h3>
+              <p>
+                Connect your store and StoreProof handles the scanning, fixing and documenting. One
+                fixed monthly price, no retainer, no sales calls.
+              </p>
+            </div>
+            <div className="benefit">
+              <div className="b-ico">Stay defensible</div>
+              <h3>Monitored every month</h3>
+              <p>
+                Stores change weekly. StoreProof re-scans monthly and alerts you the moment your
+                accessibility exposure slips back.
+              </p>
+            </div>
+            <div className="benefit">
+              <div className="b-ico">Who&rsquo;s behind it</div>
+              <h3>Built by VantagePoint Networks</h3>
+              <p>
+                A UK security and data company. Your accessibility is handled by people who do
+                compliance and evidence for a living.
+              </p>
+            </div>
           </div>
         </div>
       </section>

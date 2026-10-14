@@ -12,7 +12,7 @@
 - [Accessibility statement](https://storeproof.co.uk/accessibility): StoreProof's own conformance
 
 ## Position
-- The European Accessibility Act (EAA) has been enforced since 28 June 2025; fines reach €500,000.
+- The European Accessibility Act (EAA) has applied to EU-facing online stores since 28 June 2025. Penalties are set per member state (reported maximums around €100,000–€250,000; Ireland carries criminal liability); enforcement is still early-stage. Microenterprises providing services (under 10 staff and ≤€2M turnover) may be exempt.
 - Shopify does not make a merchant's store compliant; the merchant is legally responsible. Shopify themes cover only about a fifth of WCAG criteria.
 - Accessibility overlays are discredited: the FTC fined a leading overlay vendor $1,000,000, and more than 800 overlay users were sued anyway. StoreProof fixes the source code instead of layering a widget on top.
 - An automated scan reliably detects roughly 30–40% of WCAG issues. StoreProof fixes those automatically and flags the remainder for human review. It never claims a full compliance guarantee it cannot deliver.
