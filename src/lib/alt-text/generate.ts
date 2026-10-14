@@ -39,5 +39,20 @@ export async function generateAltText(imageUrl: string, productTitle: string): P
   const d = (await res.json()) as { content?: Array<{ type: string; text?: string }> };
   const text = d.content?.find((c) => c.type === "text")?.text?.trim();
   if (!text) return null;
-  return text.replace(/^["']|["']$/g, "").slice(0, 160);
+  return tidyAlt(text);
+}
+
+// Keep alt text concise and clean: strip wrapping quotes, collapse whitespace,
+// and trim to a whole word near ~125 chars (never cut mid-word).
+const MAX_ALT = 125;
+function tidyAlt(raw: string): string {
+  const cleaned = raw
+    .replace(/^["']+|["']+$/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (cleaned.length <= MAX_ALT) return cleaned;
+  const slice = cleaned.slice(0, MAX_ALT);
+  const lastSpace = slice.lastIndexOf(" ");
+  const trimmed = lastSpace > 60 ? slice.slice(0, lastSpace) : slice;
+  return trimmed.replace(/[\s,;:.–—-]+$/, "");
 }
