@@ -62,6 +62,44 @@ Not an overlay. Fixed at source.`}</div>
             </div>
           </div>
         </section>
+        <section className="block alt">
+          <div className="w">
+            <div className="prose2">
+              <div>
+                <h3>Why each document matters</h3>
+                <p>
+                  If a complaint reaches a lawyer or a supervisory authority, they do not want
+                  marketing claims; they want evidence of a genuine, ongoing effort. The EN 301 549
+                  accessibility statement is the document the EAA expects a trader to publish: it
+                  states your conformance position plainly, including the parts still under review. A
+                  dated fix log shows exactly what was changed and when, which demonstrates you acted
+                  rather than ignored the problem.
+                </p>
+                <p>
+                  The conformance declaration ties it together, setting out what has been verified
+                  against the standard and what remains flagged for human work. Honest partial
+                  conformance, backed by dates, reads far better to a regulator than a silent overlay
+                  claiming a perfect pass it cannot support.
+                </p>
+              </div>
+              <div>
+                <h3>Kept current, not a one-off</h3>
+                <p>
+                  A single audit is accurate only on the day it runs. Shopify stores change
+                  constantly: new products arrive without alt text, a theme update reorders
+                  headings, a promotion adds a low-contrast banner. Within weeks, a one-off report
+                  describes a store that no longer exists, and stale evidence is weak evidence.
+                </p>
+                <p>
+                  StoreProof re-scans every month and alerts you when a regression appears, so new
+                  issues are caught close to when they happen rather than discovered during a
+                  complaint. Each pass refreshes the fix log and reissues the accessibility statement
+                  with a current timestamp — a living record that reflects your store as it is today.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
         <FinalCta
           heading="Get your evidence pack started."
           sub="The free scan produces a draft statement on the spot — subscribe to keep it signed and current."
