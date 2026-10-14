@@ -25,11 +25,6 @@ export default function Page() {
                 give you the <b>evidence pack your lawyer actually needs</b>.
               </p>
               <span className="chip">Not an overlay · we fix the code</span>
-              <div className="ledger">
-                <div><div className="n">3,117</div><div className="l">US web suits, 2025</div></div>
-                <div><div className="n">&euro;250k</div><div className="l">Max fine · France</div></div>
-                <div><div className="n">Jun 2025</div><div className="l">EAA in force</div></div>
-              </div>
             </div>
             <div className="hero-side">
               <ScanHero />
@@ -39,6 +34,12 @@ export default function Page() {
                 <li>A draft EAA accessibility statement on the spot.</li>
               </ul>
             </div>
+          </div>
+          <div className="ledger" style={{ marginTop: "48px" }}>
+            <div><div className="n">3,117</div><div className="l">US web suits, 2025</div></div>
+            <div><div className="n">&euro;250k</div><div className="l">Max fine · France</div></div>
+            <div><div className="n">Jun 2025</div><div className="l">EAA in force</div></div>
+            <div><div className="n">$1M</div><div className="l">FTC overlay fine</div></div>
           </div>
         </div>
       </header>
