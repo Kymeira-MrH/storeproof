@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { createClient } from "@/lib/supabase/browser";
 import { AuthHeader } from "../auth-header";
 import { SiteFooter } from "../site-footer";
@@ -10,6 +10,27 @@ export default function ResetPasswordPage() {
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  // null = still verifying the reset link, false = no valid session, true = ready.
+  const [ready, setReady] = useState<boolean | null>(null);
+
+  // Establish the recovery session from whatever the email link delivered
+  // (a PKCE `code` in the query, or tokens in the URL hash).
+  useEffect(() => {
+    const supabase = createClient();
+    (async () => {
+      try {
+        const code = new URL(window.location.href).searchParams.get("code");
+        if (code) {
+          await supabase.auth.exchangeCodeForSession(code);
+          window.history.replaceState({}, "", "/reset-password");
+        }
+      } catch {
+        // fall through to the session check below
+      }
+      const { data } = await supabase.auth.getSession();
+      setReady(Boolean(data.session));
+    })();
+  }, []);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -19,11 +40,7 @@ export default function ResetPasswordPage() {
       const supabase = createClient();
       const { error } = await supabase.auth.updateUser({ password });
       if (error) {
-        setError(
-          error.message.includes("session")
-            ? "This reset link has expired. Request a new one from the forgot-password page."
-            : error.message,
-        );
+        setError(error.message);
       } else {
         setDone(true);
         setTimeout(() => {
@@ -48,20 +65,38 @@ export default function ResetPasswordPage() {
               <h2>Set a new password</h2>
             </div>
 
-            {done ? (
+            {ready === null ? (
+              <p className="micro">Verifying your reset link…</p>
+            ) : ready === false ? (
+              <p>
+                This reset link has expired or already been used.{" "}
+                <a href="/forgot-password" style={{ color: "var(--green-d)" }}>
+                  Request a new one
+                </a>
+                .
+              </p>
+            ) : done ? (
               <p>Password updated. Taking you to your dashboard…</p>
             ) : (
               <form onSubmit={onSubmit}>
+                <label
+                  htmlFor="new-password"
+                  style={{ display: "block", fontSize: "14px", fontWeight: 600, marginBottom: "6px" }}
+                >
+                  New password
+                </label>
                 <input
+                  id="new-password"
                   className="gate-input"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="New password"
+                  placeholder="At least 8 characters"
                   aria-label="New password"
                   autoComplete="new-password"
                   minLength={8}
                   required
+                  style={{ marginTop: 0 }}
                 />
                 <div style={{ marginTop: "14px" }}>
                   <button className="btn" type="submit" disabled={loading}>

@@ -17,11 +17,12 @@ export default function ForgotPasswordPage() {
     setLoading(true);
     try {
       const supabase = createClient();
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
+      // Always show the same neutral confirmation — never surface rate limits or
+      // reveal whether an account exists. Only a network failure is an error.
+      await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
       });
-      if (error) setError(error.message);
-      else setSent(true);
+      setSent(true);
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -47,16 +48,27 @@ export default function ForgotPasswordPage() {
               </p>
             ) : (
               <form onSubmit={onSubmit}>
+                <label
+                  htmlFor="reset-email"
+                  style={{ display: "block", fontSize: "14px", fontWeight: 600, marginBottom: "6px" }}
+                >
+                  Your account email
+                </label>
                 <input
+                  id="reset-email"
                   className="gate-input"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@your-store.com"
-                  aria-label="Email"
+                  placeholder="you@example.com"
+                  aria-label="Your account email"
                   autoComplete="email"
                   required
+                  style={{ marginTop: 0 }}
                 />
+                <p className="micro">
+                  Enter the email you signed up with and we&rsquo;ll send you a reset link.
+                </p>
                 <div style={{ marginTop: "14px" }}>
                   <button className="btn" type="submit" disabled={loading}>
                     {loading ? "Sending…" : "Send reset link"}
