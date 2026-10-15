@@ -1,6 +1,7 @@
 import { MarketingNav } from "../marketing-nav";
 import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
+import { PlanCheckout } from "./plan-checkout";
 
 export const metadata = {
   title: "Pricing",
@@ -45,7 +46,7 @@ export default function Page() {
                   <li>Evidence pack + signed statement</li>
                   <li>Continuous monthly monitoring</li>
                 </ul>
-                <a className="go" href="/#scan">Start free, then subscribe</a>
+                <PlanCheckout tier="fix" label="Get Fix & Watch" />
               </div>
               <div className="price">
                 <span className="k">The record</span>
@@ -56,7 +57,7 @@ export default function Page() {
                   <li>Statement kept current</li>
                   <li>Fresh evidence timestamp</li>
                 </ul>
-                <a className="go" href="/#scan">Stay defensible</a>
+                <PlanCheckout tier="monitoring" label="Get Monitoring" />
               </div>
             </div>
           </div>
