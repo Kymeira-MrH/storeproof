@@ -2,12 +2,16 @@ import { ScanHero } from "./scan-hero";
 import { MarketingNav } from "./marketing-nav";
 import { SiteFooter } from "./site-footer";
 import { FinalCta } from "./final-cta";
+import { CountUp } from "./count-up";
+import { RevealObserver } from "./reveal";
+import { AltTextDemo } from "./alt-text-demo";
 
 export default function Page() {
   return (
     <>
       <MarketingNav active="home" />
 
+      <main>
       <header className="hero" id="scan">
         <div className="lines" aria-hidden="true" />
         <div className="w">
@@ -36,10 +40,10 @@ export default function Page() {
             </div>
           </div>
           <div className="ledger" style={{ marginTop: "48px" }}>
-            <div><div className="n">3,117</div><div className="l">US web suits, 2025</div></div>
-            <div><div className="n">&euro;250k</div><div className="l">Max fine · France</div></div>
+            <div><div className="n"><CountUp to={3117} /></div><div className="l">US web suits, 2025</div></div>
+            <div><div className="n"><CountUp to={250} prefix="€" suffix="k" /></div><div className="l">Max fine · France</div></div>
             <div><div className="n">Jun 2025</div><div className="l">EAA in force</div></div>
-            <div><div className="n">$1M</div><div className="l">FTC overlay fine</div></div>
+            <div><div className="n"><CountUp to={1} prefix="$" suffix="M" /></div><div className="l">FTC overlay fine</div></div>
           </div>
         </div>
       </header>
@@ -52,7 +56,7 @@ export default function Page() {
         </div>
       </div>
 
-      <section className="block">
+      <section className="block reveal">
         <div className="w">
           <div className="head">
             <span className="eyebrow">Overlay vs source-fix</span>
@@ -85,10 +89,10 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="statband">
+      <section className="statband reveal">
         <div className="w">
           <div className="cell">
-            <div className="big">$1M</div>
+            <div className="big"><CountUp to={1} prefix="$" suffix="M" /></div>
             <div className="lab">FTC fine on an overlay vendor</div>
             <div className="src">FTC, 2025</div>
           </div>
@@ -98,7 +102,7 @@ export default function Page() {
             <div className="src">Deque / AFB, 2025</div>
           </div>
           <div className="cell">
-            <div className="big">3,117</div>
+            <div className="big"><CountUp to={3117} /></div>
             <div className="lab">US web-accessibility lawsuits, 2025</div>
             <div className="src">Seyfarth Shaw, 2025</div>
           </div>
@@ -110,7 +114,21 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="block alt">
+      <section className="block reveal">
+        <div className="w">
+          <div className="head">
+            <span className="eyebrow">See it, don&rsquo;t just read it</span>
+            <h2>This is what a screen reader hears.</h2>
+            <p>
+              Empty alt text means a blind shopper hears nothing at all. StoreProof writes a real
+              description to every product image — watch it happen:
+            </p>
+          </div>
+          <AltTextDemo />
+        </div>
+      </section>
+
+      <section className="block alt reveal">
         <div className="w">
           <div className="head">
             <span className="eyebrow">The short version</span>
@@ -146,7 +164,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="block alt">
+      <section className="block alt reveal">
         <div className="w">
           <div className="head">
             <span className="eyebrow">Why StoreProof</span>
@@ -210,7 +228,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="block">
+      <section className="block reveal">
         <div className="w">
           <div className="head">
             <span className="eyebrow">Honest by design</span>
@@ -245,6 +263,8 @@ export default function Page() {
       </section>
 
       <FinalCta />
+      </main>
+      <RevealObserver />
       <SiteFooter />
     </>
   );
