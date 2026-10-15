@@ -1,3 +1,5 @@
+import { NavAuthLink } from "./nav-auth-link";
+
 const LINKS: Array<{ key: string; label: string; href: string }> = [
   { key: "overlays", label: "The overlay trap", href: "/overlays" },
   { key: "how", label: "How it works", href: "/how-it-works" },
@@ -31,7 +33,7 @@ export function MarketingNav({ active }: { active?: string }) {
               </li>
             ))}
             <li>
-              <a href="/login">Log in</a>
+              <NavAuthLink />
             </li>
           </ul>
           <div className="nav-right">
@@ -48,7 +50,7 @@ export function MarketingNav({ active }: { active?: string }) {
                     {l.label}
                   </a>
                 ))}
-                <a href="/login">Log in</a>
+                <NavAuthLink />
               </div>
             </details>
           </div>

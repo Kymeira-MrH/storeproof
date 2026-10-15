@@ -338,5 +338,9 @@ html, body { margin: 0; padding: 0; }
 .ap .prose2 p:last-child{ margin-bottom:0; }
 .ap section.block code{ font-family:var(--mono); font-size:.9em; background:var(--paper-2); padding:1px 5px; border-radius:4px; }
 
+/* inline notice / warning banner */
+.ap .notice{ display:flex; gap:12px; border:1px solid #e6cf8f; background:#fdf6e3; border-radius:var(--r); padding:14px 18px; margin-top:18px; font-size:14px; color:#5c4a1a; line-height:1.55; }
+.ap .notice b{ color:#4a3a10; }
+
 .ap :focus-visible{ outline:3px solid var(--green); outline-offset:2px; }
 @media(prefers-reduced-motion:reduce){ .ap *{ animation:none!important; transition:none!important; } }

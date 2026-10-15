@@ -59,6 +59,17 @@ export class AxeScanner implements Scanner {
       await page.goto(url, { waitUntil: "load", timeout: 30_000 });
       await page.waitForLoadState("networkidle", { timeout: 5_000 }).catch(() => {});
 
+      // A password-protected / "coming soon" Shopify store redirects to /password,
+      // so anything we scan is the lock screen, not the real storefront.
+      const finalPath = (() => {
+        try {
+          return new URL(page.url()).pathname.replace(/\/+$/, "");
+        } catch {
+          return "";
+        }
+      })();
+      const storefrontLocked = finalPath === "/password" || finalPath.endsWith("/password");
+
       const axe = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
         .analyze();
@@ -77,6 +88,7 @@ export class AxeScanner implements Scanner {
         violations,
         passes: axe.passes.length,
         incomplete: axe.incomplete.length,
+        storefrontLocked,
       };
     } finally {
       await browser.close();

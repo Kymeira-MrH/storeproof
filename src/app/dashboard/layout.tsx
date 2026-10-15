@@ -19,6 +19,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           <nav className="dash-nav">
             <a href="/dashboard">Stores</a>
             <a href="/dashboard/account">Account</a>
+            <a href="/">Main site</a>
           </nav>
           <div className="dash-account">
             <span className="dash-email">{user.email}</span>

@@ -38,6 +38,7 @@ interface ScanRow {
   statement: string | null;
   violations: Violation[] | null;
   scanned_at: string;
+  storefront_locked: boolean | null;
 }
 
 export default async function StoreDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -50,7 +51,7 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
   const { data: scansData } = await supabase
     .from("scans")
     .select(
-      "id, band, score, total_violations, critical_count, serious_count, affected_elements, statement, violations, scanned_at",
+      "id, band, score, total_violations, critical_count, serious_count, affected_elements, statement, violations, scanned_at, storefront_locked",
     )
     .eq("store_id", id)
     .order("scanned_at", { ascending: false })
@@ -102,6 +103,18 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
         <RescanButton storeId={store.id} />
         {latest ? <StatementDownload statement={latest.statement ?? ""} /> : null}
       </div>
+
+      {latest?.storefront_locked ? (
+        <div className="notice">
+          <span aria-hidden="true">🔒</span>
+          <div>
+            <b>This store looks password-protected.</b> The last scan reached a Shopify lock screen,
+            not your storefront, so these findings aren&rsquo;t your real store. Turn off password
+            protection in Shopify (Online Store → Preferences) and re-scan. Alt-text fixes still
+            work — they go through the Admin API, not the storefront.
+          </div>
+        </div>
+      ) : null}
 
       {latest ? (
         <>

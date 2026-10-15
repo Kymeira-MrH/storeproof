@@ -15,6 +15,9 @@ export interface ScanResult {
   violations: Violation[];
   passes: number;
   incomplete: number; // "needs review" count
+  // True when the scanned store redirected to a Shopify password/lock page, so
+  // the results describe the lock screen rather than the real storefront.
+  storefrontLocked?: boolean;
 }
 
 export interface Scanner {

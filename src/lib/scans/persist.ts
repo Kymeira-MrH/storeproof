@@ -36,6 +36,7 @@ export async function scanAndPersist(opts: {
     affected_elements: score.affectedElements,
     statement,
     violations: result.violations,
+    storefront_locked: result.storefrontLocked ?? false,
   });
   if (error) throw new Error(`failed to persist scan: ${error.message}`);
   return { band: score.band };

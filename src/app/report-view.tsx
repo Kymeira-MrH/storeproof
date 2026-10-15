@@ -9,9 +9,27 @@ const LABEL: Record<ExposureBand, string> = {
   severe: "Severe",
 };
 
-export function ReportView({ url, score }: { url: string; score: RiskScore }) {
+export function ReportView({
+  url,
+  score,
+  locked,
+}: {
+  url: string;
+  score: RiskScore;
+  locked?: boolean;
+}) {
   return (
     <div className="result show" aria-live="polite">
+      {locked ? (
+        <div className="notice" style={{ marginTop: 0, marginBottom: "14px" }}>
+          <span aria-hidden="true">🔒</span>
+          <div>
+            <b>This store looks password-protected.</b> We reached a Shopify lock screen, not your
+            storefront — so these results aren&rsquo;t your real store. A live public store scans
+            fine; for a locked store, turn password protection off and scan again.
+          </div>
+        </div>
+      ) : null}
       <div className="r-head">
         <span className="mono">Exposure for {url}</span>
         <b>{score.band.toUpperCase()}</b>

@@ -70,7 +70,13 @@ export async function POST(req: NextRequest) {
       statement,
     }).catch(() => false);
 
-    return NextResponse.json({ result, score, statement, emailed });
+    return NextResponse.json({
+      result,
+      score,
+      statement,
+      emailed,
+      storefrontLocked: result.storefrontLocked ?? false,
+    });
   } catch (err) {
     console.error("scan failed", err);
     const message = err instanceof Error ? err.message : "unknown";
