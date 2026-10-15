@@ -23,13 +23,17 @@ export default async function DashboardPage() {
     .from("scans")
     .select("store_id, band, scanned_at")
     .order("scanned_at", { ascending: false });
-  const { data: subRow } = await supabase.from("subscriptions").select("status").maybeSingle();
+  const { data: subRow } = await supabase
+    .from("subscriptions")
+    .select("status, tier")
+    .maybeSingle();
 
   const latest = new Map<string, { band: string; scanned_at: string }>();
   for (const s of (scans ?? []) as Array<{ store_id: string; band: string; scanned_at: string }>) {
     if (!latest.has(s.store_id)) latest.set(s.store_id, { band: s.band, scanned_at: s.scanned_at });
   }
   const subStatus = (subRow?.status as string | undefined) ?? "none";
+  const subTier = (subRow?.tier as string | undefined) ?? "";
   const storeList = (stores ?? []) as Array<{ id: string; url: string; created_at: string }>;
 
   return (
@@ -41,7 +45,7 @@ export default async function DashboardPage() {
       </p>
 
       <div style={{ marginTop: "22px" }}>
-        <Billing status={subStatus} />
+        <Billing status={subStatus} tier={subTier} />
       </div>
 
       <div className="section-label">Add a store</div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { createClient } from "@/lib/supabase/browser";
 import { AuthHeader } from "../auth-header";
 import { SiteFooter } from "../site-footer";
@@ -12,6 +12,20 @@ export default function LoginPage() {
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  // A chosen plan carried over from the pricing page. When present, the flow is
+  // always: choose plan → create account → straight into Stripe checkout.
+  const [plan, setPlan] = useState("");
+
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const p = q.get("plan");
+    if (p === "fix" || p === "monitoring") setPlan(p);
+    if (q.get("mode") === "signup") setMode("signup");
+    if (q.get("error") === "auth") setError("That link has expired. Please sign in to continue.");
+  }, []);
+
+  // Where to send the visitor once they're authenticated.
+  const afterAuth = () => (plan ? `/checkout/start?plan=${plan}` : "/dashboard");
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -23,15 +37,30 @@ export default function LoginPage() {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) setError(error.message);
-        else window.location.href = "/dashboard";
+        else window.location.href = afterAuth();
       } else {
-        const { error } = await supabase.auth.signUp({
+        // Carry the plan into the confirmation link so the visitor lands back on
+        // checkout after confirming, if email confirmation is required.
+        const redirect = plan
+          ? `${window.location.origin}/auth/callback?plan=${plan}`
+          : `${window.location.origin}/auth/callback`;
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+          options: { emailRedirectTo: redirect },
         });
-        if (error) setError(error.message);
-        else setNotice("Account created — check your inbox to confirm your email, then sign in.");
+        if (error) {
+          setError(error.message);
+        } else if (data.session) {
+          // Email confirmation is off — we have a session already, go straight on.
+          window.location.href = afterAuth();
+        } else if (plan) {
+          setNotice(
+            "Account created — check your inbox to confirm your email. The confirmation link brings you straight to checkout.",
+          );
+        } else {
+          setNotice("Account created — check your inbox to confirm your email, then sign in.");
+        }
       }
     } catch {
       setError("Something went wrong. Please try again.");
@@ -49,6 +78,13 @@ export default function LoginPage() {
           <div className="head">
             <span className="eyebrow">StoreProof account</span>
             <h2>{mode === "signin" ? "Sign in" : "Create your account"}</h2>
+            {plan ? (
+              <p>
+                You&rsquo;re signing up for{" "}
+                <b>{plan === "fix" ? "Fix & Watch — £49/month" : "Monitoring — £29/month"}</b>. Create
+                your account and we&rsquo;ll take you straight to secure checkout.
+              </p>
+            ) : null}
           </div>
 
           {notice ? <p>{notice}</p> : null}

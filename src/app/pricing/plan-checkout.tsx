@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/browser";
 
 // Pricing CTA: if signed in, start Stripe checkout for the tier; if not, send to
-// the free scan (the sign-up entry point) rather than a dead jump to the top.
+// sign-up carrying the chosen plan, then straight into checkout after signup.
 export function PlanCheckout({ tier, label }: { tier: "fix" | "monitoring"; label: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -18,9 +18,9 @@ export function PlanCheckout({ tier, label }: { tier: "fix" | "monitoring"; labe
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
-        // No account yet — send them to create one (account-first), carrying the
-        // chosen plan so we can drop them back onto it.
-        window.location.href = `/login?plan=${tier}`;
+        // No account yet — send them to sign up first (account-first), carrying
+        // the chosen plan so the order is: choose plan → create account → Stripe.
+        window.location.href = `/login?plan=${tier}&mode=signup`;
         return;
       }
       const res = await fetch("/api/stripe/checkout", {

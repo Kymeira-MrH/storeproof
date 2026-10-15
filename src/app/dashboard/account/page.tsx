@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 
 const TIER_LABEL: Record<string, string> = {
   record: "Monitoring — £29/month",
+  monitoring: "Monitoring — £29/month",
   fix: "Fix & Watch — £49/month",
 };
 
@@ -47,7 +48,7 @@ export default async function AccountPage() {
         )}
       </p>
       <div style={{ marginTop: "14px" }}>
-        <Billing status={status} />
+        <Billing status={status} tier={tier} />
       </div>
       <p className="remnote" style={{ marginTop: "12px" }}>
         Paid plans add automated source-level fixes, the signed evidence pack and monthly

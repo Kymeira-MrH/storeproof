@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 
-export function Billing({ status }: { status: string }) {
+export function Billing({ status, tier = "" }: { status: string; tier?: string }) {
   const active = status === "active" || status === "trialing";
+  const onFix = tier === "fix";
   const billingEnabled = process.env.NEXT_PUBLIC_BILLING_ENABLED === "true";
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -13,7 +14,7 @@ export function Billing({ status }: { status: string }) {
   if (!billingEnabled) {
     return (
       <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
-        {active ? <span className="chip">Monitoring active</span> : null}
+        {active ? <span className="chip">{onFix ? "Fix & Watch active" : "Monitoring active"}</span> : null}
         <span className="chip" style={{ background: "var(--green-soft)", color: "var(--green-d)" }}>
           Paid plans open soon
         </span>
@@ -47,8 +48,24 @@ export function Billing({ status }: { status: string }) {
     <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
       {active ? (
         <>
-          <span className="chip">Monitoring active</span>
-          <button className="btn" type="button" onClick={() => go("/api/stripe/portal")} disabled={loading}>
+          <span className="chip">{onFix ? "Fix & Watch active" : "Monitoring active"}</span>
+          {!onFix ? (
+            <button
+              className="btn"
+              type="button"
+              onClick={() => go("/api/stripe/upgrade")}
+              disabled={loading}
+            >
+              {loading ? "Opening…" : "Upgrade to Fix & Watch — £49/mo"}
+            </button>
+          ) : null}
+          <button
+            className="btn"
+            type="button"
+            onClick={() => go("/api/stripe/portal")}
+            disabled={loading}
+            style={{ background: "var(--ink)" }}
+          >
             Manage billing
           </button>
         </>

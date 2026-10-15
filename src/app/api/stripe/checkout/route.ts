@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { getStripe, isStripeConfigured } from "@/lib/stripe/client";
+import { getStripe, isStripeConfigured, resolvePriceId, type Tier } from "@/lib/stripe/client";
 
 export const runtime = "nodejs";
 
@@ -13,10 +13,13 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: "Not signed in." }, { status: 401 });
 
   const body = (await req.json().catch(() => null)) as { tier?: string } | null;
-  const price =
-    body?.tier === "fix" ? process.env.STRIPE_PRICE_FIX : process.env.STRIPE_PRICE_MONITORING;
-  if (!isStripeConfigured() || !price) {
+  const tier: Tier = body?.tier === "fix" ? "fix" : "monitoring";
+  if (!isStripeConfigured()) {
     return NextResponse.json({ error: "Billing is not configured yet." }, { status: 503 });
+  }
+  const { priceId: price, error: priceError } = resolvePriceId(tier);
+  if (!price) {
+    return NextResponse.json({ error: priceError ?? "Billing price is not configured." }, { status: 503 });
   }
 
   try {
