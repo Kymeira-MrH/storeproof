@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { ShopifyAdmin } from "@/lib/shopify/client";
 import { generateAltText } from "@/lib/alt-text/generate";
 import { createFixRateLimiter } from "@/lib/ratelimit/factory";
+import { decryptToken } from "@/lib/crypto/token-cipher";
 
 // How many images we remediate per run. Keeps a single request bounded; the
 // merchant re-runs to continue through a large catalogue.
@@ -56,7 +57,10 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
   if (!conn)
     return NextResponse.json({ error: "Connect your Shopify store first." }, { status: 400 });
 
-  const client = new ShopifyAdmin(conn.shop_domain as string, conn.access_token as string);
+  const client = new ShopifyAdmin(
+    conn.shop_domain as string,
+    decryptToken(conn.access_token as string),
+  );
 
   let images;
   try {

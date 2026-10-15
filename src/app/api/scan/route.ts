@@ -76,6 +76,7 @@ export async function POST(req: NextRequest) {
       statement,
       emailed,
       storefrontLocked: result.storefrontLocked ?? false,
+      incomplete: result.incomplete,
     });
   } catch (err) {
     console.error("scan failed", err);

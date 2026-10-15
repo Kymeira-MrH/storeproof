@@ -28,6 +28,7 @@ export function ScanHero() {
   const [statement, setStatement] = useState("");
   const [emailed, setEmailed] = useState(false);
   const [locked, setLocked] = useState(false);
+  const [needsReview, setNeedsReview] = useState(0);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -38,6 +39,7 @@ export function ScanHero() {
     setStatement("");
     setEmailed(false);
     setLocked(false);
+    setNeedsReview(0);
     setLoading(true);
     try {
       const res = await fetch("/api/scan", {
@@ -52,6 +54,7 @@ export function ScanHero() {
             emailed?: unknown;
             error?: unknown;
             storefrontLocked?: unknown;
+            incomplete?: unknown;
           }
         | null;
       if (!res.ok) {
@@ -63,6 +66,7 @@ export function ScanHero() {
         setScannedUrl(url);
         setEmailed(data.emailed === true);
         setLocked(data.storefrontLocked === true);
+        setNeedsReview(typeof data.incomplete === "number" ? data.incomplete : 0);
         if (typeof data.statement === "string") setStatement(data.statement);
       } else {
         setError("Unexpected response from the scanner. Please try again.");
@@ -123,7 +127,9 @@ export function ScanHero() {
           {error}
         </p>
       ) : null}
-      {score ? <ReportView url={scannedUrl} score={score} locked={locked} /> : null}
+      {score ? (
+        <ReportView url={scannedUrl} score={score} locked={locked} needsReview={needsReview} />
+      ) : null}
       {emailed ? <p className="micro">A copy has been emailed to {email}.</p> : null}
       {statement ? (
         <details className="stmt">

@@ -13,10 +13,12 @@ export function ReportView({
   url,
   score,
   locked,
+  needsReview,
 }: {
   url: string;
   score: RiskScore;
   locked?: boolean;
+  needsReview?: number;
 }) {
   return (
     <div className="result show" aria-live="polite">
@@ -45,6 +47,12 @@ export function ReportView({
         {score.totalViolations} automated issues · {score.criticalCount} critical ·{" "}
         {score.seriousCount} serious · {score.affectedElements} elements
       </p>
+      {needsReview && needsReview > 0 ? (
+        <p className="micro">
+          {needsReview} item{needsReview === 1 ? "" : "s"} also need{needsReview === 1 ? "s" : ""}{" "}
+          manual review — we surface these with guidance, never auto-pass them.
+        </p>
+      ) : null}
       <p className="micro">
         An automated scan does not establish full WCAG conformance. Issues needing human
         judgement are flagged during remediation, never faked.

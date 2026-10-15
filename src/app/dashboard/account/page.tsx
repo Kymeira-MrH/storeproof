@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { Billing } from "../billing";
+import { DeleteAccount } from "./delete-account";
 
 export const dynamic = "force-dynamic";
 
@@ -62,6 +63,16 @@ export default async function AccountPage() {
         </a>
         .
       </p>
+
+      <div className="section-label" style={{ color: "var(--red)" }}>
+        Danger zone
+      </div>
+      <p className="remnote" style={{ marginTop: "8px" }}>
+        Delete your account and all of the data we hold. This cannot be undone.
+      </p>
+      <div style={{ marginTop: "14px" }}>
+        <DeleteAccount />
+      </div>
     </>
   );
 }

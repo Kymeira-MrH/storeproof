@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { RegisterSW } from "./register-sw";
+import { Analytics } from "@vercel/analytics/next";
 
 const DESCRIPTION =
   "Automated WCAG 2.2 AA scanning and source-level remediation for EU-selling Shopify stores, with the evidence pack your lawyer needs. Not an overlay.";
@@ -105,6 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="ap">
         {children}
         <RegisterSW />
+        <Analytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

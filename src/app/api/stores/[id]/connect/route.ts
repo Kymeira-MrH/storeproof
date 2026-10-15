@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { ShopifyAdmin } from "@/lib/shopify/client";
 import { normalizeShopDomain } from "@/lib/shopify/domain";
+import { encryptToken } from "@/lib/crypto/token-cipher";
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -59,7 +60,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     store_id: id,
     account_id: user.id,
     shop_domain: shop,
-    access_token: token,
+    access_token: encryptToken(token),
     scopes: "read_products,write_products",
     images_total: imagesTotal,
     images_missing_alt: imagesMissingAlt,

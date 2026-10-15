@@ -67,9 +67,27 @@ export default async function DashboardPage() {
           })}
         </div>
       ) : (
-        <p className="dash-sub" style={{ marginTop: "24px" }}>
-          No stores yet — add your store URL above to run the first scan.
-        </p>
+        <div className="add-panel" style={{ marginTop: "24px" }}>
+          <div className="section-label" style={{ marginTop: 0 }}>
+            Getting started
+          </div>
+          <p className="dash-sub" style={{ marginTop: "8px" }}>
+            Add your store above to run its first scan. Here&rsquo;s the flow:
+          </p>
+          <ol className="connect-steps" style={{ marginTop: "12px" }}>
+            <li>
+              <b>Add &amp; scan</b> your store URL — you&rsquo;ll get an exposure band and a
+              plain-English issue list in under a minute.
+            </li>
+            <li>
+              <b>Connect Shopify</b> on the store&rsquo;s page so we can write alt-text fixes back to
+              your products.
+            </li>
+            <li>
+              <b>Subscribe</b> to keep it monitored and your evidence pack current.
+            </li>
+          </ol>
+        </div>
       )}
     </>
   );
