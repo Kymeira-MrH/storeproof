@@ -1,6 +1,7 @@
 import { MarketingNav } from "../marketing-nav";
 import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
+import { IconSearch, IconWrench, IconSeal } from "../icons";
 
 export const metadata = {
   title: "How it works",
@@ -26,6 +27,7 @@ export default function Page() {
             </div>
             <div className="steps">
               <div className="step">
+                <div className="step-ico"><IconSearch /></div>
                 <div className="no">01 — Scan</div>
                 <h3>We find what a claimant would find</h3>
                 <p>
@@ -34,6 +36,7 @@ export default function Page() {
                 </p>
               </div>
               <div className="step">
+                <div className="step-ico"><IconWrench /></div>
                 <div className="no">02 — Auto-fix &amp; flag</div>
                 <h3>Real fixes in the code, not a widget</h3>
                 <p>
@@ -42,6 +45,7 @@ export default function Page() {
                 </p>
               </div>
               <div className="step">
+                <div className="step-ico"><IconSeal /></div>
                 <div className="no">03 — Document &amp; monitor</div>
                 <h3>The evidence pack, kept current</h3>
                 <p>

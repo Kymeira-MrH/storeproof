@@ -5,6 +5,7 @@ import { FinalCta } from "./final-cta";
 import { CountUp } from "./count-up";
 import { RevealObserver } from "./reveal";
 import { AltTextDemo } from "./alt-text-demo";
+import { IconCode, IconDoc, IconShieldCheck, IconBolt, IconEye, IconBuilding } from "./icons";
 
 export default function Page() {
   return (
@@ -14,6 +15,13 @@ export default function Page() {
       <main>
       <header className="hero" id="scan">
         <div className="lines" aria-hidden="true" />
+        <div className="hero-scan" aria-hidden="true" />
+        <svg className="hero-motif" viewBox="0 0 200 200" aria-hidden="true">
+          <circle cx="100" cy="100" r="34" fill="none" stroke="currentColor" strokeWidth="2" />
+          <circle cx="100" cy="100" r="62" fill="none" stroke="currentColor" strokeWidth="2" />
+          <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="2" />
+          <circle cx="100" cy="100" r="7" fill="currentColor" />
+        </svg>
         <div className="w">
           <div className="grid">
             <div>
@@ -176,6 +184,7 @@ export default function Page() {
           </div>
           <div className="benefits">
             <div className="benefit">
+              <div className="benefit-ico"><IconCode /></div>
               <div className="b-ico">Not an overlay</div>
               <h3>Real fixes, in your code</h3>
               <p>
@@ -184,6 +193,7 @@ export default function Page() {
               </p>
             </div>
             <div className="benefit">
+              <div className="benefit-ico"><IconDoc /></div>
               <div className="b-ico">The paperwork</div>
               <h3>The evidence pack lawyers ask for</h3>
               <p>
@@ -192,6 +202,7 @@ export default function Page() {
               </p>
             </div>
             <div className="benefit">
+              <div className="benefit-ico"><IconShieldCheck /></div>
               <div className="b-ico">Honest by design</div>
               <h3>We never fake a fix</h3>
               <p>
@@ -201,6 +212,7 @@ export default function Page() {
               </p>
             </div>
             <div className="benefit">
+              <div className="benefit-ico"><IconBolt /></div>
               <div className="b-ico">Hands-off</div>
               <h3>Set up once, it runs itself</h3>
               <p>
@@ -209,6 +221,7 @@ export default function Page() {
               </p>
             </div>
             <div className="benefit">
+              <div className="benefit-ico"><IconEye /></div>
               <div className="b-ico">Stay defensible</div>
               <h3>Monitored every month</h3>
               <p>
@@ -217,6 +230,7 @@ export default function Page() {
               </p>
             </div>
             <div className="benefit">
+              <div className="benefit-ico"><IconBuilding /></div>
               <div className="b-ico">Who&rsquo;s behind it</div>
               <h3>Built by VantagePoint Networks</h3>
               <p>
