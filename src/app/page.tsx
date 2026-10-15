@@ -6,6 +6,7 @@ import { CountUp } from "./count-up";
 import { RevealObserver } from "./reveal";
 import { AltTextDemo } from "./alt-text-demo";
 import { IconCode, IconDoc, IconShieldCheck, IconBolt, IconEye, IconBuilding } from "./icons";
+import { CodeFixDemo } from "./code-fix-demo";
 
 export default function Page() {
   return (
@@ -94,6 +95,21 @@ export default function Page() {
               </ul>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="block reveal">
+        <div className="w">
+          <div className="head">
+            <span className="eyebrow">Watch a fix happen</span>
+            <h2>We change the code — not a widget on top of it.</h2>
+            <p>
+              An overlay runs after the page has loaded and can&rsquo;t touch any of this.
+              StoreProof edits the source itself: alt text, button names, link text — where a claim
+              is actually built.
+            </p>
+          </div>
+          <CodeFixDemo />
         </div>
       </section>
 

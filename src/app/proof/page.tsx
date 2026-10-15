@@ -1,6 +1,7 @@
 import { MarketingNav } from "../marketing-nav";
 import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
+import { EvidencePack } from "../evidence-pack";
 
 export const metadata = {
   title: "The proof",
@@ -45,20 +46,7 @@ export default function Page() {
                   </li>
                 </ul>
               </div>
-              <div className="packet">
-                <span className="cap">Evidence pack — contents</span>
-                <div className="doc">{`STOREPROOF / EVIDENCE PACK
-RE: your-store.com
-
-01  Accessibility statement ....... EN 301 549
-02  Conformance declaration ....... WCAG 2.2 AA
-03  Remediation log ............... dated
-04  Items needing human review .... flagged
-05  Re-scan schedule .............. monthly
-—
-Prepared by StoreProof.
-Not an overlay. Fixed at source.`}</div>
-              </div>
+              <EvidencePack />
             </div>
           </div>
         </section>
