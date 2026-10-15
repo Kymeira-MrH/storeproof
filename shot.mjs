@@ -1,0 +1,16 @@
+import { chromium } from "playwright";
+const b = await chromium.launch();
+const c = await b.newContext({ viewport: { width: 1440, height: 900 } });
+const p = await c.newPage();
+await p.goto("https://storeproof.co.uk/", { waitUntil:"load", timeout:30000 });
+await p.waitForLoadState("networkidle",{timeout:6000}).catch(()=>{});
+await p.evaluate(()=>document.querySelector(".codefix")?.scrollIntoView({block:"center"}));
+await p.waitForTimeout(4200);
+await p.screenshot({ path:"codefix.png" });
+const p2 = await c.newPage();
+await p2.goto("https://storeproof.co.uk/proof", { waitUntil:"load", timeout:30000 });
+await p2.waitForLoadState("networkidle",{timeout:6000}).catch(()=>{});
+await p2.evaluate(()=>document.querySelector(".evpack")?.scrollIntoView({block:"center"}));
+await p2.waitForTimeout(3000);
+await p2.screenshot({ path:"evpack.png" });
+await b.close(); console.log("saved");

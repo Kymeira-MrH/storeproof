@@ -55,7 +55,7 @@ export function CodeFixDemo() {
   }, []);
 
   return (
-    <div className={`codefix reveal${run ? " run" : ""}`} ref={ref}>
+    <div className={`codefix${run ? " run" : ""}`} ref={ref}>
       <div className="codefix-bar" aria-hidden="true">
         <span />
         <span />
