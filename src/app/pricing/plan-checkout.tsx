@@ -7,9 +7,11 @@ import { createClient } from "@/lib/supabase/browser";
 // the free scan (the sign-up entry point) rather than a dead jump to the top.
 export function PlanCheckout({ tier, label }: { tier: "fix" | "monitoring"; label: string }) {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   async function go() {
     setLoading(true);
+    setError("");
     try {
       const supabase = createClient();
       const {
@@ -26,16 +28,29 @@ export function PlanCheckout({ tier, label }: { tier: "fix" | "monitoring"; labe
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ tier }),
       });
-      const data = (await res.json().catch(() => null)) as { url?: string } | null;
-      window.location.href = data?.url ?? "/dashboard";
+      const data = (await res.json().catch(() => null)) as { url?: string; error?: string } | null;
+      if (data?.url) {
+        window.location.href = data.url;
+        return;
+      }
+      setError(data?.error ?? "Couldn't start checkout. Please try again.");
     } catch {
-      window.location.href = "/dashboard";
+      setError("Couldn't reach checkout. Please try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <button className="go" type="button" onClick={go} disabled={loading}>
-      {loading ? "Opening…" : label}
-    </button>
+    <>
+      <button className="go" type="button" onClick={go} disabled={loading}>
+        {loading ? "Opening…" : label}
+      </button>
+      {error ? (
+        <p className="micro err" role="alert" style={{ marginTop: "8px" }}>
+          {error}
+        </p>
+      ) : null}
+    </>
   );
 }
