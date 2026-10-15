@@ -1,7 +1,20 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { RegisterSW } from "./register-sw";
 import { Analytics } from "@vercel/analytics/next";
+
+const display = Fraunces({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
+});
+const body = Hanken_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
 
 const DESCRIPTION =
   "Automated WCAG 2.2 AA scanning and source-level remediation for EU-selling Shopify stores, with the evidence pack your lawyer needs. Not an overlay.";
@@ -102,7 +115,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="ap">
         {children}
         <RegisterSW />
