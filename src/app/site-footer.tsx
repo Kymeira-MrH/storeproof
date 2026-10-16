@@ -44,6 +44,27 @@ export function SiteFooter() {
         </div>
 
         <div>
+          <div className="footer-h">Guides</div>
+          <ul className="footer-links">
+            <li>
+              <a href="/shopify-accessibility-checker">Accessibility checker</a>
+            </li>
+            <li>
+              <a href="/european-accessibility-act-shopify">EAA &amp; Shopify</a>
+            </li>
+            <li>
+              <a href="/accessibility-statement-generator">Statement generator</a>
+            </li>
+            <li>
+              <a href="/accessibility-overlay-alternative">Overlay alternative</a>
+            </li>
+            <li>
+              <a href="/accessibility-demand-letter">Demand letter help</a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
           <div className="footer-h">Company</div>
           <ul className="footer-links">
             <li>

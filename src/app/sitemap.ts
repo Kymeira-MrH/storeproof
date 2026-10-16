@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { POSTS } from "@/lib/blog/posts";
+import { landingSlugs } from "@/lib/seo";
 
 const BASE = "https://storeproof.co.uk";
 // Bump when page content changes materially — used by search engines as a recrawl hint.
@@ -30,5 +31,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
-  return [...staticRoutes, ...postRoutes];
+  const landingRoutes = landingSlugs().map((slug) => ({
+    url: `${BASE}/${slug}`,
+    lastModified: LAST_MODIFIED,
+    changeFrequency: "monthly" as const,
+    priority: 0.85,
+  }));
+  return [...staticRoutes, ...landingRoutes, ...postRoutes];
 }
