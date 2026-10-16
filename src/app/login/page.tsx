@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { createClient } from "@/lib/supabase/browser";
+import { trackEvent } from "@/lib/consent";
 import { AuthHeader } from "../auth-header";
 import { SiteFooter } from "../site-footer";
 
@@ -53,12 +54,15 @@ export default function LoginPage() {
           setError(error.message);
         } else if (data.session) {
           // Email confirmation is off — we have a session already, go straight on.
+          trackEvent("account_created", { plan: plan || "none" });
           window.location.href = afterAuth();
         } else if (plan) {
+          trackEvent("account_created", { plan });
           setNotice(
             "Account created — check your inbox to confirm your email. The confirmation link brings you straight to checkout.",
           );
         } else {
+          trackEvent("account_created", { plan: "none" });
           setNotice("Account created — check your inbox to confirm your email, then sign in.");
         }
       }

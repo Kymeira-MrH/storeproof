@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { AddStore } from "./add-store";
 import { Billing } from "./billing";
+import { SubSuccess } from "./sub-success";
 
 export const dynamic = "force-dynamic";
 
@@ -38,6 +39,7 @@ export default async function DashboardPage() {
 
   return (
     <>
+      <SubSuccess />
       <h1 className="dash-h1">Your stores</h1>
       <p className="dash-sub">
         Scan, monitor and document accessibility compliance — and keep the evidence your lawyer

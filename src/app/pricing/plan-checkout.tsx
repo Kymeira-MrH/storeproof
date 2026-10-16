@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/browser";
+import { trackEvent } from "@/lib/consent";
 
 // Pricing CTA: if signed in, start Stripe checkout for the tier; if not, send to
 // sign-up carrying the chosen plan, then straight into checkout after signup.
@@ -20,9 +21,11 @@ export function PlanCheckout({ tier, label }: { tier: "fix" | "monitoring"; labe
       if (!user) {
         // No account yet — send them to sign up first (account-first), carrying
         // the chosen plan so the order is: choose plan → create account → Stripe.
+        trackEvent("signup_from_pricing", { tier });
         window.location.href = `/login?plan=${tier}&mode=signup`;
         return;
       }
+      trackEvent("checkout_started", { tier, source: "pricing" });
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "content-type": "application/json" },

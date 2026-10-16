@@ -438,3 +438,15 @@ html, body { margin: 0; padding: 0; }
 
 .ap :focus-visible{ outline:3px solid var(--green); outline-offset:2px; }
 @media(prefers-reduced-motion:reduce){ .ap *{ animation:none!important; transition:none!important; } }
+
+/* Cookie consent */
+.consent{ position:fixed; left:16px; right:16px; bottom:16px; z-index:60; display:flex; justify-content:center; }
+.consent-in{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; max-width:860px; width:100%; background:var(--ink); color:#f3f4f2; border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:16px 20px; box-shadow:0 18px 50px -12px rgba(0,0,0,.5); }
+.consent-copy{ flex:1 1 320px; font-size:13.5px; line-height:1.5; margin:0; color:#d9dcd8; }
+.consent-copy a{ color:#8fe3bf; text-decoration:underline; }
+.consent-btns{ display:flex; gap:10px; flex-wrap:wrap; }
+.consent-ok, .consent-min{ font:inherit; font-size:13px; font-weight:600; cursor:pointer; border-radius:var(--r-pill); padding:9px 18px; border:1px solid transparent; white-space:nowrap; }
+.consent-ok{ background:var(--green); color:#fff; }
+.consent-ok:hover{ background:var(--green-d); }
+.consent-min{ background:transparent; color:#f3f4f2; border-color:rgba(255,255,255,.28); }
+.consent-min:hover{ background:rgba(255,255,255,.08); }

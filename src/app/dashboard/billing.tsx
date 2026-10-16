@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { trackEvent } from "@/lib/consent";
 
 export function Billing({ status, tier = "" }: { status: string; tier?: string }) {
   const active = status === "active" || status === "trialing";
@@ -25,6 +26,15 @@ export function Billing({ status, tier = "" }: { status: string; tier?: string }
   async function go(path: string, payload?: object) {
     setLoading(true);
     setError("");
+    const t = (payload as { tier?: string } | undefined)?.tier;
+    if (path.includes("portal")) {
+      trackEvent("manage_billing", { source: "dashboard" });
+    } else {
+      trackEvent("checkout_started", {
+        tier: t ?? (path.includes("upgrade") ? "fix" : "monitoring"),
+        source: "dashboard",
+      });
+    }
     try {
       const res = await fetch(path, {
         method: "POST",

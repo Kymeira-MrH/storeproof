@@ -86,10 +86,19 @@ export default function Page() {
               within one month.
             </p>
 
-            <h2>Cookies</h2>
+            <h2 id="cookies">Cookies &amp; analytics</h2>
             <p>
-              We use only the strictly necessary cookies required to keep you signed in. We do not
-              run third-party advertising or tracking cookies.
+              We use strictly necessary cookies to keep you signed in &mdash; these are always on,
+              because the service can&rsquo;t work without them, and no consent is required for them
+              under UK GDPR.
+            </p>
+            <p>
+              Beyond that, we use privacy-friendly, aggregate analytics (Vercel Analytics) to
+              understand which pages and steps work &mdash; and only if you choose{" "}
+              <b>&ldquo;Accept all&rdquo;</b> on the cookie banner. Pick <b>&ldquo;Essential
+              only&rdquo;</b> and no analytics run at all. We never use third-party advertising or
+              cross-site tracking cookies. You can change your mind any time by clearing this
+              site&rsquo;s data in your browser.
             </p>
           </div>
         </section>

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/browser";
+import { trackEvent } from "@/lib/consent";
 
 export function StartCheckout() {
   const params = useSearchParams();
@@ -24,6 +25,7 @@ export function StartCheckout() {
           window.location.href = `/login?plan=${tier}&mode=signup`;
           return;
         }
+        trackEvent("checkout_started", { tier, source: "resume" });
         const res = await fetch("/api/stripe/checkout", {
           method: "POST",
           headers: { "content-type": "application/json" },

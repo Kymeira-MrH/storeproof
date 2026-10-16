@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { RegisterSW } from "./register-sw";
-import { Analytics } from "@vercel/analytics/next";
+import { AnalyticsGate } from "./analytics-gate";
+import { ConsentBanner } from "./consent-banner";
 
 const display = Fraunces({
   subsets: ["latin"],
@@ -119,7 +120,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="ap">
         {children}
         <RegisterSW />
-        <Analytics />
+        <ConsentBanner />
+        <AnalyticsGate />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

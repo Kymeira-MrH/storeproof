@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { ReportView } from "./report-view";
+import { trackEvent } from "@/lib/consent";
 import type { ExposureBand, RiskScore } from "@/lib/scoring/risk-score";
 
 const BANDS: ExposureBand[] = ["low", "elevated", "high", "severe"];
@@ -64,6 +65,7 @@ export function ScanHero() {
       if (data && isRiskScore(data.score)) {
         setScore(data.score);
         setScannedUrl(url);
+        trackEvent("scan_submitted", { band: data.score.band });
         setEmailed(data.emailed === true);
         setLocked(data.storefrontLocked === true);
         setNeedsReview(typeof data.incomplete === "number" ? data.incomplete : 0);
