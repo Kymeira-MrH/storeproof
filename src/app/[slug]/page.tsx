@@ -65,7 +65,7 @@ export default async function LandingPageView({
 
   return (
     <>
-      <MarketingNav />
+      <MarketingNav active="guides" />
       <main>
         <section className="block">
           <div className="w legal">

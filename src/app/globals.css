@@ -30,6 +30,17 @@ html, body { margin: 0; padding: 0; }
 .ap .navcta{ font-size:14px; font-weight:600; background:var(--green); color:#fff; padding:10px 18px; text-decoration:none; border-radius:var(--r-pill); box-shadow:var(--sh-sm); }
 .ap .navcta:hover{ background:var(--green-d); }
 .ap .nav-right{ display:flex; align-items:center; gap:12px; }
+.ap .navdrop{ position:relative; }
+.ap .navdrop > summary{ list-style:none; cursor:pointer; color:var(--ink-2); display:inline-flex; align-items:center; gap:5px; }
+.ap .navdrop > summary::-webkit-details-marker{ display:none; }
+.ap .navdrop > summary span{ font-size:10px; transition:transform .18s ease; }
+.ap .navdrop[open] > summary{ color:var(--ink); }
+.ap .navdrop[open] > summary span{ transform:rotate(180deg); }
+.ap .navdrop > summary:hover{ color:var(--ink); }
+.ap .navdrop-panel{ position:absolute; left:0; top:calc(100% + 14px); background:var(--card); border:1px solid var(--rule); border-radius:var(--r); box-shadow:var(--sh-lg); padding:10px; min-width:250px; display:flex; flex-direction:column; gap:2px; z-index:40; }
+.ap .navdrop-panel a{ padding:10px 12px; border-radius:var(--r-sm); font-size:14px; color:var(--ink); text-decoration:none; }
+.ap .navdrop-panel a:hover{ background:var(--paper-2); color:var(--green-d); }
+.ap .menu-label{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); padding:10px 13px 4px; }
 .ap .navmenu{ display:none; }
 .ap .navmenu > summary{ list-style:none; cursor:pointer; font-size:22px; line-height:1; padding:4px 8px; color:var(--ink); border-radius:var(--r-sm); }
 .ap .navmenu > summary::-webkit-details-marker{ display:none; }

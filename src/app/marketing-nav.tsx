@@ -8,6 +8,18 @@ const LINKS: Array<{ key: string; label: string; href: string }> = [
   { key: "blog", label: "Blog", href: "/blog" },
 ];
 
+// Intent landing pages surfaced in the nav "Guides" menu (comparison pages stay
+// footer/SEO-only to keep the menu focused).
+const GUIDES: Array<{ label: string; href: string }> = [
+  { label: "Free accessibility checker", href: "/shopify-accessibility-checker" },
+  { label: "Accessibility audit", href: "/shopify-accessibility-audit" },
+  { label: "WCAG 2.2 compliance", href: "/wcag-compliance-shopify" },
+  { label: "EAA & your Shopify store", href: "/european-accessibility-act-shopify" },
+  { label: "Accessibility statement", href: "/accessibility-statement-generator" },
+  { label: "Got a demand letter?", href: "/accessibility-demand-letter" },
+  { label: "Overlay alternative", href: "/accessibility-overlay-alternative" },
+];
+
 export function MarketingNav({ active }: { active?: string }) {
   return (
     <>
@@ -33,6 +45,20 @@ export function MarketingNav({ active }: { active?: string }) {
               </li>
             ))}
             <li>
+              <details className="navdrop">
+                <summary className={active === "guides" ? "active" : undefined}>
+                  Guides <span aria-hidden="true">▾</span>
+                </summary>
+                <div className="navdrop-panel">
+                  {GUIDES.map((g) => (
+                    <a key={g.href} href={g.href}>
+                      {g.label}
+                    </a>
+                  ))}
+                </div>
+              </details>
+            </li>
+            <li>
               <NavAuthLink />
             </li>
           </ul>
@@ -48,6 +74,12 @@ export function MarketingNav({ active }: { active?: string }) {
                 {LINKS.map((l) => (
                   <a key={l.key} className={active === l.key ? "active" : undefined} href={l.href}>
                     {l.label}
+                  </a>
+                ))}
+                <span className="menu-label">Guides</span>
+                {GUIDES.map((g) => (
+                  <a key={g.href} href={g.href}>
+                    {g.label}
                   </a>
                 ))}
                 <NavAuthLink />
