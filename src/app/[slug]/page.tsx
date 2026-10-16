@@ -69,9 +69,9 @@ export default async function LandingPageView({
       <main>
         <section className="block">
           <div className="w legal">
-            <nav aria-label="Breadcrumb" className="crumb">
+            <p className="crumb">
               <a href="/">Home</a> <span aria-hidden="true">/</span> {page.h1}
-            </nav>
+            </p>
             <div className="head">
               <span className="eyebrow">{page.eyebrow}</span>
               <h1>{page.h1}</h1>

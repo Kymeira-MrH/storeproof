@@ -1,6 +1,7 @@
 import { NavAuthLink } from "./nav-auth-link";
 
 const LINKS: Array<{ key: string; label: string; href: string }> = [
+  { key: "home", label: "Home", href: "/" },
   { key: "overlays", label: "The overlay trap", href: "/overlays" },
   { key: "how", label: "How it works", href: "/how-it-works" },
   { key: "proof", label: "The proof", href: "/proof" },
