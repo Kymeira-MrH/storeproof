@@ -3,7 +3,8 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { createClient } from "@/lib/supabase/browser";
 import { trackEvent } from "@/lib/consent";
-import { AuthHeader } from "../auth-header";
+import { MarketingNav } from "../marketing-nav";
+import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
 
 export default function LoginPage() {
@@ -75,8 +76,15 @@ export default function LoginPage() {
 
   return (
     <>
-      <AuthHeader />
+      <MarketingNav />
       <main>
+        <PhotoHero
+          image="/img/storefront.jpg"
+          alt="An independent shopfront on a quiet street"
+          kicker="Account"
+          title={<>Your StoreProof <em>account.</em></>}
+          lede="Sign in to manage your stores, billing and evidence packs — or create one to get started."
+        />
       <section className="block">
         <div className="w" style={{ maxWidth: "520px" }}>
           <div className="head">

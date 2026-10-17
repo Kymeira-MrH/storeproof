@@ -1,5 +1,6 @@
 import { MarketingNav } from "../marketing-nav";
 import { SiteFooter } from "../site-footer";
+import { PhotoHero } from "../photo-hero";
 
 export const metadata = {
   title: "Accessibility statement",
@@ -13,19 +14,16 @@ export default function Page() {
     <>
       <MarketingNav />
       <main>
+        <PhotoHero
+          image="/img/storefront.jpg"
+          alt="An independent shopfront on a quiet street"
+          kicker="StoreProof"
+          title={<>Accessibility <em>statement</em></>}
+          lede="We sell accessibility compliance, so we hold our own site to the same standard we hold yours. This statement is prepared in the spirit of EN 301 549 and the European Accessibility Act."
+        />
         <section className="block">
           <div className="w legal">
-            <div className="head">
-              <span className="eyebrow">StoreProof</span>
-              <h1>Accessibility statement</h1>
-            </div>
             <p className="updated">Last updated 13 October 2026</p>
-
-            <p className="lead">
-              We sell accessibility compliance, so we hold our own site to the same standard we
-              hold yours. This statement is prepared in the spirit of EN 301 549 and the European
-              Accessibility Act.
-            </p>
 
             <h2>Our commitment</h2>
             <p>

@@ -1,4 +1,5 @@
 import { MarketingNav } from "../marketing-nav";
+import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
 
 export const metadata = {
@@ -13,18 +14,16 @@ export default function Page() {
     <>
       <MarketingNav />
       <main>
+        <PhotoHero
+          image="/img/counter.jpg"
+          alt="A shopkeeper at the counter"
+          kicker="Terms"
+          title="Terms of service"
+          lede="These terms govern your use of StoreProof, operated by VantagePoint Networks. By using the service you agree to them."
+        />
         <section className="block">
           <div className="w legal">
-            <div className="head">
-              <span className="eyebrow">StoreProof</span>
-              <h1>Terms of service</h1>
-            </div>
             <p className="updated">Last updated 13 October 2026</p>
-
-            <p className="lead">
-              These terms govern your use of StoreProof, operated by VantagePoint Networks. By using
-              the service you agree to them.
-            </p>
 
             <h2>What the service does</h2>
             <p>

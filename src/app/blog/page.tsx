@@ -1,5 +1,6 @@
 import { MarketingNav } from "../marketing-nav";
 import { SiteFooter } from "../site-footer";
+import { PhotoHero } from "../photo-hero";
 import { POSTS } from "@/lib/blog/posts";
 
 export const metadata = {
@@ -14,16 +15,15 @@ export default function Page() {
     <>
       <MarketingNav active="blog" />
       <main>
+        <PhotoHero
+          image="/img/arcade.jpg"
+          alt="Shoppers in a grand retail arcade"
+          kicker="StoreProof journal"
+          title={<>Accessibility, in <em>plain English.</em></>}
+          lede="Straight guides to the European Accessibility Act, overlays, and what actually makes a demand letter go away."
+        />
         <section className="block">
           <div className="w">
-            <div className="head">
-              <span className="eyebrow">StoreProof journal</span>
-              <h1>Accessibility, in plain English.</h1>
-              <p>
-                Straight guides to the European Accessibility Act, overlays, and what actually makes
-                a demand letter go away.
-              </p>
-            </div>
             <div className="navcards">
               {POSTS.map((p) => (
                 <a className="navcard" href={`/blog/${p.slug}`} key={p.slug}>

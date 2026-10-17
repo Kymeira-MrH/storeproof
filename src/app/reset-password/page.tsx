@@ -2,7 +2,8 @@
 
 import { useState, useEffect, type FormEvent } from "react";
 import { createClient } from "@/lib/supabase/browser";
-import { AuthHeader } from "../auth-header";
+import { MarketingNav } from "../marketing-nav";
+import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
 
 export default function ResetPasswordPage() {
@@ -56,8 +57,15 @@ export default function ResetPasswordPage() {
 
   return (
     <>
-      <AuthHeader />
+      <MarketingNav />
       <main>
+        <PhotoHero
+          image="/img/counter.jpg"
+          alt="A shopkeeper at the counter of their store"
+          kicker="Account"
+          title={<>Choose a new <em>password.</em></>}
+          lede="Set a new password for your StoreProof account."
+        />
         <section className="block">
           <div className="w" style={{ maxWidth: "520px" }}>
             <div className="head">

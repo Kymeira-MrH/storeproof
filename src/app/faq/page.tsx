@@ -1,6 +1,7 @@
 import { MarketingNav } from "../marketing-nav";
 import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
+import { PhotoHero } from "../photo-hero";
 
 export const metadata = {
   title: "FAQ",
@@ -65,12 +66,14 @@ export default function Page() {
       />
       <MarketingNav />
       <main>
+        <PhotoHero
+          image="/img/boutique.jpg"
+          alt="Inside an independent boutique"
+          kicker="Straight answers"
+          title={<>The questions <em>every merchant asks.</em></>}
+        />
         <section className="block faq">
           <div className="w" style={{ maxWidth: "860px" }}>
-            <div className="head">
-              <span className="eyebrow">Straight answers</span>
-              <h1>The questions every merchant asks.</h1>
-            </div>
             <details open>
               <summary>Doesn&rsquo;t Shopify make my store compliant?</summary>
               <p>

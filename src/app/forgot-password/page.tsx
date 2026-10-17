@@ -2,7 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { createClient } from "@/lib/supabase/browser";
-import { AuthHeader } from "../auth-header";
+import { MarketingNav } from "../marketing-nav";
+import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
 
 export default function ForgotPasswordPage() {
@@ -32,8 +33,15 @@ export default function ForgotPasswordPage() {
 
   return (
     <>
-      <AuthHeader />
+      <MarketingNav />
       <main>
+        <PhotoHero
+          image="/img/boutique.jpg"
+          alt="Inside an independent boutique"
+          kicker="Account"
+          title={<>Reset your <em>password.</em></>}
+          lede="Enter your email and we&rsquo;ll send a secure link to set a new password."
+        />
         <section className="block">
           <div className="w" style={{ maxWidth: "520px" }}>
             <div className="head">

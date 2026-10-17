@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { MarketingNav } from "../../marketing-nav";
 import { SiteFooter } from "../../site-footer";
 import { FinalCta } from "../../final-cta";
+import { PhotoHero } from "../../photo-hero";
 import { POSTS, getPost } from "@/lib/blog/posts";
 
 export function generateStaticParams() {
@@ -48,6 +49,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       />
       <MarketingNav active="blog" />
       <main>
+        <PhotoHero
+          image="/img/storefront.jpg"
+          alt="An independent shopfront"
+          kicker="Journal"
+          title={post.title}
+          lede={post.description}
+        />
         <section className="block">
           <div className="w legal">
             <p className="crumb">
@@ -62,7 +70,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 })}{" "}
                 · {post.readMins} min read
               </span>
-              <h1>{post.title}</h1>
             </div>
 
             {post.blocks.map((b, i) => {
