@@ -156,8 +156,8 @@
 .ap .ed a.ed-cta2 { color: #fff; }
 .ap .ed a.ed-cta2:hover { color: var(--e-gold-2); }
 .ap .ed a.ed-pcta { color: var(--e-ink); }
-.ap .ed a.ed-pcta.ghost { color: #fff; }
-.ap .ed a.ed-pcta.ghost:hover { color: var(--e-gold-2); }
+.ap .ed a.ed-pcta.ghost { color: var(--e-ink); }
+.ap .ed a.ed-pcta.ghost:hover { color: #9a7828; }
 .ap .ed .ed-mast nav a { color: var(--e-faint); }
 .ap .ed .ed-mast nav a:hover { color: #fff; }
 .ap .ed .ed-site-foot a { color: var(--e-faint); }
@@ -618,3 +618,23 @@
   .ed h1 .ed-l > span { transform: none; }
   .ed-kick, .ed-stand, .ed-cta-row, .ed-ledger, .ed-rev { opacity: 1; transform: none; }
 }
+
+/* ── Index: flip the flat dark frames (scan / honest / pricing) to cream ──
+   so the homepage is light-dominant like the rest of the site. Hero + closing
+   stay photographic; footer is the shared dark SiteFooter. */
+.ed .ed-scan, .ed .ed-f3, .ed .ed-f5 { background: var(--e-paper); color: var(--e-ink); border-top-color: rgba(20, 18, 16, 0.12); }
+.ed .ed-scan .ed-sech, .ed .ed-f3 .ed-sech, .ed .ed-f5 .ed-sech, .ed .ed-pn, .ed .ed-pp { color: var(--e-ink); }
+.ed .ed-scan .ed-sech em, .ed .ed-f3 .ed-sech em, .ed .ed-f5 .ed-sech em, .ed .ed-pn small { color: #9a7828; }
+.ed .ed-scan .ed-idx, .ed .ed-f3 .ed-idx, .ed .ed-f5 .ed-idx { color: #9a7828; }
+.ed .ed-scan .ed-lead, .ed .ed-f3 .ed-lead { color: #4a443b; }
+.ed .ed-scan .ed-micro-list li, .ed .ed-col li { color: #3a342c; border-bottom-color: rgba(20, 18, 16, 0.1); }
+.ed .ed-col-h { border-bottom-color: rgba(20, 18, 16, 0.12); }
+.ed .ed-col.mend .ed-col-h { color: #2f6b4e; }
+.ed .ed-col.mark .ed-col-h { color: #9a7828; }
+.ed .ed-note { color: #6a6358; }
+.ed .ed-plans { border-top-color: rgba(20, 18, 16, 0.12); }
+.ed .ed-plan { border-bottom-color: rgba(20, 18, 16, 0.12); }
+.ed .ed-pd { color: #4a443b; }
+.ed .ed-pp small { color: #6a6358; }
+.ed .ed-pcta.ghost { color: var(--e-ink); border-color: rgba(20, 18, 16, 0.2); }
+.ed .ed-pcta.ghost:hover { color: #9a7828; border-color: #9a7828; }

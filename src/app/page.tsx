@@ -1,4 +1,6 @@
 import "./editorial.css";
+import { MarketingNav } from "./marketing-nav";
+import { SiteFooter } from "./site-footer";
 import { ScanHero } from "./scan-hero";
 import { EditorialReveal } from "./editorial-reveal";
 import { PlanCheckout } from "./pricing/plan-checkout";
@@ -16,31 +18,15 @@ const CheckThin = () => (
 
 export default function Page() {
   return (
-    <div className="ed">
+    <>
+      <MarketingNav active="home" />
+      <div className="ed">
       {/* ── FRAME 1 — hero ───────────────────────────────────────── */}
       <section className="ed-frame">
         <div className="ed-bg">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/img/arcade.jpg" alt="Shoppers walking through a grand retail arcade" fetchPriority="high" />
         </div>
-
-        <header className="ed-mast">
-          <a className="ed-logo" href="/">
-            <svg width="26" height="26" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-              <circle cx="32" cy="32" r="29" stroke="#c9a24b" strokeWidth="2.6" />
-              <path d="M22 32.5l7 7 14-15" stroke="#e3c67e" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            Store<b>Proof</b>
-          </a>
-          <nav aria-label="Primary">
-            <a href="/how-it-works">How it works</a>
-            <a href="/pricing">Pricing</a>
-            <a href="/blog">Journal</a>
-            <a href="/shopify-accessibility-checker">Guides</a>
-            <a href="/login">Sign in</a>
-          </nav>
-          <div className="ed-issue">EU &middot; EAA &mdash; No.&nbsp;01</div>
-        </header>
 
         <div className="ed-hero-in">
           <div>
@@ -283,45 +269,9 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ── footer ───────────────────────────────────────────────── */}
-      <footer className="ed-site-foot">
-        <div className="ed-ftop">
-          <div>
-            <div className="ed-flogo">Store<b>Proof</b></div>
-            <p style={{ marginTop: "10px", maxWidth: "30ch", color: "rgba(255,255,255,.45)" }}>
-              Honest, documented accessibility for Shopify. Never an overlay.
-            </p>
-          </div>
-          <div className="ed-cols2">
-            <div>
-              <div className="ed-fh">Product</div>
-              <a href="/how-it-works">How it works</a>
-              <a href="/pricing">Pricing</a>
-              <a href="/shopify-accessibility-checker">Guides</a>
-              <a href="#scan">Scan my store</a>
-            </div>
-            <div>
-              <div className="ed-fh">Company</div>
-              <a href="/blog">Journal</a>
-              <a href="/privacy">Privacy</a>
-              <a href="/terms">Terms</a>
-              <a href="mailto:info@vpnetworks.co.uk">info@vpnetworks.co.uk</a>
-            </div>
-          </div>
-        </div>
-        <div className="ed-base">
-          <span>&copy; 2026 StoreProof &mdash; a VantagePoint Networks product</span>
-          <span>We pass our own WCAG 2.2 AA test</span>
-        </div>
-        <div className="ed-cred">
-          Photography by{" "}
-          <a href="https://unsplash.com/@framesbyfin" target="_blank" rel="noopener noreferrer">Heidi Fin</a>,{" "}
-          <a href="https://unsplash.com/@benchaccounting" target="_blank" rel="noopener noreferrer">Bench Accounting</a> &amp;{" "}
-          <a href="https://unsplash.com/@smilevivo" target="_blank" rel="noopener noreferrer">Sang Kwak</a> on Unsplash.
-        </div>
-      </footer>
-
       <EditorialReveal />
-    </div>
+      </div>
+      <SiteFooter />
+    </>
   );
 }
