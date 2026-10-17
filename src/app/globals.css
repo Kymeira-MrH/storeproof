@@ -5,8 +5,8 @@ html, body { margin: 0; padding: 0; }
   /* Light editorial ground — cream paper, white cards, ink text. Dark bands
      (nav, mast, footer, statband, final, dash) use --night + explicit light text. */
   --paper:#f1ece2; --paper-2:#e8decb; --card:#ffffff; --card-2:#faf5ec; --night:#141210;
-  --ink:#221c15; --ink-2:#6a5f52; --faint:#938876;
-  --gold:#9a7828; --gold-2:#c9a24b;
+  --ink:#221c15; --ink-2:#6a5f52; --faint:#6f655a;
+  --gold:#80611c; --gold-2:#c9a24b;
   --red:#b54336; --red-ink:#8f3328; --green:#2f8a63; --green-d:#1f6b4a; --green-soft:rgba(47,138,99,.12);
   --rule:rgba(20,18,16,.12); --rule-2:rgba(20,18,16,.2);
   /* explicit light tones for the dark bands */
