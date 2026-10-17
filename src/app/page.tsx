@@ -1,301 +1,327 @@
+import "./editorial.css";
 import { ScanHero } from "./scan-hero";
-import { MarketingNav } from "./marketing-nav";
-import { SiteFooter } from "./site-footer";
-import { FinalCta } from "./final-cta";
-import { CountUp } from "./count-up";
-import { RevealObserver } from "./reveal";
-import { AltTextDemo } from "./alt-text-demo";
-import { IconCode, IconDoc, IconShieldCheck, IconBolt, IconEye, IconBuilding } from "./icons";
-import { CodeFixDemo } from "./code-fix-demo";
+import { EditorialReveal } from "./editorial-reveal";
+import { PlanCheckout } from "./pricing/plan-checkout";
+
+// Editorial homepage — the approved magazine direction. Full-bleed photography,
+// masthead + issue motif, huge Fraunces display, gold + emerald on dark ink, and
+// the product shown as a restrained proof ledger. The real scanner (ScanHero) and
+// Stripe checkout (PlanCheckout) are wired into the design, nothing faked.
+
+const CheckThin = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M5 12.5l4 4 10-11" stroke="#7ec9a3" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
 
 export default function Page() {
   return (
-    <>
-      <MarketingNav active="home" />
+    <div className="ed">
+      {/* ── FRAME 1 — hero ───────────────────────────────────────── */}
+      <section className="ed-frame">
+        <div className="ed-bg">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/img/arcade.jpg" alt="Shoppers walking through a grand retail arcade" fetchPriority="high" />
+        </div>
 
-      <main>
-      <header className="hero" id="scan">
-        <div className="lines" aria-hidden="true" />
-        <div className="hero-scan" aria-hidden="true" />
-        <svg className="hero-motif" viewBox="0 0 200 200" aria-hidden="true">
-          <circle cx="100" cy="100" r="34" fill="none" stroke="currentColor" strokeWidth="2" />
-          <circle cx="100" cy="100" r="62" fill="none" stroke="currentColor" strokeWidth="2" />
-          <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="2" />
-          <circle cx="100" cy="100" r="7" fill="currentColor" />
-        </svg>
-        <div className="w">
-          <div className="grid">
+        <header className="ed-mast">
+          <a className="ed-logo" href="/">
+            <svg width="26" height="26" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <circle cx="32" cy="32" r="29" stroke="#c9a24b" strokeWidth="2.6" />
+              <path d="M22 32.5l7 7 14-15" stroke="#e3c67e" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Store<b>Proof</b>
+          </a>
+          <nav aria-label="Primary">
+            <a href="/how-it-works">How it works</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/shopify-accessibility-checker">Guides</a>
+            <a href="/blog">Journal</a>
+            <a href="/login">Sign in</a>
+          </nav>
+          <div className="ed-issue">EU &middot; EAA &mdash; No.&nbsp;01</div>
+        </header>
+
+        <div className="ed-hero-in">
+          <div>
+            <div className="ed-kick"><span className="ed-ln" /> The European Accessibility Act is here</div>
+            <h1>
+              <span className="ed-l"><span>Let everyone</span></span>
+              <span className="ed-l"><span><em>through the door.</em></span></span>
+            </h1>
+            <p className="ed-stand">
+              Accessibility compliance for Shopify &mdash; <b>scanned, fixed at the source, and documented.</b>{" "}
+              Not an overlay. Not a promise. A record.
+            </p>
+            <div className="ed-cta-row">
+              <a className="ed-cta" href="#scan">Scan your store &rarr;</a>
+              <a className="ed-cta2" href="/proof">See a sample evidence pack</a>
+            </div>
+          </div>
+          <aside className="ed-ledger" aria-label="Example scan result">
+            <div className="ed-lh">Latest scan &middot; yourstore.com</div>
+            <div className="ed-row g"><span className="k">Issues found</span><span className="v">47</span></div>
+            <div className="ed-row e"><span className="k">Auto-fixed at source</span><span className="v">31</span></div>
+            <div className="ed-row"><span className="k">Flagged for a human</span><span className="v">16</span></div>
+            <div className="ed-seal">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12.5l4 4 10-11" stroke="#7ec9a3" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Signed &amp; timestamped &middot; PDF ready
+            </div>
+          </aside>
+        </div>
+
+        <footer className="ed-foot">
+          <span>Honest, documented accessibility</span>
+          <span>WCAG 2.2 AA &middot; EN 301 549</span>
+        </footer>
+      </section>
+
+      {/* ── SCAN — the real scanner ──────────────────────────────── */}
+      <section className="ed-scan" id="scan">
+        <div className="ed-wrap">
+          <div className="ed-grid2">
             <div>
-              <span className="retag">Re: the letter on your desk</span>
-              <h1>
-                You got a demand letter.
-                <br />
-                Let&rsquo;s make it <em>go away</em>, properly.
-              </h1>
-              <p className="lede">
-                Accessibility overlays got 800+ stores sued anyway and cost one vendor a $1M
-                FTC fine. We scan your Shopify store, fix what can be fixed at the source, and
-                give you the <b>evidence pack your lawyer actually needs</b>.
+              <div className="ed-idx"><span className="ed-ln" /> No. 01 &mdash; The scan</div>
+              <h2 className="ed-sech">See where your store <em>stands.</em></h2>
+              <p className="ed-lead">
+                A real WCAG 2.2 AA scan of one page, in under a minute. You get your exposure band, a
+                plain-English issue list, and a draft EAA accessibility statement on the spot. No card.
               </p>
-              <span className="chip">Not an overlay · we fix the code</span>
+              <ul className="ed-micro-list">
+                <li><CheckThin /> A real automated scan &mdash; not a checklist you fill in yourself.</li>
+                <li><CheckThin /> Your exposure band and the issues that drive it.</li>
+                <li><CheckThin /> A draft accessibility statement you can download.</li>
+              </ul>
             </div>
-            <div className="hero-side">
+            <div>
               <ScanHero />
-              <ul className="hero-points">
-                <li>A real WCAG 2.2 AA scan of your store — in under a minute.</li>
-                <li>Plain-English issue list and your exposure band.</li>
-                <li>A draft EAA accessibility statement on the spot.</li>
-              </ul>
             </div>
           </div>
-          <div className="ledger" style={{ marginTop: "48px" }}>
-            <div><div className="n"><CountUp to={3117} /></div><div className="l">US web suits, 2025</div></div>
-            <div><div className="n"><CountUp to={250} prefix="€" suffix="k" /></div><div className="l">Max fine · France</div></div>
-            <div><div className="n">Jun 2025</div><div className="l">EAA in force</div></div>
-            <div><div className="n"><CountUp to={1} prefix="$" suffix="M" /></div><div className="l">FTC overlay fine</div></div>
+        </div>
+      </section>
+
+      {/* ── FRAME 2 — the fix ────────────────────────────────────── */}
+      <section className="ed-frame2">
+        <div className="ed-pic">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="ed-rev" src="/img/packing.jpg" alt="A small-business owner packing an order at a table" loading="lazy" />
+          <span className="ed-tag">Fig. 02 &mdash; fixes written to source</span>
+        </div>
+        <div className="ed-txt">
+          <div className="ed-n"><span className="ed-ln" /> No. 02 &mdash; The fix</div>
+          <h2 className="ed-rev">We go into the store and <em>repair it.</em></h2>
+          <p className="ed-rev">
+            Alt text written straight to your products. Controls given real names. The issues automation
+            can honestly handle, handled &mdash; and the rest flagged for a person, never faked.
+          </p>
+          <div className="ed-rule ed-rev" />
+          <div className="ed-mini ed-rev">
+            <span><b>128</b>images captioned</span>
+            <span><b>41</b>controls named</span>
+            <span><b>16</b>human-flagged</span>
           </div>
         </div>
-      </header>
+      </section>
 
-      <div className="strip">
-        <div className="w">
-          The European Accessibility Act has applied to online stores <b>since June 2025</b>. US
-          web-accessibility lawsuits hit <b>3,117 in 2025</b> — up <b>27%</b>, roughly a dozen every
-          business day.
-        </div>
-      </div>
-
-      <section className="block reveal">
-        <div className="w">
-          <div className="head">
-            <span className="eyebrow">Overlay vs source-fix</span>
-            <h2>Two ways to answer a demand letter. Only one holds up.</h2>
-            <p>
-              The cheap widget is the most-sued fix there is. We do the opposite — fix the code and
-              keep the receipts.
+      {/* ── FRAME 3 — the honest part ────────────────────────────── */}
+      <section className="ed-f3">
+        <div className="ed-wrap">
+          <div>
+            <div className="ed-idx"><span className="ed-ln" /> No. 03 &mdash; The honest part</div>
+            <h2 className="ed-sech ed-rev">We mend what&rsquo;s real. We <em>mark</em> what isn&rsquo;t.</h2>
+            <p className="ed-lead ed-rev">
+              Overlay widgets sell one-click compliance. That&rsquo;s the lie that gets shops sued. Here is
+              the truth about what automation can and can&rsquo;t do.
             </p>
           </div>
-          <div className="compare">
-            <div className="compare-col bad">
-              <div className="compare-h">An accessibility overlay</div>
+          <div className="ed-cols">
+            <div className="ed-col mend ed-rev">
+              <div className="ed-col-h">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="11" stroke="#7ec9a3" strokeWidth="1.5" />
+                  <path d="M7 12.5l3 3 7-7.5" stroke="#7ec9a3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Mended, automatically
+              </div>
               <ul>
-                <li>Runs after the page loads — screen readers never see it.</li>
-                <li>Can&rsquo;t touch form labels, keyboard traps or heading structure.</li>
-                <li>FTC-fined $1M; 800+ overlay users were sued anyway.</li>
-                <li>In court, it reads as an admission you knew and took a shortcut.</li>
+                <li><CheckThin /> Missing image alt text, written to your products</li>
+                <li><CheckThin /> Buttons &amp; links with no accessible name</li>
+                <li><CheckThin /> Common structural and labelling gaps</li>
               </ul>
+              <div className="ed-note">Applied at the source &middot; logged &amp; dated</div>
             </div>
-            <div className="compare-col good">
-              <div className="compare-h">StoreProof</div>
+            <div className="ed-col mark ed-rev d1">
+              <div className="ed-col-h">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="11" stroke="#e3c67e" strokeWidth="1.5" />
+                  <path d="M12 7v6" stroke="#e3c67e" strokeWidth="2.2" strokeLinecap="round" />
+                  <circle cx="12" cy="16.5" r="1.3" fill="#e3c67e" />
+                </svg>
+                Marked for a human
+              </div>
               <ul>
-                <li>Fixes the source — real alt text written to your products.</li>
-                <li>Flags what needs human judgement plainly, never faked.</li>
-                <li>Gives you an EN 301 549 statement and a dated evidence pack.</li>
-                <li>Keeps it current with monthly re-scans and regression alerts.</li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 5v7" stroke="#e3c67e" strokeWidth="2.2" strokeLinecap="round" />
+                    <circle cx="12" cy="17" r="1.4" fill="#e3c67e" />
+                  </svg>
+                  Judgement calls on colour contrast in your brand
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 5v7" stroke="#e3c67e" strokeWidth="2.2" strokeLinecap="round" />
+                    <circle cx="12" cy="17" r="1.4" fill="#e3c67e" />
+                  </svg>
+                  Whether a complex flow truly works by keyboard
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 5v7" stroke="#e3c67e" strokeWidth="2.2" strokeLinecap="round" />
+                    <circle cx="12" cy="17" r="1.4" fill="#e3c67e" />
+                  </svg>
+                  Anything that needs a real person to verify
+                </li>
               </ul>
+              <div className="ed-note">We tell you exactly what&rsquo;s left &middot; no false &ldquo;100% compliant&rdquo;</div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="block reveal">
-        <div className="w">
-          <div className="head">
-            <span className="eyebrow">Watch a fix happen</span>
-            <h2>We change the code — not a widget on top of it.</h2>
-            <p>
-              An overlay runs after the page has loaded and can&rsquo;t touch any of this.
-              StoreProof edits the source itself: alt text, button names, link text — where a claim
-              is actually built.
+      {/* ── FRAME 4 — the evidence ───────────────────────────────── */}
+      <section className="ed-f4">
+        <div className="ed-wrap">
+          <div className="ed-grid">
+            <div className="ed-rev">
+              <div className="ed-idx"><span className="ed-ln" /> No. 04 &mdash; The evidence</div>
+              <h2 className="ed-sech">If a letter comes, you&rsquo;ve <em>already answered it.</em></h2>
+              <p className="ed-lead">
+                Every fix logged. A signed accessibility statement. A dated record of exactly what was done
+                and what&rsquo;s still watched &mdash; the difference between panicking and forwarding a PDF.
+              </p>
+              <div style={{ marginTop: "30px" }}>
+                <a className="ed-cta" href="/proof">See a sample pack &rarr;</a>
+              </div>
+            </div>
+            <div className="ed-exhibit ed-rev d1">
+              <div className="ed-et">Accessibility statement</div>
+              <div className="ed-ed">yourstore.com &middot; WCAG 2.2 AA &middot; sample record</div>
+              <div className="ed-er">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12.5l4 4 10-11" stroke="#2f6b4e" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span><b>128</b> product images &mdash; alt text applied</span>
+              </div>
+              <div className="ed-er">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12.5l4 4 10-11" stroke="#2f6b4e" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span><b>41</b> controls &mdash; accessible names added</span>
+              </div>
+              <div className="ed-er">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 6v6" stroke="#c9a24b" strokeWidth="2.2" strokeLinecap="round" />
+                  <circle cx="12" cy="16" r="1.3" fill="#c9a24b" />
+                </svg>
+                <span><b>16</b> items flagged for human review</span>
+              </div>
+              <div className="ed-er" style={{ color: "#2f6b4e", fontWeight: 600 }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" stroke="#2f6b4e" strokeWidth="1.6" />
+                  <path d="M7.5 12l3 3 6-6.5" stroke="#2f6b4e" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Signed &amp; timestamped &middot; PDF ready for your lawyer
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FRAME 5 — pricing ────────────────────────────────────── */}
+      <section className="ed-f5">
+        <div className="ed-wrap">
+          <div>
+            <div className="ed-idx"><span className="ed-ln" /> No. 05 &mdash; Terms</div>
+            <h2 className="ed-sech ed-rev">Start free. Pay when you&rsquo;re <em>ready.</em></h2>
+          </div>
+          <div className="ed-plans">
+            <div className="ed-plan ed-rev">
+              <div className="ed-pn"><small>The scan</small>The scan</div>
+              <div className="ed-pd">A real WCAG 2.2 AA scan, your exposure band and issue list, and a draft accessibility statement.</div>
+              <div className="ed-pp">Free</div>
+              <a className="ed-pcta ghost" href="#scan">Scan free</a>
+            </div>
+            <div className="ed-plan ed-rev d1">
+              <div className="ed-pn"><small>Most chosen</small>Fix &amp; Watch</div>
+              <div className="ed-pd">Source-level fixes applied for you, the signed evidence pack, and continuous monthly monitoring.</div>
+              <div className="ed-pp">&pound;49<small>/mo</small></div>
+              <PlanCheckout tier="fix" label="Get Fix & Watch" />
+            </div>
+            <div className="ed-plan ed-rev d2">
+              <div className="ed-pn"><small>Keep watch</small>Monitoring</div>
+              <div className="ed-pd">A monthly re-scan, regression alerts the moment something slips, and your statement kept current.</div>
+              <div className="ed-pp">&pound;29<small>/mo</small></div>
+              <PlanCheckout tier="monitoring" label="Get Monitoring" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FRAME 6 — closing ────────────────────────────────────── */}
+      <section className="ed-frame ed-f6">
+        <div className="ed-bg">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/img/storefront.jpg" alt="A small independent shop with an orange door and striped awning" loading="lazy" />
+        </div>
+        <div className="ed-in">
+          <div className="ed-idx"><span className="ed-ln" /> Begin</div>
+          <h2>See where your store <em>stands.</em></h2>
+          <p>One page, a real scan, under a minute. No sales call, no card.</p>
+          <a className="ed-cta" href="#scan">Scan your store &rarr;</a>
+        </div>
+      </section>
+
+      {/* ── footer ───────────────────────────────────────────────── */}
+      <footer className="ed-site-foot">
+        <div className="ed-ftop">
+          <div>
+            <div className="ed-flogo">Store<b>Proof</b></div>
+            <p style={{ marginTop: "10px", maxWidth: "30ch", color: "rgba(255,255,255,.45)" }}>
+              Honest, documented accessibility for Shopify. Never an overlay.
             </p>
           </div>
-          <CodeFixDemo />
-        </div>
-      </section>
-
-      <section className="statband reveal">
-        <div className="w">
-          <div className="cell">
-            <div className="big"><CountUp to={1} prefix="$" suffix="M" /></div>
-            <div className="lab">FTC fine on an overlay vendor</div>
-            <div className="src">FTC, 2025</div>
-          </div>
-          <div className="cell">
-            <div className="big">~30–40%</div>
-            <div className="lab">of WCAG issues automation can fix</div>
-            <div className="src">Deque / AFB, 2025</div>
-          </div>
-          <div className="cell">
-            <div className="big"><CountUp to={3117} /></div>
-            <div className="lab">US web-accessibility lawsuits, 2025</div>
-            <div className="src">Seyfarth Shaw, 2025</div>
-          </div>
-          <div className="cell">
-            <div className="big">Jun 2025</div>
-            <div className="lab">EAA in force for EU online stores</div>
-            <div className="src">Directive 2019/882</div>
-          </div>
-        </div>
-      </section>
-
-      <section className="block reveal">
-        <div className="w">
-          <div className="head">
-            <span className="eyebrow">See it, don&rsquo;t just read it</span>
-            <h2>This is what a screen reader hears.</h2>
-            <p>
-              Empty alt text means a blind shopper hears nothing at all. StoreProof writes a real
-              description to every product image — watch it happen:
-            </p>
-          </div>
-          <AltTextDemo />
-        </div>
-      </section>
-
-      <section className="block alt reveal">
-        <div className="w">
-          <div className="head">
-            <span className="eyebrow">The short version</span>
-            <h2>No wall of text. Just the bits that matter.</h2>
-            <p>Pick what you need — and the free scanner is always one click away.</p>
-          </div>
-          <div className="navcards">
-            <a className="navcard" href="/overlays">
-              <span className="kick">The trap</span>
-              <h3>Why overlays backfire</h3>
-              <p>The $1M FTC fine, 800+ stores sued anyway, and why a widget can&rsquo;t save you.</p>
-              <span className="arrow">Read →</span>
-            </a>
-            <a className="navcard" href="/how-it-works">
-              <span className="kick">The method</span>
-              <h3>How it works</h3>
-              <p>Scan, fix at the source, document — hands-off, one fixed monthly price.</p>
-              <span className="arrow">Read →</span>
-            </a>
-            <a className="navcard" href="/proof">
-              <span className="kick">The paperwork</span>
-              <h3>What you walk away with</h3>
-              <p>The EAA statement and evidence pack that actually make a letter go away.</p>
-              <span className="arrow">Read →</span>
-            </a>
-            <a className="navcard" href="/pricing">
-              <span className="kick">The price</span>
-              <h3>Simple pricing</h3>
-              <p>Start free. Subscribe when you&rsquo;re ready. No retainer, no games.</p>
-              <span className="arrow">Read →</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section className="block alt reveal">
-        <div className="w">
-          <div className="head">
-            <span className="eyebrow">Why StoreProof</span>
-            <h2>Everything a demand letter needs — handled by StoreProof.</h2>
-            <p>
-              Not a widget. StoreProof fixes your store at the source, documents every change, and
-              keeps you defensible as the store grows.
-            </p>
-          </div>
-          <div className="benefits">
-            <div className="benefit">
-              <div className="benefit-ico"><IconCode /></div>
-              <div className="b-ico">Not an overlay</div>
-              <h3>Real fixes, in your code</h3>
-              <p>
-                StoreProof writes proper alt text into your products and corrects your theme at the
-                source — the opposite of a widget bolted on top.
-              </p>
+          <div className="ed-cols2">
+            <div>
+              <div className="ed-fh">Product</div>
+              <a href="/how-it-works">How it works</a>
+              <a href="/pricing">Pricing</a>
+              <a href="/shopify-accessibility-checker">Guides</a>
+              <a href="#scan">Scan my store</a>
             </div>
-            <div className="benefit">
-              <div className="benefit-ico"><IconDoc /></div>
-              <div className="b-ico">The paperwork</div>
-              <h3>The evidence pack lawyers ask for</h3>
-              <p>
-                An EN 301 549 accessibility statement, a dated fix log and a conformance declaration
-                you can hand straight to a lawyer or regulator.
-              </p>
-            </div>
-            <div className="benefit">
-              <div className="benefit-ico"><IconShieldCheck /></div>
-              <div className="b-ico">Honest by design</div>
-              <h3>We never fake a fix</h3>
-              <p>
-                StoreProof fixes what can be safely automated and flags the rest for human review,
-                plainly — none of the &ldquo;guaranteed compliance&rdquo; theatre that got overlays
-                fined.
-              </p>
-            </div>
-            <div className="benefit">
-              <div className="benefit-ico"><IconBolt /></div>
-              <div className="b-ico">Hands-off</div>
-              <h3>Set up once, it runs itself</h3>
-              <p>
-                Connect your store and StoreProof handles the scanning, fixing and documenting. One
-                fixed monthly price, no retainer, no sales calls.
-              </p>
-            </div>
-            <div className="benefit">
-              <div className="benefit-ico"><IconEye /></div>
-              <div className="b-ico">Stay defensible</div>
-              <h3>Monitored every month</h3>
-              <p>
-                Stores change weekly. StoreProof re-scans monthly and alerts you the moment your
-                accessibility exposure slips back.
-              </p>
-            </div>
-            <div className="benefit">
-              <div className="benefit-ico"><IconBuilding /></div>
-              <div className="b-ico">Who&rsquo;s behind it</div>
-              <h3>Built by VantagePoint Networks</h3>
-              <p>
-                A UK security and data company. Your accessibility is handled by people who do
-                compliance and evidence for a living.
-              </p>
+            <div>
+              <div className="ed-fh">Company</div>
+              <a href="/blog">Journal</a>
+              <a href="/privacy">Privacy</a>
+              <a href="/terms">Terms</a>
+              <a href="mailto:info@vpnetworks.co.uk">info@vpnetworks.co.uk</a>
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="block reveal">
-        <div className="w">
-          <div className="head">
-            <span className="eyebrow">Honest by design</span>
-            <h2>What we fix for you, and what we flag.</h2>
-            <p>
-              Automated tools reliably fix only about a third of accessibility issues. So we fix
-              that part properly — and tell you plainly about the rest, instead of pretending a
-              scan equals full compliance.
-            </p>
-          </div>
-          <div className="compare">
-            <div className="compare-col good">
-              <div className="compare-h">We fix these automatically</div>
-              <ul>
-                <li>Alt text written into your product images, generated by Claude vision.</li>
-                <li>Page language, title and viewport set correctly in your theme.</li>
-                <li>Duplicate element IDs and missing frame titles, corrected at the source.</li>
-                <li>Every change logged and reversible, shown to you in a fix log.</li>
-              </ul>
-            </div>
-            <div className="compare-col flag">
-              <div className="compare-h">We flag these for human review</div>
-              <ul>
-                <li>Colour contrast, and whether text is genuinely readable in context.</li>
-                <li>Keyboard operation and focus order all the way through checkout.</li>
-                <li>Meaningful link and button names, heading order, and ARIA.</li>
-                <li>Surfaced with plain-English guidance and examples — never faked.</li>
-              </ul>
-            </div>
-          </div>
+        <div className="ed-base">
+          <span>&copy; 2026 StoreProof &mdash; a VantagePoint Networks product</span>
+          <span>We pass our own WCAG 2.2 AA test</span>
         </div>
-      </section>
+        <div className="ed-cred">
+          Photography by{" "}
+          <a href="https://unsplash.com/@framesbyfin" target="_blank" rel="noopener noreferrer">Heidi Fin</a>,{" "}
+          <a href="https://unsplash.com/@benchaccounting" target="_blank" rel="noopener noreferrer">Bench Accounting</a> &amp;{" "}
+          <a href="https://unsplash.com/@smilevivo" target="_blank" rel="noopener noreferrer">Sang Kwak</a> on Unsplash.
+        </div>
+      </footer>
 
-      <FinalCta />
-      </main>
-      <RevealObserver />
-      <SiteFooter />
-    </>
+      <EditorialReveal />
+    </div>
   );
 }
