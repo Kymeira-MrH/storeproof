@@ -115,6 +115,17 @@ export default function Page() {
                 scan first — it shows exactly where you stand before you spend a penny.
               </p>
             </details>
+            <details>
+              <summary>Can I use StoreProof on my phone?</summary>
+              <p>
+                Yes — StoreProof runs in any mobile browser, and you can add it to your home screen
+                so it opens full-screen like an app. On an <b>iPhone or iPad</b>: open StoreProof in
+                Safari, tap the <b>Share</b> button, then <b>Add to Home Screen</b>. On{" "}
+                <b>Android</b>: open it in Chrome, tap the <b>⋮</b> menu, then <b>Install app</b> (or{" "}
+                <b>Add to Home Screen</b>). The scanner, your dashboard and the evidence packs all
+                work on mobile.
+              </p>
+            </details>
           </div>
         </section>
         <FinalCta />

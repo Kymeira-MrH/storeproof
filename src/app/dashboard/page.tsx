@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { AddStore } from "./add-store";
 import { Billing } from "./billing";
 import { SubSuccess } from "./sub-success";
+import { InstallTip } from "../install-tip";
 
 export const dynamic = "force-dynamic";
 
@@ -95,6 +96,8 @@ export default async function DashboardPage() {
           </ol>
         </div>
       )}
+
+      <InstallTip />
     </>
   );
 }
