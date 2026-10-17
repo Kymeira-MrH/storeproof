@@ -12,7 +12,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="w footer-grid">
         <div>
-          <div className="footer-brand">STOREPROOF</div>
+          <div className="footer-brand">Store<b>Proof</b></div>
           <p className="footer-tag">
             Honest, automated accessibility compliance for Shopify stores. Source-level fixes,
             evidence packs and monitoring — never an overlay.

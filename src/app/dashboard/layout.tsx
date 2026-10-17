@@ -13,8 +13,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
     <>
       <header className="dash-top">
         <div className="dash-top-inner">
-          <a href="/dashboard" className="dash-brand">
-            STOREPROOF
+          <a href="/dashboard" className="dash-brand" aria-label="StoreProof dashboard">
+            <svg width="22" height="22" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <circle cx="32" cy="32" r="29" stroke="#c9a24b" strokeWidth="2.6" />
+              <path d="M22 32.5l7 7 14-15" stroke="#e3c67e" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Store<b>Proof</b>
           </a>
           <nav className="dash-nav">
             <a href="/dashboard">Stores</a>

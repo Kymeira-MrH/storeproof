@@ -26,16 +26,20 @@ export function MarketingNav({ active }: { active?: string }) {
     <>
       <div className="mast">
         <div className="w">
-          <span>STOREPROOF</span>
-          <span>Case EAA-2026-0417 · Re: Accessibility Demand</span>
-          <span>EU · EAA Ready</span>
+          <span>Honest, documented accessibility</span>
+          <span>WCAG 2.2 AA · EN 301 549</span>
+          <span>EU · EAA — No. 01</span>
         </div>
       </div>
 
       <nav>
         <div className="w">
-          <a className="brand" href="/">
-            STOREPROOF
+          <a className="brand" href="/" aria-label="StoreProof home">
+            <svg width="24" height="24" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <circle cx="32" cy="32" r="29" stroke="#c9a24b" strokeWidth="2.6" />
+              <path d="M22 32.5l7 7 14-15" stroke="#e3c67e" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Store<b>Proof</b>
           </a>
           <ul>
             {LINKS.map((l) => (
