@@ -1,8 +1,12 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { MarketingNav } from "../marketing-nav";
 import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
+
+// Private, authenticated area — keep it out of search indexes.
+export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
