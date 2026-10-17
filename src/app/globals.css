@@ -522,3 +522,6 @@ html, body { margin: 0; padding: 0; }
 .ap .sub-banner{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; background:var(--green-soft); border:1px solid rgba(47,138,99,.3); border-left:3px solid var(--green); color:var(--ink); border-radius:var(--r-sm); padding:14px 16px; margin-bottom:22px; font-size:14.5px; line-height:1.5; }
 .ap .sub-banner button{ background:none; border:0; color:var(--ink-2); font-size:20px; line-height:1; cursor:pointer; padding:0 4px; flex:none; }
 .ap .sub-banner button:hover{ color:var(--ink); }
+
+.ap .footer-credit a{ color:rgba(241,236,226,.6); text-decoration:underline; text-underline-offset:2px; }
+.ap .footer-credit a:hover{ color:#fff; }

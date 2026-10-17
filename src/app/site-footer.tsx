@@ -112,8 +112,17 @@ export function SiteFooter() {
         <span>We pass our own WCAG 2.2 AA test.</span>
       </div>
       <div className="w footer-credit">
-        Photography via Unsplash — Heidi Fin, Bench Accounting, Sang Kwak, Brooke Cagle, Clark Street
-        Mercantile, Vitaly Gariev &amp; Matt Hoffman.
+        Photography via{" "}
+        <a href="https://unsplash.com/?utm_source=storeproof&utm_medium=referral" target="_blank" rel="noopener noreferrer">Unsplash</a>
+        {" — "}
+        <a href="https://unsplash.com/@framesbyfin?utm_source=storeproof&utm_medium=referral" target="_blank" rel="noopener noreferrer">Heidi Fin</a>,{" "}
+        <a href="https://unsplash.com/@benchaccounting?utm_source=storeproof&utm_medium=referral" target="_blank" rel="noopener noreferrer">Bench Accounting</a>,{" "}
+        <a href="https://unsplash.com/@smilevivo?utm_source=storeproof&utm_medium=referral" target="_blank" rel="noopener noreferrer">Sang Kwak</a>,{" "}
+        <a href="https://unsplash.com/@brookecagle?utm_source=storeproof&utm_medium=referral" target="_blank" rel="noopener noreferrer">Brooke Cagle</a>,{" "}
+        <a href="https://unsplash.com/@mercantile?utm_source=storeproof&utm_medium=referral" target="_blank" rel="noopener noreferrer">Clark Street Mercantile</a>,{" "}
+        <a href="https://unsplash.com/@silverkblack?utm_source=storeproof&utm_medium=referral" target="_blank" rel="noopener noreferrer">Vitaly Gariev</a>
+        {" & "}
+        <a href="https://unsplash.com/@__matthoffman__?utm_source=storeproof&utm_medium=referral" target="_blank" rel="noopener noreferrer">Matt Hoffman</a>.
       </div>
     </footer>
   );
