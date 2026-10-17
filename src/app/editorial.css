@@ -132,9 +132,38 @@
   text-decoration: none;
 }
 .ed-logo b { color: var(--e-gold-2); font-weight: 600; }
-.ed-mast nav { display: flex; gap: 30px; font-size: 0.92rem; }
+/* reset the global .ap nav sticky-bar styling that leaks onto this <nav> */
+.ed-mast nav {
+  display: flex;
+  gap: 30px;
+  font-size: 0.92rem;
+  position: static;
+  top: auto;
+  z-index: auto;
+  background: transparent;
+  backdrop-filter: none;
+  border: 0;
+  padding: 0;
+}
 .ed-mast nav a { color: var(--e-faint); text-decoration: none; transition: color 0.2s; }
 .ed-mast nav a:hover { color: #fff; }
+
+/* ── anchor-colour overrides — beat global ".ap a{color:var(--green-d)}" ── */
+.ap .ed a.ed-logo { color: #fff; }
+.ap .ed a.ed-logo b { color: var(--e-gold-2); }
+.ap .ed a.ed-cta { color: var(--e-ink); }
+.ap .ed a.ed-cta:hover { color: var(--e-ink); }
+.ap .ed a.ed-cta2 { color: #fff; }
+.ap .ed a.ed-cta2:hover { color: var(--e-gold-2); }
+.ap .ed a.ed-pcta { color: var(--e-ink); }
+.ap .ed a.ed-pcta.ghost { color: #fff; }
+.ap .ed a.ed-pcta.ghost:hover { color: var(--e-gold-2); }
+.ap .ed .ed-mast nav a { color: var(--e-faint); }
+.ap .ed .ed-mast nav a:hover { color: #fff; }
+.ap .ed .ed-site-foot a { color: var(--e-faint); }
+.ap .ed .ed-site-foot a:hover { color: #fff; }
+.ap .ed .ed-site-foot .ed-cred a { color: rgba(255, 255, 255, 0.45); }
+.ap .ed .ed-site-foot .ed-cred a:hover { color: #fff; }
 .ed-issue {
   font-family: var(--e-mono);
   font-size: 0.72rem;
