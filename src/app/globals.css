@@ -517,3 +517,8 @@ html, body { margin: 0; padding: 0; }
 .ap .install-tip li{ font-size:14px; color:var(--ink-2); padding-left:18px; position:relative; line-height:1.5; }
 .ap .install-tip li::before{ content:""; position:absolute; left:0; top:8px; width:7px; height:7px; border-radius:2px; background:var(--gold); }
 .ap .install-tip b{ color:var(--ink); }
+
+/* Dashboard subscription confirmation banner */
+.ap .sub-banner{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; background:var(--green-soft); border:1px solid rgba(47,138,99,.3); border-left:3px solid var(--green); color:var(--ink); border-radius:var(--r-sm); padding:14px 16px; margin-bottom:22px; font-size:14.5px; line-height:1.5; }
+.ap .sub-banner button{ background:none; border:0; color:var(--ink-2); font-size:20px; line-height:1; cursor:pointer; padding:0 4px; flex:none; }
+.ap .sub-banner button:hover{ color:var(--ink); }

@@ -44,23 +44,67 @@ export async function POST(req: NextRequest) {
 
     const subscriptionId = (sub?.stripe_subscription_id as string | null) ?? null;
 
-    // Swap the price on a live subscription in place.
+    // Change the plan on a live subscription:
+    //  • Upgrade (→ Fix) takes effect immediately, charged pro-rata.
+    //  • Downgrade (→ Monitoring) is scheduled for the END of the current billing
+    //    period via a subscription schedule — the customer keeps Fix & Watch until
+    //    the period they've already paid for ends, then drops to Monitoring. No
+    //    proration credit, so no negative balance.
     if (subscriptionId) {
       try {
         const current = await stripe.subscriptions.retrieve(subscriptionId);
         const live = current.status === "active" || current.status === "trialing";
         const itemId = current.items?.data?.[0]?.id;
         const currentPrice = current.items?.data?.[0]?.price?.id;
+        const schedRef = current.schedule as string | { id: string } | null;
+        const scheduleId = typeof schedRef === "string" ? schedRef : schedRef?.id;
+
         if (live && itemId) {
           if (currentPrice === priceId) {
             return NextResponse.json({ url: `${origin}/dashboard?sub=success` });
           }
-          await stripe.subscriptions.update(subscriptionId, {
-            items: [{ id: itemId, price: priceId }],
-            proration_behavior: "create_prorations",
+
+          if (tier === "fix") {
+            // Upgrade now. Cancel any pending scheduled downgrade first.
+            if (scheduleId) {
+              try {
+                await stripe.subscriptionSchedules.release(scheduleId);
+              } catch {
+                // already released/complete — ignore
+              }
+            }
+            await stripe.subscriptions.update(subscriptionId, {
+              items: [{ id: itemId, price: priceId }],
+              proration_behavior: "create_prorations",
+            });
+            return NextResponse.json({ url: `${origin}/dashboard?sub=upgraded` });
+          }
+
+          // Downgrade: schedule the switch for the end of the current period.
+          const periodEnd = (current as unknown as { current_period_end: number })
+            .current_period_end;
+          const schedule = scheduleId
+            ? await stripe.subscriptionSchedules.retrieve(scheduleId)
+            : await stripe.subscriptionSchedules.create({ from_subscription: subscriptionId });
+          const phase0 = schedule.phases[0];
+          await stripe.subscriptionSchedules.update(schedule.id, {
+            end_behavior: "release",
+            proration_behavior: "none",
+            phases: [
+              {
+                items: phase0.items.map((i) => ({
+                  price: typeof i.price === "string" ? i.price : (i.price as { id: string }).id,
+                  quantity: i.quantity ?? 1,
+                })),
+                start_date: phase0.start_date,
+                end_date: phase0.end_date,
+              },
+              { items: [{ price: priceId, quantity: 1 }] },
+            ],
           });
-          const marker = tier === "fix" ? "upgraded" : "downgraded";
-          return NextResponse.json({ url: `${origin}/dashboard?sub=${marker}` });
+          return NextResponse.json({
+            url: `${origin}/dashboard?sub=downgrade_scheduled&on=${periodEnd}`,
+          });
         }
       } catch {
         // Stale/cancelled subscription id — fall through to a fresh checkout.
