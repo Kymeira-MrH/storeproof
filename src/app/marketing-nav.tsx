@@ -1,12 +1,10 @@
 import { NavAuthLink } from "./nav-auth-link";
 
+// One canonical link set, identical to the homepage masthead, used on every page.
 const LINKS: Array<{ key: string; label: string; href: string }> = [
-  { key: "home", label: "Home", href: "/" },
-  { key: "overlays", label: "The overlay trap", href: "/overlays" },
   { key: "how", label: "How it works", href: "/how-it-works" },
-  { key: "proof", label: "The proof", href: "/proof" },
   { key: "pricing", label: "Pricing", href: "/pricing" },
-  { key: "blog", label: "Blog", href: "/blog" },
+  { key: "journal", label: "Journal", href: "/blog" },
 ];
 
 // Intent landing pages surfaced in the nav "Guides" menu (comparison pages stay

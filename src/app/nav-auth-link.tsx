@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/browser";
 
 // Keeps marketing pages static while making the nav tie into the app: a
-// logged-in visitor sees "Dashboard", everyone else sees "Log in".
+// logged-in visitor sees "Dashboard", everyone else sees "Sign in".
 export function NavAuthLink({ className }: { className?: string }) {
   const [authed, setAuthed] = useState<boolean | null>(null);
 
@@ -32,7 +32,7 @@ export function NavAuthLink({ className }: { className?: string }) {
   }
   return (
     <a className={className} href="/login">
-      Log in
+      Sign in
     </a>
   );
 }

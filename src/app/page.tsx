@@ -35,8 +35,8 @@ export default function Page() {
           <nav aria-label="Primary">
             <a href="/how-it-works">How it works</a>
             <a href="/pricing">Pricing</a>
-            <a href="/shopify-accessibility-checker">Guides</a>
             <a href="/blog">Journal</a>
+            <a href="/shopify-accessibility-checker">Guides</a>
             <a href="/login">Sign in</a>
           </nav>
           <div className="ed-issue">EU &middot; EAA &mdash; No.&nbsp;01</div>

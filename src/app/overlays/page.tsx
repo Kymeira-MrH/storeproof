@@ -1,4 +1,5 @@
 import { MarketingNav } from "../marketing-nav";
+import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
 
@@ -14,17 +15,15 @@ export default function Page() {
     <>
       <MarketingNav active="overlays" />
       <main>
+        <PhotoHero
+          image="/img/shoppers.jpg"
+          alt="Shoppers on a busy high street"
+          kicker="The cheap fix that backfires"
+          title={<>An overlay widget is not a defence. Courts treat it as an <em>admission.</em></>}
+          lede="The accessibility button in the corner of a site is the most-sued fix there is. It runs after the page loads, so screen readers never see it, and it cannot touch the code underneath."
+        />
         <section className="block">
           <div className="w">
-            <div className="head">
-              <span className="eyebrow">The cheap fix that backfires</span>
-              <h1>An overlay widget is not a defence. Courts treat it as an admission.</h1>
-              <p>
-                The &ldquo;accessibility button&rdquo; in the corner of a site is the most-sued
-                fix there is. It runs after the page loads, so screen readers never see it, and
-                it cannot touch the code underneath.
-              </p>
-            </div>
             <div className="cols">
               <div className="c">
                 <div className="big mono">$1M</div>

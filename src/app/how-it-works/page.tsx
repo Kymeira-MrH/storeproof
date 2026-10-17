@@ -1,4 +1,5 @@
 import { MarketingNav } from "../marketing-nav";
+import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
 import { IconSearch, IconWrench, IconSeal } from "../icons";
@@ -15,16 +16,15 @@ export default function Page() {
     <>
       <MarketingNav active="how" />
       <main>
+        <PhotoHero
+          image="/img/coffee.jpg"
+          alt="An independent shop owner behind the counter"
+          kicker="How the automation works"
+          title={<>Scanned, fixed and documented online. <em>Hands-off.</em></>}
+          lede="A fixed monthly price, no retainer. You connect your store once; the rest runs itself. What a machine cannot safely fix, we flag plainly rather than fake."
+        />
         <section className="block">
           <div className="w">
-            <div className="head">
-              <span className="eyebrow">How the automation works</span>
-              <h1>Scanned, fixed and documented online. Hands-off.</h1>
-              <p>
-                A fixed monthly price, no retainer. You connect your store once; the rest runs
-                itself. What a machine cannot safely fix, we flag plainly rather than fake.
-              </p>
-            </div>
             <div className="steps">
               <div className="step">
                 <div className="step-ico"><IconSearch /></div>

@@ -111,6 +111,10 @@ export function SiteFooter() {
         </span>
         <span>We pass our own WCAG 2.2 AA test.</span>
       </div>
+      <div className="w footer-credit">
+        Photography via Unsplash — Heidi Fin, Bench Accounting, Sang Kwak, Brooke Cagle, Clark Street
+        Mercantile, Vitaly Gariev &amp; Matt Hoffman.
+      </div>
     </footer>
   );
 }

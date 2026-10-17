@@ -1,9 +1,26 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MarketingNav } from "../marketing-nav";
+import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
 import { getLandingPage, landingSlugs } from "@/lib/seo";
+
+// Deterministic, varied photography per landing page (different from the homepage set).
+// Excludes coffee.jpg (owned by /how-it-works) so adjacent pages differ.
+const LANDING_IMAGES = [
+  "/img/shoppers.jpg",
+  "/img/boutique.jpg",
+  "/img/counter.jpg",
+  "/img/arcade.jpg",
+  "/img/packing.jpg",
+  "/img/storefront.jpg",
+];
+function pickImage(slug: string): string {
+  let n = 0;
+  for (const ch of slug) n = (n + ch.charCodeAt(0)) % LANDING_IMAGES.length;
+  return LANDING_IMAGES[n];
+}
 
 export function generateStaticParams() {
   return landingSlugs().map((slug) => ({ slug }));
@@ -67,16 +84,18 @@ export default async function LandingPageView({
     <>
       <MarketingNav active="guides" />
       <main>
+        <PhotoHero
+          image={pickImage(page.slug)}
+          alt="An independent retail store"
+          kicker={page.eyebrow}
+          title={page.h1}
+          lede={page.lede}
+        />
         <section className="block">
           <div className="w legal">
             <p className="crumb">
               <a href="/">Home</a> <span aria-hidden="true">/</span> {page.h1}
             </p>
-            <div className="head">
-              <span className="eyebrow">{page.eyebrow}</span>
-              <h1>{page.h1}</h1>
-              <p className="lead">{page.lede}</p>
-            </div>
 
             {page.sections.map((s) => (
               <section key={s.h2}>

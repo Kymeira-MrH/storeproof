@@ -1,4 +1,5 @@
 import { MarketingNav } from "../marketing-nav";
+import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
 import { PlanCheckout } from "./plan-checkout";
@@ -15,16 +16,15 @@ export default function Page() {
     <>
       <MarketingNav active="pricing" />
       <main>
+        <PhotoHero
+          image="/img/boutique.jpg"
+          alt="Inside an independent boutique"
+          kicker="Fixed price, no retainer games"
+          title={<>Start with the free scan. Subscribe <em>when you&rsquo;re ready.</em></>}
+          lede="No sales call, no setup fee. See your exposure for free, then pick the plan that matches how much you want handled for you."
+        />
         <section className="block">
           <div className="w">
-            <div className="head">
-              <span className="eyebrow">Fixed price, no retainer games</span>
-              <h1>Start with the free scan. Subscribe when you&rsquo;re ready.</h1>
-              <p>
-                No sales call, no setup fee. See your exposure for free, then pick the plan that
-                matches how much you want handled for you.
-              </p>
-            </div>
             <div className="prices">
               <div className="price">
                 <span className="k">The scan</span>

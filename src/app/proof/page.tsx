@@ -1,4 +1,5 @@
 import { MarketingNav } from "../marketing-nav";
+import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
 import { FinalCta } from "../final-cta";
 import { EvidencePack } from "../evidence-pack";
@@ -15,14 +16,21 @@ export default function Page() {
     <>
       <MarketingNav active="proof" />
       <main>
+        <PhotoHero
+          image="/img/counter.jpg"
+          alt="A shopkeeper at the counter of their store"
+          kicker="What you walk away with"
+          title={<>If a letter comes, you&rsquo;ve <em>already answered it.</em></>}
+          lede="An EN 301 549 accessibility statement, a dated fix log and a conformance declaration — the difference between panicking and forwarding a PDF."
+        />
         <section className="block">
           <div className="w">
             <div className="deliver">
               <div>
                 <span className="eyebrow">What you walk away with</span>
-                <h1 className="proof-h2">
+                <h2 className="proof-h2">
                   The point is the paperwork. That is what makes a letter go away.
-                </h1>
+                </h2>
                 <ul className="checklist">
                   <li>
                     <span className="tick">[✓]</span> EAA accessibility statement, written to EN
