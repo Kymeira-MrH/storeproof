@@ -59,16 +59,25 @@ export function Billing({ status, tier = "" }: { status: string; tier?: string }
       {active ? (
         <>
           <span className="chip">{onFix ? "Fix & Watch active" : "Monitoring active"}</span>
-          {!onFix ? (
+          {onFix ? (
             <button
               className="btn"
               type="button"
-              onClick={() => go("/api/stripe/upgrade")}
+              onClick={() => go("/api/stripe/change-plan", { tier: "monitoring" })}
+              disabled={loading}
+            >
+              {loading ? "Opening…" : "Downgrade to Monitoring — £29/mo"}
+            </button>
+          ) : (
+            <button
+              className="btn"
+              type="button"
+              onClick={() => go("/api/stripe/change-plan", { tier: "fix" })}
               disabled={loading}
             >
               {loading ? "Opening…" : "Upgrade to Fix & Watch — £49/mo"}
             </button>
-          ) : null}
+          )}
           <button
             className="btn"
             type="button"

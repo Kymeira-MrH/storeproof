@@ -26,11 +26,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "No billing account yet." }, { status: 400 });
   }
 
-  const stripe = getStripe();
-  const origin = new URL(req.url).origin;
-  const session = await stripe.billingPortal.sessions.create({
-    customer: customerId,
-    return_url: `${origin}/dashboard`,
-  });
-  return NextResponse.json({ url: session.url });
+  try {
+    const stripe = getStripe();
+    const origin = new URL(req.url).origin;
+    const session = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: `${origin}/dashboard`,
+    });
+    return NextResponse.json({ url: session.url });
+  } catch (err) {
+    console.error("stripe portal failed", err);
+    // Most common cause: the Stripe Customer Portal has not been activated in the
+    // Stripe dashboard (Settings → Billing → Customer portal). Return a clear,
+    // non-500 message so the UI shows something useful instead of "unavailable".
+    const raw = err instanceof Error ? err.message : "";
+    const message = /portal|configuration/i.test(raw)
+      ? "The billing portal isn't switched on yet. You can still upgrade or downgrade with the buttons here; contact us to cancel."
+      : "Couldn't open the billing portal. Please try again.";
+    return NextResponse.json({ error: message }, { status: 400 });
+  }
 }
