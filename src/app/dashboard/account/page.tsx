@@ -29,7 +29,7 @@ export default async function AccountPage() {
       <p className="crumb">
         <a href="/dashboard">&larr; Stores</a>
       </p>
-      <h1 className="dash-h1">Account &amp; billing</h1>
+      <h2 className="dash-h1">Account &amp; billing</h2>
       <p className="dash-sub">Manage your plan and sign-in details.</p>
 
       <div className="section-label">Signed in as</div>

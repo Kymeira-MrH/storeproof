@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { MarketingNav } from "../marketing-nav";
+import { PhotoHero } from "../photo-hero";
 import { SiteFooter } from "../site-footer";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -13,6 +14,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <>
       <MarketingNav />
+      <PhotoHero
+        image="/img/shoppers.jpg"
+        alt="Shoppers on a busy high street"
+        kicker="Dashboard"
+        title={<>Your StoreProof <em>account.</em></>}
+        lede="Scan, monitor and document accessibility compliance — and keep the evidence your lawyer needs on hand."
+      />
       <nav className="dash-subnav" aria-label="Dashboard">
         <div className="dash-subnav-in">
           <div className="dash-subnav-links">

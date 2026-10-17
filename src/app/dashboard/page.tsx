@@ -40,7 +40,7 @@ export default async function DashboardPage() {
   return (
     <>
       <SubSuccess />
-      <h1 className="dash-h1">Your stores</h1>
+      <h2 className="dash-h1">Your stores</h2>
       <p className="dash-sub">
         Scan, monitor and document accessibility compliance — and keep the evidence your lawyer
         needs on hand.

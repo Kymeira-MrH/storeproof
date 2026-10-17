@@ -87,9 +87,9 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
       <p className="crumb">
         <a href="/dashboard">&larr; Stores</a>
       </p>
-      <h1 className="dash-h1" style={{ wordBreak: "break-all" }}>
+      <h2 className="dash-h1" style={{ wordBreak: "break-all" }}>
         {store.url}
-      </h1>
+      </h2>
 
       {latest ? (
         <div style={{ marginTop: "14px" }}>
