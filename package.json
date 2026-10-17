@@ -17,6 +17,7 @@
     "@upstash/ratelimit": "^2.2.0",
     "@upstash/redis": "^1.39.0",
     "@vercel/analytics": "^2.0.1",
+    "gsap": "^3.15.0",
     "ipaddr.js": "^2.5.0",
     "jspdf": "^4.2.1",
     "next": "latest",

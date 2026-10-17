@@ -8,6 +8,7 @@ import { ConsentBanner } from "./consent-banner";
 const display = Fraunces({
   subsets: ["latin"],
   style: ["normal", "italic"],
+  axes: ["opsz"],
   variable: "--font-display",
   display: "swap",
 });
