@@ -40,9 +40,16 @@ export async function POST(req: NextRequest) {
     // Stripe dashboard (Settings → Billing → Customer portal). Return a clear,
     // non-500 message so the UI shows something useful instead of "unavailable".
     const raw = err instanceof Error ? err.message : "";
-    const message = /portal|configuration/i.test(raw)
-      ? "The billing portal isn't switched on yet. You can still upgrade or downgrade with the buttons here; contact us to cancel."
-      : "Couldn't open the billing portal. Please try again.";
+    const code =
+      (err as { raw?: { code?: string } })?.raw?.code ?? (err as { code?: string })?.code;
+    let message = "Couldn't open the billing portal. Please try again.";
+    if (code === "resource_missing") {
+      message =
+        "Your saved billing details are out of date. Choose a plan again from the dashboard to re-link your account, then Manage billing will work.";
+    } else if (/portal|configuration/i.test(raw)) {
+      message =
+        "The billing portal isn't switched on yet. You can still upgrade or downgrade with the buttons here; contact us to cancel.";
+    }
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }

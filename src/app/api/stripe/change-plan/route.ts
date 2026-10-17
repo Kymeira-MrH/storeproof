@@ -67,8 +67,19 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // No live subscription: reuse the Stripe customer if we have one, else create.
+    // No live subscription: reuse the Stripe customer only if it still exists in
+    // THIS Stripe account; otherwise forget it and make a fresh one. Guards against
+    // stale sandbox customer IDs left in the database (which caused the
+    // "No such customer" errors on portal/checkout for test accounts).
     let customerId = (sub?.stripe_customer_id as string | null) ?? undefined;
+    if (customerId) {
+      try {
+        const existing = await stripe.customers.retrieve(customerId);
+        if ((existing as { deleted?: boolean }).deleted) customerId = undefined;
+      } catch {
+        customerId = undefined;
+      }
+    }
     if (!customerId) {
       const customer = await stripe.customers.create({
         email: user.email ?? undefined,
@@ -78,6 +89,7 @@ export async function POST(req: NextRequest) {
       await admin.from("subscriptions").upsert({
         account_id: user.id,
         stripe_customer_id: customerId,
+        stripe_subscription_id: null,
         status: "none",
         updated_at: new Date().toISOString(),
       });
